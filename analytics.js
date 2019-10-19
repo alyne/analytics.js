@@ -35,7 +35,7 @@ Object.keys(Integrations).forEach(function(name) {
   analytics.use(Integrations[name]);
 });
 
-},{"../package.json":139,"./integrations":2,"@segment/analytics.js-core":23}],2:[function(require,module,exports){
+},{"../package.json":120,"./integrations":2,"@segment/analytics.js-core":22}],2:[function(require,module,exports){
 /* eslint quote-props: off */
 'use strict';
 
@@ -45,11 +45,11 @@ Object.keys(Integrations).forEach(function(name) {
  Make sure the integrations added are also installed and saved in the package.json
  */
 module.exports = {
-  mixpanel: require('@segment/analytics.js-integration-mixpanel'),
-  segmentio: require('@segment/analytics.js-integration-segmentio')
+  // mixpanel: require('@segment/analytics.js-integration-mixpanel'),
+  segmentio: require('analytics.js-integration-segmentio')
 };
 
-},{"@segment/analytics.js-integration-mixpanel":37,"@segment/analytics.js-integration-segmentio":45}],3:[function(require,module,exports){
+},{"analytics.js-integration-segmentio":56}],3:[function(require,module,exports){
 'use strict';
 
 /*
@@ -341,7 +341,7 @@ var clone = function clone(obj) {
 
 module.exports = clone;
 
-},{"component-type":96}],6:[function(require,module,exports){
+},{"component-type":75}],6:[function(require,module,exports){
 'use strict';
 
 /*
@@ -1277,66 +1277,7 @@ function ads(query) {
 
 module.exports = ads;
 
-},{"component-querystring":94}],18:[function(require,module,exports){
-
-var type = require('component-type');
-var clone = require('component-clone');
-
-
-/**
- * Expose `alias`.
- */
-
-module.exports = alias;
-
-
-/**
- * Alias an `object`.
- *
- * @param {Object} obj
- * @param {Mixed} method
- */
-
-function alias (obj, method) {
-  switch (type(method)) {
-    case 'object': return aliasByDictionary(clone(obj), method);
-    case 'function': return aliasByFunction(clone(obj), method);
-  }
-}
-
-
-/**
- * Convert the keys in an `obj` using a dictionary of `aliases`.
- *
- * @param {Object} obj
- * @param {Object} aliases
- */
-
-function aliasByDictionary (obj, aliases) {
-  for (var key in aliases) {
-    if (undefined === obj[key]) continue;
-    obj[aliases[key]] = obj[key];
-    delete obj[key];
-  }
-  return obj;
-}
-
-
-/**
- * Convert the keys in an `obj` using a `convert` function.
- *
- * @param {Object} obj
- * @param {Function} convert
- */
-
-function aliasByFunction (obj, convert) {
-  // have to create another object so that ie8 won't infinite loop on keys
-  var output = {};
-  for (var key in obj) output[convert(key)] = obj[key];
-  return output;
-}
-
-},{"component-clone":84,"component-type":96}],19:[function(require,module,exports){
+},{"component-querystring":73}],18:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -2238,7 +2179,7 @@ module.exports.store = store;
 module.exports.metrics = metrics;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./cookie":20,"./group":22,"./memory":24,"./metrics":25,"./middleware":26,"./normalize":27,"./pageDefaults":28,"./store":29,"./user":30,"@ndhoule/after":3,"@ndhoule/clone":5,"@ndhoule/defaults":6,"@ndhoule/each":8,"@ndhoule/foldl":11,"@ndhoule/keys":13,"@ndhoule/pick":15,"@segment/is-meta":59,"@segment/prevent-default":75,"bind-all":82,"component-emitter":31,"component-event":91,"component-querystring":94,"component-type":96,"debug":32,"extend":101,"is":105,"next-tick":33,"segmentio-facade":124}],20:[function(require,module,exports){
+},{"./cookie":19,"./group":21,"./memory":23,"./metrics":24,"./middleware":25,"./normalize":26,"./pageDefaults":27,"./store":28,"./user":29,"@ndhoule/after":3,"@ndhoule/clone":5,"@ndhoule/defaults":6,"@ndhoule/each":8,"@ndhoule/foldl":11,"@ndhoule/keys":13,"@ndhoule/pick":15,"@segment/is-meta":36,"@segment/prevent-default":50,"bind-all":61,"component-emitter":70,"component-event":71,"component-querystring":73,"component-type":75,"debug":30,"extend":31,"is":83,"next-tick":92,"segmentio-facade":102}],19:[function(require,module,exports){
 'use strict';
 
 /**
@@ -2366,7 +2307,7 @@ module.exports = bindAll(new Cookie());
 
 module.exports.Cookie = Cookie;
 
-},{"@ndhoule/clone":5,"@ndhoule/defaults":6,"@segment/top-domain":80,"bind-all":82,"component-cookie":85,"debug":32,"json3":106}],21:[function(require,module,exports){
+},{"@ndhoule/clone":5,"@ndhoule/defaults":6,"@segment/top-domain":54,"bind-all":61,"component-cookie":64,"debug":30,"json3":84}],20:[function(require,module,exports){
 'use strict';
 
 /*
@@ -2666,7 +2607,7 @@ Entity.prototype.load = function() {
   this.traits(this.traits());
 };
 
-},{"./cookie":20,"./memory":24,"./store":29,"@ndhoule/clone":5,"@ndhoule/defaults":6,"@ndhoule/extend":10,"@segment/isodate-traverse":60,"debug":32}],22:[function(require,module,exports){
+},{"./cookie":19,"./memory":23,"./store":28,"@ndhoule/clone":5,"@ndhoule/defaults":6,"@ndhoule/extend":10,"@segment/isodate-traverse":37,"debug":30}],21:[function(require,module,exports){
 'use strict';
 
 /*
@@ -2722,7 +2663,7 @@ module.exports = bindAll(new Group());
 
 module.exports.Group = Group;
 
-},{"./entity":21,"bind-all":82,"debug":32,"inherits":103}],23:[function(require,module,exports){
+},{"./entity":20,"bind-all":61,"debug":30,"inherits":81}],22:[function(require,module,exports){
 'use strict';
 
 /**
@@ -2749,7 +2690,7 @@ analytics.VERSION = require('../package.json').version;
 
 module.exports = analytics;
 
-},{"../package.json":36,"./analytics":19}],24:[function(require,module,exports){
+},{"../package.json":32,"./analytics":18}],23:[function(require,module,exports){
 'use strict';
 
 /*
@@ -2815,7 +2756,7 @@ Memory.prototype.remove = function(key) {
   return true;
 };
 
-},{"@ndhoule/clone":5,"bind-all":82}],25:[function(require,module,exports){
+},{"@ndhoule/clone":5,"bind-all":61}],24:[function(require,module,exports){
 'use strict';
 
 var bindAll = require('bind-all');
@@ -2912,7 +2853,7 @@ module.exports = bindAll(new Metrics());
 
 module.exports.Metrics = Metrics;
 
-},{"@segment/send-json":77,"bind-all":82,"debug":32}],26:[function(require,module,exports){
+},{"@segment/send-json":52,"bind-all":61,"debug":30}],25:[function(require,module,exports){
 'use strict';
 
 var Facade = require('segmentio-facade');
@@ -2978,7 +2919,7 @@ function executeChain(payload, integration, middlewares, index) {
 
 module.exports.Chain = Chain;
 
-},{"segmentio-facade":124}],27:[function(require,module,exports){
+},{"segmentio-facade":102}],26:[function(require,module,exports){
 'use strict';
 
 /**
@@ -3079,7 +3020,7 @@ function normalize(msg, list) {
   }
 }
 
-},{"@ndhoule/defaults":6,"@ndhoule/each":8,"@ndhoule/includes":12,"@ndhoule/map":14,"component-type":96,"debug":32,"json3":106,"spark-md5":131,"uuid":35}],28:[function(require,module,exports){
+},{"@ndhoule/defaults":6,"@ndhoule/each":8,"@ndhoule/includes":12,"@ndhoule/map":14,"component-type":75,"debug":30,"json3":84,"spark-md5":109,"uuid":117}],27:[function(require,module,exports){
 'use strict';
 
 /*
@@ -3143,7 +3084,7 @@ function canonicalUrl(search) {
 
 module.exports = pageDefaults;
 
-},{"@ndhoule/includes":12,"@segment/canonical":56,"component-url":97}],29:[function(require,module,exports){
+},{"@ndhoule/includes":12,"@segment/canonical":34,"component-url":76}],28:[function(require,module,exports){
 'use strict';
 
 /*
@@ -3228,7 +3169,7 @@ module.exports = bindAll(new Store());
 
 module.exports.Store = Store;
 
-},{"@ndhoule/defaults":6,"@segment/store":78,"bind-all":82}],30:[function(require,module,exports){
+},{"@ndhoule/defaults":6,"@segment/store":53,"bind-all":61}],29:[function(require,module,exports){
 'use strict';
 
 /*
@@ -3431,184 +3372,7 @@ module.exports = bindAll(new User());
 
 module.exports.User = User;
 
-},{"./cookie":20,"./entity":21,"./store":29,"bind-all":82,"component-cookie":85,"debug":32,"inherits":103,"uuid":35}],31:[function(require,module,exports){
-
-/**
- * Expose `Emitter`.
- */
-
-if (typeof module !== 'undefined') {
-  module.exports = Emitter;
-}
-
-/**
- * Initialize a new `Emitter`.
- *
- * @api public
- */
-
-function Emitter(obj) {
-  if (obj) return mixin(obj);
-};
-
-/**
- * Mixin the emitter properties.
- *
- * @param {Object} obj
- * @return {Object}
- * @api private
- */
-
-function mixin(obj) {
-  for (var key in Emitter.prototype) {
-    obj[key] = Emitter.prototype[key];
-  }
-  return obj;
-}
-
-/**
- * Listen on the given `event` with `fn`.
- *
- * @param {String} event
- * @param {Function} fn
- * @return {Emitter}
- * @api public
- */
-
-Emitter.prototype.on =
-Emitter.prototype.addEventListener = function(event, fn){
-  this._callbacks = this._callbacks || {};
-  (this._callbacks['$' + event] = this._callbacks['$' + event] || [])
-    .push(fn);
-  return this;
-};
-
-/**
- * Adds an `event` listener that will be invoked a single
- * time then automatically removed.
- *
- * @param {String} event
- * @param {Function} fn
- * @return {Emitter}
- * @api public
- */
-
-Emitter.prototype.once = function(event, fn){
-  function on() {
-    this.off(event, on);
-    fn.apply(this, arguments);
-  }
-
-  on.fn = fn;
-  this.on(event, on);
-  return this;
-};
-
-/**
- * Remove the given callback for `event` or all
- * registered callbacks.
- *
- * @param {String} event
- * @param {Function} fn
- * @return {Emitter}
- * @api public
- */
-
-Emitter.prototype.off =
-Emitter.prototype.removeListener =
-Emitter.prototype.removeAllListeners =
-Emitter.prototype.removeEventListener = function(event, fn){
-  this._callbacks = this._callbacks || {};
-
-  // all
-  if (0 == arguments.length) {
-    this._callbacks = {};
-    return this;
-  }
-
-  // specific event
-  var callbacks = this._callbacks['$' + event];
-  if (!callbacks) return this;
-
-  // remove all handlers
-  if (1 == arguments.length) {
-    delete this._callbacks['$' + event];
-    return this;
-  }
-
-  // remove specific handler
-  var cb;
-  for (var i = 0; i < callbacks.length; i++) {
-    cb = callbacks[i];
-    if (cb === fn || cb.fn === fn) {
-      callbacks.splice(i, 1);
-      break;
-    }
-  }
-
-  // Remove event specific arrays for event types that no
-  // one is subscribed for to avoid memory leak.
-  if (callbacks.length === 0) {
-    delete this._callbacks['$' + event];
-  }
-
-  return this;
-};
-
-/**
- * Emit `event` with the given args.
- *
- * @param {String} event
- * @param {Mixed} ...
- * @return {Emitter}
- */
-
-Emitter.prototype.emit = function(event){
-  this._callbacks = this._callbacks || {};
-
-  var args = new Array(arguments.length - 1)
-    , callbacks = this._callbacks['$' + event];
-
-  for (var i = 1; i < arguments.length; i++) {
-    args[i - 1] = arguments[i];
-  }
-
-  if (callbacks) {
-    callbacks = callbacks.slice(0);
-    for (var i = 0, len = callbacks.length; i < len; ++i) {
-      callbacks[i].apply(this, args);
-    }
-  }
-
-  return this;
-};
-
-/**
- * Return array of callbacks for `event`.
- *
- * @param {String} event
- * @return {Array}
- * @api public
- */
-
-Emitter.prototype.listeners = function(event){
-  this._callbacks = this._callbacks || {};
-  return this._callbacks['$' + event] || [];
-};
-
-/**
- * Check if this emitter has `event` handlers.
- *
- * @param {String} event
- * @return {Boolean}
- * @api public
- */
-
-Emitter.prototype.hasListeners = function(event){
-  return !! this.listeners(event).length;
-};
-
-},{}],32:[function(require,module,exports){
+},{"./cookie":19,"./entity":20,"./store":28,"bind-all":61,"component-cookie":64,"debug":30,"inherits":81,"uuid":117}],30:[function(require,module,exports){
 
 /**
  * Expose `debug()` as the module.
@@ -3747,180 +3511,1302 @@ try {
   if (window.localStorage) debug.enable(localStorage.debug);
 } catch(e){}
 
-},{}],33:[function(require,module,exports){
-(function (process,setImmediate){
+},{}],31:[function(require,module,exports){
 'use strict';
 
-var callable, byObserver;
+var hasOwn = Object.prototype.hasOwnProperty;
+var toStr = Object.prototype.toString;
+var defineProperty = Object.defineProperty;
+var gOPD = Object.getOwnPropertyDescriptor;
 
-callable = function (fn) {
-	if (typeof fn !== 'function') throw new TypeError(fn + " is not a function");
-	return fn;
+var isArray = function isArray(arr) {
+	if (typeof Array.isArray === 'function') {
+		return Array.isArray(arr);
+	}
+
+	return toStr.call(arr) === '[object Array]';
 };
 
-byObserver = function (Observer) {
-	var node = document.createTextNode(''), queue, i = 0;
-	new Observer(function () {
-		var data;
-		if (!queue) return;
-		data = queue;
-		queue = null;
-		if (typeof data === 'function') {
-			data();
-			return;
-		}
-		data.forEach(function (fn) { fn(); });
-	}).observe(node, { characterData: true });
-	return function (fn) {
-		callable(fn);
-		if (queue) {
-			if (typeof queue === 'function') queue = [queue, fn];
-			else queue.push(fn);
-			return;
-		}
-		queue = fn;
-		node.data = (i = ++i % 2);
-	};
+var isPlainObject = function isPlainObject(obj) {
+	if (!obj || toStr.call(obj) !== '[object Object]') {
+		return false;
+	}
+
+	var hasOwnConstructor = hasOwn.call(obj, 'constructor');
+	var hasIsPrototypeOf = obj.constructor && obj.constructor.prototype && hasOwn.call(obj.constructor.prototype, 'isPrototypeOf');
+	// Not own constructor property must be Object
+	if (obj.constructor && !hasOwnConstructor && !hasIsPrototypeOf) {
+		return false;
+	}
+
+	// Own properties are enumerated firstly, so to speed up,
+	// if last one is own, then all properties are own.
+	var key;
+	for (key in obj) { /**/ }
+
+	return typeof key === 'undefined' || hasOwn.call(obj, key);
 };
 
-module.exports = (function () {
-	// Node.js
-	if ((typeof process !== 'undefined') && process &&
-			(typeof process.nextTick === 'function')) {
-		return process.nextTick;
+// If name is '__proto__', and Object.defineProperty is available, define __proto__ as an own property on target
+var setProperty = function setProperty(target, options) {
+	if (defineProperty && options.name === '__proto__') {
+		defineProperty(target, options.name, {
+			enumerable: true,
+			configurable: true,
+			value: options.newValue,
+			writable: true
+		});
+	} else {
+		target[options.name] = options.newValue;
 	}
+};
 
-	// MutationObserver=
-	if ((typeof document === 'object') && document) {
-		if (typeof MutationObserver === 'function') {
-			return byObserver(MutationObserver);
+// Return undefined instead of __proto__ if '__proto__' is not an own property
+var getProperty = function getProperty(obj, name) {
+	if (name === '__proto__') {
+		if (!hasOwn.call(obj, name)) {
+			return void 0;
+		} else if (gOPD) {
+			// In early versions of node, obj['__proto__'] is buggy when obj has
+			// __proto__ as an own property. Object.getOwnPropertyDescriptor() works.
+			return gOPD(obj, name).value;
 		}
-		if (typeof WebKitMutationObserver === 'function') {
-			return byObserver(WebKitMutationObserver);
+	}
+
+	return obj[name];
+};
+
+module.exports = function extend() {
+	var options, name, src, copy, copyIsArray, clone;
+	var target = arguments[0];
+	var i = 1;
+	var length = arguments.length;
+	var deep = false;
+
+	// Handle a deep copy situation
+	if (typeof target === 'boolean') {
+		deep = target;
+		target = arguments[1] || {};
+		// skip the boolean and the target
+		i = 2;
+	}
+	if (target == null || (typeof target !== 'object' && typeof target !== 'function')) {
+		target = {};
+	}
+
+	for (; i < length; ++i) {
+		options = arguments[i];
+		// Only deal with non-null/undefined values
+		if (options != null) {
+			// Extend the base object
+			for (name in options) {
+				src = getProperty(target, name);
+				copy = getProperty(options, name);
+
+				// Prevent never-ending loop
+				if (target !== copy) {
+					// Recurse if we're merging plain objects or arrays
+					if (deep && copy && (isPlainObject(copy) || (copyIsArray = isArray(copy)))) {
+						if (copyIsArray) {
+							copyIsArray = false;
+							clone = src && isArray(src) ? src : [];
+						} else {
+							clone = src && isPlainObject(src) ? src : {};
+						}
+
+						// Never move original objects, clone them
+						setProperty(target, { name: name, newValue: extend(deep, clone, copy) });
+
+					// Don't bring in undefined values
+					} else if (typeof copy !== 'undefined') {
+						setProperty(target, { name: name, newValue: copy });
+					}
+				}
+			}
 		}
 	}
 
-	// W3C Draft
-	// http://dvcs.w3.org/hg/webperf/raw-file/tip/specs/setImmediate/Overview.html
-	if (typeof setImmediate === 'function') {
-		return function (cb) { setImmediate(callable(cb)); };
-	}
+	// Return the modified object
+	return target;
+};
 
-	// Wide available standard
-	if (typeof setTimeout === 'function') {
-		return function (cb) { setTimeout(callable(cb), 0); };
-	}
+},{}],32:[function(require,module,exports){
+module.exports={
+  "name": "@segment/analytics.js-core",
+  "author": "Segment <friends@segment.com>",
+  "version": "3.9.0",
+  "description": "The hassle-free way to integrate analytics into any web application.",
+  "keywords": [
+    "analytics",
+    "analytics.js",
+    "segment",
+    "segment.io"
+  ],
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "make test",
+    "lint": "eslint \"./{lib,test}/**/*.js\"",
+    "format": "prettier-eslint --write --list-different \"./{lib,test}/**/*.{js,json,md}\"",
+    "precommit": "lint-staged",
+    "np": "np --no-publish",
+    "cz": "git-cz",
+    "commitmsg": "commitlint -E GIT_PARAMS"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/segmentio/analytics.js-core"
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/segmentio/analytics.js-core/issues"
+  },
+  "homepage": "https://github.com/segmentio/analytics.js-core#readme",
+  "dependencies": {
+    "@ndhoule/after": "^1.0.0",
+    "@ndhoule/clone": "^1.0.0",
+    "@ndhoule/defaults": "^2.0.1",
+    "@ndhoule/each": "^2.0.1",
+    "@ndhoule/extend": "^2.0.0",
+    "@ndhoule/foldl": "^2.0.1",
+    "@ndhoule/includes": "^2.0.1",
+    "@ndhoule/keys": "^2.0.0",
+    "@ndhoule/map": "^2.0.1",
+    "@ndhoule/pick": "^2.0.0",
+    "@segment/canonical": "^1.0.0",
+    "@segment/is-meta": "^1.0.0",
+    "@segment/isodate": "^1.0.2",
+    "@segment/isodate-traverse": "^1.0.1",
+    "@segment/prevent-default": "^1.0.0",
+    "@segment/send-json": "^3.0.0",
+    "@segment/store": "^1.3.20",
+    "@segment/top-domain": "^3.0.0",
+    "bind-all": "^1.0.0",
+    "component-cookie": "^1.1.2",
+    "component-emitter": "^1.2.1",
+    "component-event": "^0.1.4",
+    "component-querystring": "^2.0.0",
+    "component-type": "^1.2.1",
+    "component-url": "^0.2.1",
+    "debug": "^0.7.4",
+    "extend": "3.0.2",
+    "inherits": "^2.0.1",
+    "install": "^0.7.3",
+    "is": "^3.1.0",
+    "json3": "^3.3.2",
+    "new-date": "^1.0.0",
+    "next-tick": "^0.2.2",
+    "segmentio-facade": "^3.0.2",
+    "spark-md5": "^2.0.2",
+    "uuid": "^2.0.2"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^7.0.0",
+    "@commitlint/config-conventional": "^7.0.1",
+    "@segment/analytics.js-integration": "^3.2.1",
+    "@segment/eslint-config": "^4.0.0",
+    "browserify": "13.0.0",
+    "browserify-istanbul": "^2.0.0",
+    "codecov": "^3.0.2",
+    "commitizen": "^2.10.1",
+    "commitlint-circle": "^1.0.0",
+    "compat-trigger-event": "^1.0.0",
+    "component-each": "^0.2.6",
+    "cz-conventional-changelog": "^2.1.0",
+    "eslint": "^4.19.1",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-mocha": "^5.0.0",
+    "eslint-plugin-react": "^7.9.1",
+    "eslint-plugin-require-path-exists": "^1.1.8",
+    "husky": "^0.14.3",
+    "istanbul": "^0.4.3",
+    "jquery": "^3.2.1",
+    "karma": "1.3.0",
+    "karma-browserify": "^5.0.4",
+    "karma-chrome-launcher": "^1.0.1",
+    "karma-coverage": "^1.0.0",
+    "karma-junit-reporter": "^1.0.0",
+    "karma-mocha": "1.0.1",
+    "karma-phantomjs-launcher": "^1.0.0",
+    "karma-sauce-launcher": "^1.0.0",
+    "karma-spec-reporter": "0.0.26",
+    "karma-summary-reporter": "^1.5.0",
+    "lint-staged": "^7.2.0",
+    "mocha": "^2.2.5",
+    "np": "^3.0.4",
+    "phantomjs-prebuilt": "^2.1.7",
+    "prettier-eslint-cli": "^4.7.1",
+    "proclaim": "^3.4.1",
+    "sinon": "^1.7.3",
+    "snyk": "^1.83.0",
+    "watchify": "^3.7.0"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "lint-staged": {
+    "linters": {
+      "*.{js,json,md}": [
+        "prettier-eslint --write",
+        "git add"
+      ]
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  }
+}
 
-	return null;
-}());
+},{}],33:[function(require,module,exports){
+var utf8Encode = require('utf8-encode');
+var keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
 
-}).call(this,require('_process'),require("timers").setImmediate)
-},{"_process":116,"timers":132}],34:[function(require,module,exports){
+module.exports = encode;
+function encode(input) {
+    var output = "";
+    var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
+    var i = 0;
+
+    input = utf8Encode(input);
+
+    while (i < input.length) {
+
+        chr1 = input.charCodeAt(i++);
+        chr2 = input.charCodeAt(i++);
+        chr3 = input.charCodeAt(i++);
+
+        enc1 = chr1 >> 2;
+        enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+        enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+        enc4 = chr3 & 63;
+
+        if (isNaN(chr2)) {
+            enc3 = enc4 = 64;
+        } else if (isNaN(chr3)) {
+            enc4 = 64;
+        }
+
+        output = output +
+            keyStr.charAt(enc1) + keyStr.charAt(enc2) +
+            keyStr.charAt(enc3) + keyStr.charAt(enc4);
+
+    }
+
+    return output;
+}
+},{"utf8-encode":115}],34:[function(require,module,exports){
+'use strict';
+
+/**
+ * Get the current page's canonical URL.
+ *
+ * @return {string|undefined}
+ */
+function canonical() {
+  var tags = document.getElementsByTagName('link');
+  // eslint-disable-next-line no-cond-assign
+  for (var i = 0, tag; tag = tags[i]; i++) {
+    if (tag.getAttribute('rel') === 'canonical') {
+      return tag.getAttribute('href');
+    }
+  }
+}
+
+/*
+ * Exports.
+ */
+
+module.exports = canonical;
+
+},{}],35:[function(require,module,exports){
 (function (global){
+'use strict';
 
-var rng;
+// Stringifier
+var toString = global.JSON && typeof JSON.stringify === 'function' ? JSON.stringify : String;
 
-var crypto = global.crypto || global.msCrypto; // for IE 11
-if (crypto && crypto.getRandomValues) {
-  // WHATWG crypto-based RNG - http://wiki.whatwg.org/wiki/Crypto
-  // Moderately fast, high quality
-  var _rnds8 = new Uint8Array(16);
-  rng = function whatwgRNG() {
-    crypto.getRandomValues(_rnds8);
-    return _rnds8;
+/**
+ * Format the given `str`.
+ *
+ * @param {string} str
+ * @param {...*} [args]
+ * @return {string}
+ */
+function fmt(str) {
+  var args = Array.prototype.slice.call(arguments, 1);
+  var j = 0;
+
+  return str.replace(/%([a-z])/gi, function(match, f) {
+    return fmt[f] ? fmt[f](args[j++]) : match + f;
+  });
+}
+
+// Formatters
+fmt.o = toString;
+fmt.s = String;
+fmt.d = parseInt;
+
+/*
+ * Exports.
+ */
+
+module.exports = fmt;
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],36:[function(require,module,exports){
+'use strict';
+
+function isMeta(e) {
+  if (e.metaKey || e.altKey || e.ctrlKey || e.shiftKey) {
+    return true;
+  }
+
+  // Logic that handles checks for the middle mouse button, based
+  // on [jQuery](https://github.com/jquery/jquery/blob/master/src/event.js#L466).
+  var which = e.which;
+  var button = e.button;
+  if (!which && button !== undefined) {
+    // eslint-disable-next-line no-bitwise, no-extra-parens
+    return (!button & 1) && (!button & 2) && (button & 4);
+  } else if (which === 2) {
+    return true;
+  }
+
+  return false;
+}
+
+/*
+ * Exports.
+ */
+
+module.exports = isMeta;
+
+},{}],37:[function(require,module,exports){
+'use strict';
+
+var type = require('component-type');
+var each = require('component-each');
+var isodate = require('@segment/isodate');
+
+/**
+ * Expose `traverse`.
+ */
+
+module.exports = traverse;
+
+/**
+ * Traverse an object or array, and return a clone with all ISO strings parsed
+ * into Date objects.
+ *
+ * @param {Object} obj
+ * @return {Object}
+ */
+
+function traverse(input, strict) {
+  if (strict === undefined) strict = true;
+
+  if (type(input) === 'object') return object(input, strict);
+  if (type(input) === 'array') return array(input, strict);
+  return input;
+}
+
+/**
+ * Object traverser.
+ *
+ * @param {Object} obj
+ * @param {Boolean} strict
+ * @return {Object}
+ */
+
+function object(obj, strict) {
+  // 'each' utility uses obj.length to check whether the obj is array. To avoid incorrect classification, wrap call to 'each' with rename of obj.length
+  if (obj.length && typeof obj.length === 'number' && !(obj.length - 1 in obj)) { // cross browser compatible way of checking has length and is not array
+    obj.lengthNonArray = obj.length;
+    delete obj.length;
+  }
+  each(obj, function(key, val) {
+    if (isodate.is(val, strict)) {
+      obj[key] = isodate.parse(val);
+    } else if (type(val) === 'object' || type(val) === 'array') {
+      traverse(val, strict);
+    }
+  });
+  // restore obj.length if it was renamed
+  if (obj.lengthNonArray) {
+    obj.length = obj.lengthNonArray;
+    delete obj.lengthNonArray;
+  }
+  return obj;
+}
+
+/**
+ * Array traverser.
+ *
+ * @param {Array} arr
+ * @param {Boolean} strict
+ * @return {Array}
+ */
+
+function array(arr, strict) {
+  each(arr, function(val, x) {
+    if (type(val) === 'object') {
+      traverse(val, strict);
+    } else if (isodate.is(val, strict)) {
+      arr[x] = isodate.parse(val);
+    }
+  });
+  return arr;
+}
+
+},{"@segment/isodate":38,"component-each":68,"component-type":75}],38:[function(require,module,exports){
+'use strict';
+
+/**
+ * Matcher, slightly modified from:
+ *
+ * https://github.com/csnover/js-iso8601/blob/lax/iso8601.js
+ */
+
+var matcher = /^(\d{4})(?:-?(\d{2})(?:-?(\d{2}))?)?(?:([ T])(\d{2}):?(\d{2})(?::?(\d{2})(?:[,\.](\d{1,}))?)?(?:(Z)|([+\-])(\d{2})(?::?(\d{2}))?)?)?$/;
+
+/**
+ * Convert an ISO date string to a date. Fallback to native `Date.parse`.
+ *
+ * https://github.com/csnover/js-iso8601/blob/lax/iso8601.js
+ *
+ * @param {String} iso
+ * @return {Date}
+ */
+
+exports.parse = function(iso) {
+  var numericKeys = [1, 5, 6, 7, 11, 12];
+  var arr = matcher.exec(iso);
+  var offset = 0;
+
+  // fallback to native parsing
+  if (!arr) {
+    return new Date(iso);
+  }
+
+  /* eslint-disable no-cond-assign */
+  // remove undefined values
+  for (var i = 0, val; val = numericKeys[i]; i++) {
+    arr[val] = parseInt(arr[val], 10) || 0;
+  }
+  /* eslint-enable no-cond-assign */
+
+  // allow undefined days and months
+  arr[2] = parseInt(arr[2], 10) || 1;
+  arr[3] = parseInt(arr[3], 10) || 1;
+
+  // month is 0-11
+  arr[2]--;
+
+  // allow abitrary sub-second precision
+  arr[8] = arr[8] ? (arr[8] + '00').substring(0, 3) : 0;
+
+  // apply timezone if one exists
+  if (arr[4] === ' ') {
+    offset = new Date().getTimezoneOffset();
+  } else if (arr[9] !== 'Z' && arr[10]) {
+    offset = arr[11] * 60 + arr[12];
+    if (arr[10] === '+') {
+      offset = 0 - offset;
+    }
+  }
+
+  var millis = Date.UTC(arr[1], arr[2], arr[3], arr[5], arr[6] + offset, arr[7], arr[8]);
+  return new Date(millis);
+};
+
+
+/**
+ * Checks whether a `string` is an ISO date string. `strict` mode requires that
+ * the date string at least have a year, month and date.
+ *
+ * @param {String} string
+ * @param {Boolean} strict
+ * @return {Boolean}
+ */
+
+exports.is = function(string, strict) {
+  if (typeof string !== 'string') {
+    return false;
+  }
+  if (strict && (/^\d{4}-\d{2}-\d{2}/).test(string) === false) {
+    return false;
+  }
+  return matcher.test(string);
+};
+
+},{}],39:[function(require,module,exports){
+'use strict';
+
+/*
+ * Module dependencies.
+ */
+
+var onload = require('script-onload');
+var tick = require('next-tick');
+var type = require('component-type');
+
+/**
+ * Loads a script asynchronously.
+ *
+ * @param {Object} options
+ * @param {Function} cb
+ */
+function loadScript(options, cb) {
+  if (!options) {
+    throw new Error('Can\'t load nothing...');
+  }
+
+  // Allow for the simplest case, just passing a `src` string.
+  if (type(options) === 'string') {
+    options = { src : options };
+  }
+
+  var https = document.location.protocol === 'https:' || document.location.protocol === 'chrome-extension:';
+
+  // If you use protocol relative URLs, third-party scripts like Google
+  // Analytics break when testing with `file:` so this fixes that.
+  if (options.src && options.src.indexOf('//') === 0) {
+    options.src = (https ? 'https:' : 'http:') + options.src;
+  }
+
+  // Allow them to pass in different URLs depending on the protocol.
+  if (https && options.https) {
+    options.src = options.https;
+  } else if (!https && options.http) {
+    options.src = options.http;
+  }
+
+  // Make the `<script>` element and insert it before the first script on the
+  // page, which is guaranteed to exist since this Javascript is running.
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.async = true;
+  script.src = options.src;
+
+  // If we have a cb, attach event handlers. Does not work on < IE9 because
+  // older browser versions don't register element.onerror
+  if (type(cb) === 'function') {
+    onload(script, cb);
+  }
+
+  tick(function() {
+    // Append after event listeners are attached for IE.
+    var firstScript = document.getElementsByTagName('script')[0];
+    firstScript.parentNode.insertBefore(script, firstScript);
+  });
+
+  // Return the script element in case they want to do anything special, like
+  // give it an ID or attributes.
+  return script;
+}
+
+/*
+ * Exports.
+ */
+
+module.exports = loadScript;
+
+},{"component-type":75,"next-tick":92,"script-onload":95}],40:[function(require,module,exports){
+'use strict';
+
+var keys = require('@ndhoule/keys');
+var uuid = require('uuid').v4;
+
+var inMemoryStore = {
+  _data: {},
+  length: 0,
+  setItem: function(key, value) {
+    this._data[key] = value;
+    this.length = keys(this._data).length;
+    return value;
+  },
+  getItem: function(key) {
+    if (key in this._data) {
+      return this._data[key];
+    }
+    return null;
+  },
+  removeItem: function(key) {
+    if (key in this._data) {
+      delete this._data[key];
+    }
+    this.length = keys(this._data).length;
+    return null;
+  },
+  clear: function() {
+    this._data = {};
+    this.length = 0;
+  },
+  key: function(index) {
+    return keys(this._data)[index];
+  }
+};
+
+function isSupportedNatively() {
+  try {
+    if (!window.localStorage) return false;
+    var key = uuid();
+    window.localStorage.setItem(key, 'test_value');
+    var value = window.localStorage.getItem(key);
+    window.localStorage.removeItem(key);
+
+    // handle localStorage silently failing
+    return value === 'test_value';
+  } catch (e) {
+    // Can throw if localStorage is disabled
+    return false;
+  }
+}
+
+function pickStorage() {
+  if (isSupportedNatively()) {
+    return window.localStorage;
+  }
+  // fall back to in-memory
+  return inMemoryStore;
+}
+
+// Return a shared instance
+module.exports.defaultEngine = pickStorage();
+// Expose the in-memory store explicitly for testing
+module.exports.inMemoryEngine = inMemoryStore;
+
+},{"@ndhoule/keys":13,"uuid":45}],41:[function(require,module,exports){
+'use strict';
+
+var uuid = require('uuid').v4;
+var Store = require('./store');
+var each = require('@ndhoule/each');
+var Schedule = require('./schedule');
+var debug = require('debug')('localstorage-retry');
+var Emitter = require('component-emitter');
+
+// Some browsers don't support Function.prototype.bind, so just including a simplified version here
+function bind(func, obj) {
+  return function() {
+    return func.apply(obj, arguments);
   };
 }
 
-if (!rng) {
+/**
+ * @callback processFunc
+ * @param {Mixed} item The item added to the queue to process
+ * @param {Function} done A function to call when processing is completed.
+ *   @param {Error} Optional error parameter if the processing failed
+ *   @param {Response} Optional response parameter to emit for async handling
+ */
+
+/**
+ * Constructs a Queue backed by localStorage
+ *
+ * @constructor
+ * @param {String} name The name of the queue. Will be used to find abandoned queues and retry their items
+ * @param {processFunc} fn The function to call in order to process an item added to the queue
+ */
+function Queue(name, opts, fn) {
+  if (typeof opts === 'function') fn = opts;
+  this.name = name;
+  this.id = uuid();
+  this.fn = fn;
+  this.maxItems = opts.maxItems || Infinity;
+  this.maxAttempts = opts.maxAttempts || Infinity;
+
+  this.backoff = {
+    MIN_RETRY_DELAY: opts.minRetryDelay || 1000,
+    MAX_RETRY_DELAY: opts.maxRetryDelay || 30000,
+    FACTOR: opts.backoffFactor || 2,
+    JITTER: opts.backoffJitter || 0
+  };
+
+  // painstakingly tuned. that's why they're not "easily" configurable
+  this.timeouts = {
+    ACK_TIMER: 1000,
+    RECLAIM_TIMER: 3000,
+    RECLAIM_TIMEOUT: 10000,
+    RECLAIM_WAIT: 500
+  };
+
+  this.keys = {
+    IN_PROGRESS: 'inProgress',
+    QUEUE: 'queue',
+    ACK: 'ack',
+    RECLAIM_START: 'reclaimStart',
+    RECLAIM_END: 'reclaimEnd'
+  };
+
+  this._schedule = new Schedule();
+  this._processId = 0;
+
+  // Set up our empty queues
+  this._store = new Store(this.name, this.id, this.keys);
+  this._store.set(this.keys.IN_PROGRESS, {});
+  this._store.set(this.keys.QUEUE, []);
+
+  // bind recurring tasks for ease of use
+  this._ack = bind(this._ack, this);
+  this._checkReclaim = bind(this._checkReclaim, this);
+  this._processHead = bind(this._processHead, this);
+
+  this._running = false;
+}
+
+/**
+ * Mix in event emitter
+ */
+
+Emitter(Queue.prototype);
+
+/**
+ * Starts processing the queue
+ */
+Queue.prototype.start = function() {
+  if (this._running) {
+    this.stop();
+  }
+  this._running = true;
+  this._ack();
+  this._checkReclaim();
+  this._processHead();
+};
+
+/**
+ * Stops processing the queue
+ */
+Queue.prototype.stop = function() {
+  this._schedule.cancelAll();
+  this._running = false;
+};
+
+/**
+ * Decides whether to retry. Overridable.
+ *
+ * @param {Object} item The item being processed
+ * @param {Number} attemptNumber The attemptNumber (1 for first retry)
+ * @param {Error} error The error from previous attempt, if there was one
+ * @return {Boolean} Whether to requeue the message
+ */
+Queue.prototype.shouldRetry = function(_, attemptNumber) {
+  if (attemptNumber > this.maxAttempts) return false;
+  return true;
+};
+
+/**
+ * Calculates the delay (in ms) for a retry attempt
+ *
+ * @param {Number} attemptNumber The attemptNumber (1 for first retry)
+ * @return {Number} The delay in milliseconds to wait before attempting a retry
+ */
+Queue.prototype.getDelay = function(attemptNumber) {
+  var ms = this.backoff.MIN_RETRY_DELAY * Math.pow(this.backoff.FACTOR, attemptNumber);
+  if (this.backoff.JITTER) {
+    var rand =  Math.random();
+    var deviation = Math.floor(rand * this.backoff.JITTER * ms);
+    if (Math.floor(rand * 10) < 5) {
+      ms -= deviation;
+    } else {
+      ms += deviation;
+    }
+  }
+  return Number(Math.min(ms, this.backoff.MAX_RETRY_DELAY).toPrecision(1));
+};
+
+/**
+ * Adds an item to the queue
+ *
+ * @param {Mixed} item The item to process
+ */
+Queue.prototype.addItem = function(item) {
+  this._enqueue({
+    item: item,
+    attemptNumber: 0,
+    time: this._schedule.now()
+  });
+};
+
+/**
+ * Adds an item to the retry queue
+ *
+ * @param {Mixed} item The item to retry
+ * @param {Number} attemptNumber The attempt number (1 for first retry)
+ * @param {Error} [error] The error from previous attempt, if there was one
+ */
+Queue.prototype.requeue = function(item, attemptNumber, error) {
+  if (this.shouldRetry(item, attemptNumber, error)) {
+    this._enqueue({
+      item: item,
+      attemptNumber: attemptNumber,
+      time: this._schedule.now() + this.getDelay(attemptNumber)
+    });
+  } else {
+    this.emit('discard', item, attemptNumber);
+  }
+};
+
+Queue.prototype._enqueue = function(entry) {
+  var queue = this._store.get(this.keys.QUEUE) || [];
+  queue = queue.slice(-(this.maxItems - 1));
+  queue.push(entry);
+  queue = queue.sort(function(a,b) {
+    return a.time - b.time;
+  });
+
+  this._store.set(this.keys.QUEUE, queue);
+
+  if (this._running) {
+    this._processHead();
+  }
+};
+
+Queue.prototype._processHead = function() {
+  var self = this;
+  var store = this._store;
+
+  // cancel the scheduled task if it exists
+  this._schedule.cancel(this._processId);
+
+  // Pop the head off the queue
+  var queue = store.get(this.keys.QUEUE) || [];
+  var inProgress = store.get(this.keys.IN_PROGRESS) || {};
+  var now = this._schedule.now();
+  var toRun = [];
+
+  function enqueue(el, id) {
+    toRun.push({
+      item: el.item,
+      done: function handle(err, res) {
+        var inProgress = store.get(self.keys.IN_PROGRESS) || {};
+        delete inProgress[id];
+        store.set(self.keys.IN_PROGRESS, inProgress);
+        self.emit('processed', err, res, el.item);
+        if (err) {
+          self.requeue(el.item, el.attemptNumber + 1, err);
+        }
+      }
+    });
+  }
+
+  var inProgressSize = Object.keys(inProgress).length;
+
+  while (queue.length && queue[0].time <= now && inProgressSize++ < self.maxItems) {
+    var el = queue.shift();
+    var id = uuid();
+
+    // Save this to the in progress map
+    inProgress[id] = {
+      item: el.item,
+      attemptNumber: el.attemptNumber,
+      time: self._schedule.now()
+    };
+
+    enqueue(el, id);
+  }
+
+  store.set(this.keys.QUEUE, queue);
+  store.set(this.keys.IN_PROGRESS, inProgress);
+
+  each(function(el) {
+    // TODO: handle fn timeout
+    try {
+      self.fn(el.item, el.done);
+    } catch (err) {
+      debug('Process function threw error: ' + err);
+    }
+  }, toRun);
+
+  // re-read the queue in case the process function finished immediately or added another item
+  queue = store.get(this.keys.QUEUE) || [];
+  this._schedule.cancel(this._processId);
+  if (queue.length > 0) {
+    this._processId = this._schedule.run(this._processHead, queue[0].time - now);
+  }
+};
+
+// Ack continuously to prevent other tabs from claiming our queue
+Queue.prototype._ack = function() {
+  this._store.set(this.keys.ACK, this._schedule.now());
+  this._store.set(this.keys.RECLAIM_START, null);
+  this._store.set(this.keys.RECLAIM_END, null);
+  this._schedule.run(this._ack, this.timeouts.ACK_TIMER);
+};
+
+Queue.prototype._checkReclaim = function() {
+  var self = this;
+
+  function tryReclaim(store) {
+    store.set(self.keys.RECLAIM_START, self.id);
+    store.set(self.keys.ACK, self._schedule.now());
+
+    self._schedule.run(function() {
+      if (store.get(self.keys.RECLAIM_START) !== self.id) return;
+      store.set(self.keys.RECLAIM_END, self.id);
+
+      self._schedule.run(function() {
+        if (store.get(self.keys.RECLAIM_END) !== self.id) return;
+        if (store.get(self.keys.RECLAIM_START) !== self.id) return;
+        self._reclaim(store.id);
+      }, self.timeouts.RECLAIM_WAIT);
+    }, self.timeouts.RECLAIM_WAIT);
+  }
+
+  function findOtherQueues(name) {
+    var res = [];
+    var storage = self._store.engine;
+    for (var i = 0; i < storage.length; i++) {
+      var k = storage.key(i);
+      var parts = k.split('.');
+      if (parts.length !== 3) continue;
+      if (parts[0] !== name) continue;
+      if (parts[2] !== 'ack') continue;
+      res.push(new Store(name, parts[1], self.keys));
+    }
+    return res;
+  }
+
+  each(function(store) {
+    if (store.id === self.id) return;
+    if (self._schedule.now() - store.get(self.keys.ACK) < self.timeouts.RECLAIM_TIMEOUT) return;
+    tryReclaim(store);
+  }, findOtherQueues(this.name));
+
+  this._schedule.run(this._checkReclaim, this.timeouts.RECLAIM_TIMER);
+};
+
+Queue.prototype._reclaim = function(id) {
+  var self = this;
+  var other = new Store(this.name, id, this.keys);
+
+  var our = {
+    queue: this._store.get(this.keys.QUEUE) || []
+  };
+
+  var their = {
+    inProgress: other.get(this.keys.IN_PROGRESS) || {},
+    queue: other.get(this.keys.QUEUE) || []
+  };
+
+  // add their queue to ours, resetting run-time to immediate and copying the attempt#
+  each(function(el) {
+    our.queue.push({
+      item: el.item,
+      attemptNumber: el.attemptNumber,
+      time: self._schedule.now()
+    });
+  }, their.queue);
+
+  // if the queue is abandoned, all the in-progress are failed. retry them immediately and increment the attempt#
+  each(function(el) {
+    our.queue.push({
+      item: el.item,
+      attemptNumber: el.attemptNumber + 1,
+      time: self._schedule.now()
+    });
+  }, their.inProgress);
+
+  our.queue = our.queue.sort(function(a,b) {
+    return a.time - b.time;
+  });
+
+  this._store.set(this.keys.QUEUE, our.queue);
+
+  // remove all keys
+  other.remove(this.keys.ACK);
+  other.remove(this.keys.RECLAIM_START);
+  other.remove(this.keys.RECLAIM_END);
+  other.remove(this.keys.IN_PROGRESS);
+  other.remove(this.keys.QUEUE);
+
+  // process the new items we claimed
+  this._processHead();
+};
+
+module.exports = Queue;
+
+},{"./schedule":42,"./store":43,"@ndhoule/each":8,"component-emitter":70,"debug":44,"uuid":45}],42:[function(require,module,exports){
+'use strict';
+
+var each = require('@ndhoule/each');
+
+var defaultClock = {
+  setTimeout: function(fn, ms) {
+    return window.setTimeout(fn, ms);
+  },
+  clearTimeout: function(id) {
+    return window.clearTimeout(id);
+  },
+  Date: window.Date
+};
+
+var clock = defaultClock;
+
+function Schedule() {
+  this.tasks = {};
+  this.nextId = 1;
+}
+
+Schedule.prototype.now = function() {
+  return +new clock.Date();
+};
+
+Schedule.prototype.run = function(task, timeout) {
+  var id = this.nextId++;
+  this.tasks[id] = clock.setTimeout(this._handle(id, task), timeout);
+  return id;
+};
+
+Schedule.prototype.cancel = function(id) {
+  if (this.tasks[id]) {
+    clock.clearTimeout(this.tasks[id]);
+    delete this.tasks[id];
+  }
+};
+
+Schedule.prototype.cancelAll = function() {
+  each(clock.clearTimeout, this.tasks);
+  this.tasks = {};
+};
+
+Schedule.prototype._handle = function(id, callback) {
+  var self = this;
+  return function() {
+    delete self.tasks[id];
+    return callback();
+  };
+};
+
+Schedule.setClock = function(newClock) {
+  clock = newClock;
+};
+
+Schedule.resetClock = function() {
+  clock = defaultClock;
+};
+
+module.exports = Schedule;
+
+},{"@ndhoule/each":8}],43:[function(require,module,exports){
+'use strict';
+
+var defaultEngine = require('./engine').defaultEngine;
+var inMemoryEngine = require('./engine').inMemoryEngine;
+var each = require('@ndhoule/each');
+var keys = require('@ndhoule/keys');
+var json = require('json3');
+
+/**
+* Store Implementation with dedicated
+*/
+
+function Store(name, id, keys, optionalEngine) {
+  this.id = id;
+  this.name = name;
+  this.keys = keys || {};
+  this.engine = optionalEngine || defaultEngine;
+}
+
+/**
+* Set value by key.
+*/
+
+Store.prototype.set = function(key, value) {
+  var compoundKey = this._createValidKey(key);
+  if (!compoundKey) return;
+  try {
+    this.engine.setItem(compoundKey, json.stringify(value));
+  } catch (err) {
+    if (isQuotaExceeded(err)) {
+      // switch to inMemory engine
+      this._swapEngine();
+      // and save it there
+      this.set(key, value);
+    }
+  }
+};
+
+/**
+* Get by Key.
+*/
+
+Store.prototype.get = function(key) {
+  try {
+    var str = this.engine.getItem(this._createValidKey(key));
+    if (str === null) {
+      return null;
+    }
+    return json.parse(str);
+  } catch (err) {
+    return null;
+  }
+};
+
+/**
+* Remove by Key.
+*/
+
+Store.prototype.remove = function(key) {
+  this.engine.removeItem(this._createValidKey(key));
+};
+
+/**
+* Ensure the key is valid
+*/
+
+Store.prototype._createValidKey = function(key) {
+  var name = this.name;
+  var id = this.id;
+
+  if (!keys(this.keys).length) return [name, id, key].join('.');
+
+  // validate and return undefined if invalid key
+  var compoundKey;
+  each(function(value) {
+    if (value === key) {
+      compoundKey = [name, id, key].join('.');
+    }
+  }, this.keys);
+  return compoundKey;
+};
+
+/**
+* Switch to inMemoryEngine, bringing any existing data with.
+*/
+
+Store.prototype._swapEngine = function() {
+  var self = this;
+
+  // grab existing data, but only for this page's queue instance, not all
+  // better to keep other queues in localstorage to be flushed later
+  // than to pull them into memory and remove them from durable storage
+  each(function(key) {
+    var value = self.get(key);
+    inMemoryEngine.setItem([self.name, self.id, key].join('.'), value);
+    self.remove(key);
+  }, this.keys);
+
+  this.engine = inMemoryEngine;
+};
+
+module.exports = Store;
+
+function isQuotaExceeded(e) {
+  var quotaExceeded = false;
+  if (e.code) {
+    switch (e.code) {
+    case 22:
+      quotaExceeded = true;
+      break;
+    case 1014:
+      // Firefox
+      if (e.name === 'NS_ERROR_DOM_QUOTA_REACHED') {
+        quotaExceeded = true;
+      }
+      break;
+    default:
+      break;
+    }
+  } else if (e.number === -2147024882) {
+    // Internet Explorer 8
+    quotaExceeded = true;
+  }
+  return quotaExceeded;
+}
+
+},{"./engine":40,"@ndhoule/each":8,"@ndhoule/keys":13,"json3":84}],44:[function(require,module,exports){
+arguments[4][30][0].apply(exports,arguments)
+},{"dup":30}],45:[function(require,module,exports){
+var v1 = require('./v1');
+var v4 = require('./v4');
+
+var uuid = v4;
+uuid.v1 = v1;
+uuid.v4 = v4;
+
+module.exports = uuid;
+
+},{"./v1":48,"./v4":49}],46:[function(require,module,exports){
+/**
+ * Convert array of 16 byte values to UUID string format of the form:
+ * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+ */
+var byteToHex = [];
+for (var i = 0; i < 256; ++i) {
+  byteToHex[i] = (i + 0x100).toString(16).substr(1);
+}
+
+function bytesToUuid(buf, offset) {
+  var i = offset || 0;
+  var bth = byteToHex;
+  // join used to fix memory issue caused by concatenation: https://bugs.chromium.org/p/v8/issues/detail?id=3175#c4
+  return ([bth[buf[i++]], bth[buf[i++]], 
+	bth[buf[i++]], bth[buf[i++]], '-',
+	bth[buf[i++]], bth[buf[i++]], '-',
+	bth[buf[i++]], bth[buf[i++]], '-',
+	bth[buf[i++]], bth[buf[i++]], '-',
+	bth[buf[i++]], bth[buf[i++]],
+	bth[buf[i++]], bth[buf[i++]],
+	bth[buf[i++]], bth[buf[i++]]]).join('');
+}
+
+module.exports = bytesToUuid;
+
+},{}],47:[function(require,module,exports){
+// Unique ID creation requires a high quality random # generator.  In the
+// browser this is a little complicated due to unknown quality of Math.random()
+// and inconsistent support for the `crypto` API.  We do the best we can via
+// feature-detection
+
+// getRandomValues needs to be invoked in a context where "this" is a Crypto
+// implementation. Also, find the complete implementation of crypto on IE11.
+var getRandomValues = (typeof(crypto) != 'undefined' && crypto.getRandomValues && crypto.getRandomValues.bind(crypto)) ||
+                      (typeof(msCrypto) != 'undefined' && typeof window.msCrypto.getRandomValues == 'function' && msCrypto.getRandomValues.bind(msCrypto));
+
+if (getRandomValues) {
+  // WHATWG crypto RNG - http://wiki.whatwg.org/wiki/Crypto
+  var rnds8 = new Uint8Array(16); // eslint-disable-line no-undef
+
+  module.exports = function whatwgRNG() {
+    getRandomValues(rnds8);
+    return rnds8;
+  };
+} else {
   // Math.random()-based (RNG)
   //
   // If all else fails, use Math.random().  It's fast, but is of unspecified
   // quality.
-  var  _rnds = new Array(16);
-  rng = function() {
+  var rnds = new Array(16);
+
+  module.exports = function mathRNG() {
     for (var i = 0, r; i < 16; i++) {
       if ((i & 0x03) === 0) r = Math.random() * 0x100000000;
-      _rnds[i] = r >>> ((i & 0x03) << 3) & 0xff;
+      rnds[i] = r >>> ((i & 0x03) << 3) & 0xff;
     }
 
-    return _rnds;
+    return rnds;
   };
 }
 
-module.exports = rng;
-
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],35:[function(require,module,exports){
-//     uuid.js
-//
-//     Copyright (c) 2010-2012 Robert Kieffer
-//     MIT License - http://opensource.org/licenses/mit-license.php
-
-// Unique ID creation requires a high quality random # generator.  We feature
-// detect to determine the best RNG source, normalizing to a function that
-// returns 128-bits of randomness, since that's what's usually required
-var _rng = require('./rng');
-
-// Maps for number <-> hex string conversion
-var _byteToHex = [];
-var _hexToByte = {};
-for (var i = 0; i < 256; i++) {
-  _byteToHex[i] = (i + 0x100).toString(16).substr(1);
-  _hexToByte[_byteToHex[i]] = i;
-}
-
-// **`parse()` - Parse a UUID into it's component bytes**
-function parse(s, buf, offset) {
-  var i = (buf && offset) || 0, ii = 0;
-
-  buf = buf || [];
-  s.toLowerCase().replace(/[0-9a-f]{2}/g, function(oct) {
-    if (ii < 16) { // Don't overflow!
-      buf[i + ii++] = _hexToByte[oct];
-    }
-  });
-
-  // Zero out remaining bytes if string was short
-  while (ii < 16) {
-    buf[i + ii++] = 0;
-  }
-
-  return buf;
-}
-
-// **`unparse()` - Convert UUID byte array (ala parse()) into a string**
-function unparse(buf, offset) {
-  var i = offset || 0, bth = _byteToHex;
-  return  bth[buf[i++]] + bth[buf[i++]] +
-          bth[buf[i++]] + bth[buf[i++]] + '-' +
-          bth[buf[i++]] + bth[buf[i++]] + '-' +
-          bth[buf[i++]] + bth[buf[i++]] + '-' +
-          bth[buf[i++]] + bth[buf[i++]] + '-' +
-          bth[buf[i++]] + bth[buf[i++]] +
-          bth[buf[i++]] + bth[buf[i++]] +
-          bth[buf[i++]] + bth[buf[i++]];
-}
+},{}],48:[function(require,module,exports){
+var rng = require('./lib/rng');
+var bytesToUuid = require('./lib/bytesToUuid');
 
 // **`v1()` - Generate time-based UUID**
 //
 // Inspired by https://github.com/LiosK/UUID.js
 // and http://docs.python.org/library/uuid.html
 
-// random #'s we need to init node and clockseq
-var _seedBytes = _rng();
-
-// Per 4.5, create and 48-bit node id, (47 random bits + multicast bit = 1)
-var _nodeId = [
-  _seedBytes[0] | 0x01,
-  _seedBytes[1], _seedBytes[2], _seedBytes[3], _seedBytes[4], _seedBytes[5]
-];
-
-// Per 4.2.2, randomize (14 bit) clockseq
-var _clockseq = (_seedBytes[6] << 8 | _seedBytes[7]) & 0x3fff;
+var _nodeId;
+var _clockseq;
 
 // Previous uuid creation time
-var _lastMSecs = 0, _lastNSecs = 0;
+var _lastMSecs = 0;
+var _lastNSecs = 0;
 
 // See https://github.com/broofa/node-uuid for API details
 function v1(options, buf, offset) {
@@ -3928,8 +4814,26 @@ function v1(options, buf, offset) {
   var b = buf || [];
 
   options = options || {};
-
+  var node = options.node || _nodeId;
   var clockseq = options.clockseq !== undefined ? options.clockseq : _clockseq;
+
+  // node and clockseq need to be initialized to random values if they're not
+  // specified.  We do this lazily to minimize issues related to insufficient
+  // system entropy.  See #189
+  if (node == null || clockseq == null) {
+    var seedBytes = rng();
+    if (node == null) {
+      // Per 4.5, create and 48-bit node id, (47 random bits + multicast bit = 1)
+      node = _nodeId = [
+        seedBytes[0] | 0x01,
+        seedBytes[1], seedBytes[2], seedBytes[3], seedBytes[4], seedBytes[5]
+      ];
+    }
+    if (clockseq == null) {
+      // Per 4.2.2, randomize (14 bit) clockseq
+      clockseq = _clockseq = (seedBytes[6] << 8 | seedBytes[7]) & 0x3fff;
+    }
+  }
 
   // UUID timestamps are 100 nano-second units since the Gregorian epoch,
   // (1582-10-15 00:00).  JSNumbers aren't precise enough for this, so
@@ -3990,28 +4894,29 @@ function v1(options, buf, offset) {
   b[i++] = clockseq & 0xff;
 
   // `node`
-  var node = options.node || _nodeId;
-  for (var n = 0; n < 6; n++) {
+  for (var n = 0; n < 6; ++n) {
     b[i + n] = node[n];
   }
 
-  return buf ? buf : unparse(b);
+  return buf ? buf : bytesToUuid(b);
 }
 
-// **`v4()` - Generate random UUID**
+module.exports = v1;
 
-// See https://github.com/broofa/node-uuid for API details
+},{"./lib/bytesToUuid":46,"./lib/rng":47}],49:[function(require,module,exports){
+var rng = require('./lib/rng');
+var bytesToUuid = require('./lib/bytesToUuid');
+
 function v4(options, buf, offset) {
-  // Deprecated - 'format' argument, as supported in v1.2
   var i = buf && offset || 0;
 
   if (typeof(options) == 'string') {
-    buf = options == 'binary' ? new Array(16) : null;
+    buf = options === 'binary' ? new Array(16) : null;
     options = null;
   }
   options = options || {};
 
-  var rnds = options.random || (options.rng || _rng)();
+  var rnds = options.random || (options.rng || rng)();
 
   // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
   rnds[6] = (rnds[6] & 0x0f) | 0x40;
@@ -4019,739 +4924,526 @@ function v4(options, buf, offset) {
 
   // Copy bytes to buffer, if provided
   if (buf) {
-    for (var ii = 0; ii < 16; ii++) {
+    for (var ii = 0; ii < 16; ++ii) {
       buf[i + ii] = rnds[ii];
     }
   }
 
-  return buf || unparse(rnds);
+  return buf || bytesToUuid(rnds);
 }
 
-// Export public API
-var uuid = v4;
-uuid.v1 = v1;
-uuid.v4 = v4;
-uuid.parse = parse;
-uuid.unparse = unparse;
+module.exports = v4;
 
-module.exports = uuid;
-
-},{"./rng":34}],36:[function(require,module,exports){
-module.exports={
-  "_from": "@segment/analytics.js-core@^3.0.0",
-  "_id": "@segment/analytics.js-core@3.9.0",
-  "_inBundle": false,
-  "_integrity": "sha512-gxS1v1iphKcSJv51Ft0V8YSFQthMhojtUEce0UbCM90fPJltnY0ceelQKEVdA+IJ3mXfQUcUW0/IyWPHZNKauA==",
-  "_location": "/@segment/analytics.js-core",
-  "_phantomChildren": {},
-  "_requested": {
-    "type": "range",
-    "registry": true,
-    "raw": "@segment/analytics.js-core@^3.0.0",
-    "name": "@segment/analytics.js-core",
-    "escapedName": "@segment%2fanalytics.js-core",
-    "scope": "@segment",
-    "rawSpec": "^3.0.0",
-    "saveSpec": null,
-    "fetchSpec": "^3.0.0"
-  },
-  "_requiredBy": [
-    "/"
-  ],
-  "_resolved": "https://registry.npmjs.org/@segment/analytics.js-core/-/analytics.js-core-3.9.0.tgz",
-  "_shasum": "eaf575b784c45b2184340b1a8856906771e7e39d",
-  "_spec": "@segment/analytics.js-core@^3.0.0",
-  "_where": "/Users/manuelreil/alyne.com/dev/analytics.js",
-  "author": {
-    "name": "Segment",
-    "email": "friends@segment.com"
-  },
-  "bugs": {
-    "url": "https://github.com/segmentio/analytics.js-core/issues"
-  },
-  "bundleDependencies": false,
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
-  },
-  "config": {
-    "commitizen": {
-      "path": "cz-conventional-changelog"
-    }
-  },
-  "dependencies": {
-    "@ndhoule/after": "^1.0.0",
-    "@ndhoule/clone": "^1.0.0",
-    "@ndhoule/defaults": "^2.0.1",
-    "@ndhoule/each": "^2.0.1",
-    "@ndhoule/extend": "^2.0.0",
-    "@ndhoule/foldl": "^2.0.1",
-    "@ndhoule/includes": "^2.0.1",
-    "@ndhoule/keys": "^2.0.0",
-    "@ndhoule/map": "^2.0.1",
-    "@ndhoule/pick": "^2.0.0",
-    "@segment/canonical": "^1.0.0",
-    "@segment/is-meta": "^1.0.0",
-    "@segment/isodate": "^1.0.2",
-    "@segment/isodate-traverse": "^1.0.1",
-    "@segment/prevent-default": "^1.0.0",
-    "@segment/send-json": "^3.0.0",
-    "@segment/store": "^1.3.20",
-    "@segment/top-domain": "^3.0.0",
-    "bind-all": "^1.0.0",
-    "component-cookie": "^1.1.2",
-    "component-emitter": "^1.2.1",
-    "component-event": "^0.1.4",
-    "component-querystring": "^2.0.0",
-    "component-type": "^1.2.1",
-    "component-url": "^0.2.1",
-    "debug": "^0.7.4",
-    "extend": "3.0.2",
-    "inherits": "^2.0.1",
-    "install": "^0.7.3",
-    "is": "^3.1.0",
-    "json3": "^3.3.2",
-    "new-date": "^1.0.0",
-    "next-tick": "^0.2.2",
-    "segmentio-facade": "^3.0.2",
-    "spark-md5": "^2.0.2",
-    "uuid": "^2.0.2"
-  },
-  "deprecated": false,
-  "description": "The hassle-free way to integrate analytics into any web application.",
-  "devDependencies": {
-    "@commitlint/cli": "^7.0.0",
-    "@commitlint/config-conventional": "^7.0.1",
-    "@segment/analytics.js-integration": "^3.2.1",
-    "@segment/eslint-config": "^4.0.0",
-    "browserify": "13.0.0",
-    "browserify-istanbul": "^2.0.0",
-    "codecov": "^3.0.2",
-    "commitizen": "^2.10.1",
-    "commitlint-circle": "^1.0.0",
-    "compat-trigger-event": "^1.0.0",
-    "component-each": "^0.2.6",
-    "cz-conventional-changelog": "^2.1.0",
-    "eslint": "^4.19.1",
-    "eslint-config-prettier": "^2.9.0",
-    "eslint-plugin-mocha": "^5.0.0",
-    "eslint-plugin-react": "^7.9.1",
-    "eslint-plugin-require-path-exists": "^1.1.8",
-    "husky": "^0.14.3",
-    "istanbul": "^0.4.3",
-    "jquery": "^3.2.1",
-    "karma": "1.3.0",
-    "karma-browserify": "^5.0.4",
-    "karma-chrome-launcher": "^1.0.1",
-    "karma-coverage": "^1.0.0",
-    "karma-junit-reporter": "^1.0.0",
-    "karma-mocha": "1.0.1",
-    "karma-phantomjs-launcher": "^1.0.0",
-    "karma-sauce-launcher": "^1.0.0",
-    "karma-spec-reporter": "0.0.26",
-    "karma-summary-reporter": "^1.5.0",
-    "lint-staged": "^7.2.0",
-    "mocha": "^2.2.5",
-    "np": "^3.0.4",
-    "phantomjs-prebuilt": "^2.1.7",
-    "prettier-eslint-cli": "^4.7.1",
-    "proclaim": "^3.4.1",
-    "sinon": "^1.7.3",
-    "snyk": "^1.83.0",
-    "watchify": "^3.7.0"
-  },
-  "homepage": "https://github.com/segmentio/analytics.js-core#readme",
-  "keywords": [
-    "analytics",
-    "analytics.js",
-    "segment",
-    "segment.io"
-  ],
-  "license": "SEE LICENSE IN LICENSE",
-  "lint-staged": {
-    "linters": {
-      "*.{js,json,md}": [
-        "prettier-eslint --write",
-        "git add"
-      ]
-    }
-  },
-  "main": "lib/index.js",
-  "name": "@segment/analytics.js-core",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/segmentio/analytics.js-core.git"
-  },
-  "scripts": {
-    "commitmsg": "commitlint -E GIT_PARAMS",
-    "cz": "git-cz",
-    "format": "prettier-eslint --write --list-different \"./{lib,test}/**/*.{js,json,md}\"",
-    "lint": "eslint \"./{lib,test}/**/*.js\"",
-    "np": "np --no-publish",
-    "precommit": "lint-staged",
-    "test": "make test"
-  },
-  "version": "3.9.0"
-}
-
-},{}],37:[function(require,module,exports){
+},{"./lib/bytesToUuid":46,"./lib/rng":47}],50:[function(require,module,exports){
 'use strict';
 
 /**
- * Module dependencies.
- */
-
-var alias = require('@segment/alias');
-var dates = require('@segment/convert-dates');
-var del = require('obj-case').del;
-var includes = require('@ndhoule/includes');
-var integration = require('@segment/analytics.js-integration');
-var iso = require('@segment/to-iso-string');
-var pick = require('@ndhoule/pick');
-var is = require('is');
-var indexOf = require('component-indexof');
-
-/**
- * Expose `Mixpanel` integration.
- */
-
-var Mixpanel = module.exports = integration('Mixpanel')
-  .global('mixpanel')
-  .option('eventIncrements', [])
-  .option('propIncrements', [])
-  .option('peopleProperties', [])
-  .option('superProperties', [])
-  .option('cookieName', '')
-  .option('crossSubdomainCookie', false)
-  .option('secureCookie', false)
-  .option('persistence', 'cookie')
-  .option('nameTag', true)
-  .option('pageview', false)
-  .option('people', false)
-  .option('token', '')
-  .option('setAllTraitsByDefault', true)
-  .option('consolidatedPageCalls', true)
-  .option('trackAllPages', false)
-  .option('trackNamedPages', false)
-  .option('trackCategorizedPages', false)
-  .option('sourceName', '')
-  .tag('<script src="//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js">');
-
-/**
- * Options aliases.
- */
-
-var optionsAliases = {
-  cookieName: 'cookie_name',
-  crossSubdomainCookie: 'cross_subdomain_cookie',
-  secureCookie: 'secure_cookie'
-};
-
-/**
- * Initialize.
+ * Prevent default on a given event.
  *
- * https://mixpanel.com/help/reference/javascript#installing
- * https://mixpanel.com/help/reference/javascript-full-api-reference#mixpanel.init
- *
- * @api public
- */
-
-Mixpanel.prototype.initialize = function() {
-  /* eslint-disable */
-  (function(e,a){if(!a.__SV){var b=window;try{var c,l,i,j=b.location,g=j.hash;c=function(a,b){return(l=a.match(RegExp(b+"=([^&]*)")))?l[1]:null};g&&c(g,"state")&&(i=JSON.parse(decodeURIComponent(c(g,"state"))),"mpeditor"===i.action&&(b.sessionStorage.setItem("_mpcehash",g),history.replaceState(i.desiredHash||"",e.title,j.pathname+j.search)))}catch(m){}var k,h;window.mixpanel=a;a._i=[];a.init=function(b,c,f){function e(b,a){var c=a.split(".");2==c.length&&(b=b[c[0]],a=c[1]);b[a]=function(){b.push([a].concat(Array.prototype.slice.call(arguments,
-0)))}}var d=a;"undefined"!==typeof f?d=a[f]=[]:f="mixpanel";d.people=d.people||[];d.toString=function(b){var a="mixpanel";"mixpanel"!==f&&(a+="."+f);b||(a+=" (stub)");return a};d.people.toString=function(){return d.toString(1)+".people (stub)"};k="disable time_event track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config reset people.set people.set_once people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" ");
-for(h=0;h<k.length;h++)e(d,k[h]);a._i.push([b,c,f])};a.__SV=1.2;}})(document,window.mixpanel||[]);
-  /* eslint-enable */
-  this.options.eventIncrements = lowercase(this.options.eventIncrements);
-  this.options.propIncrements = lowercase(this.options.propIncrements);
-  var options = alias(this.options, optionsAliases);
-  // tag ajs requests with Segment by request from Mixpanel team for better mutual debugging
-  options.loaded = function(mixpanel) {
-    mixpanel.register({ mp_lib: 'Segment: web' });
-  };
-  window.mixpanel.init(options.token, options);
-  this.load(this.ready);
-};
-
-/**
- * Loaded?
- *
- * @api private
- * @return {boolean}
- */
-
-Mixpanel.prototype.loaded = function() {
-  return !!(window.mixpanel && window.mixpanel.config);
-};
-
-/**
- * Page.
- *
- * https://mixpanel.com/help/reference/javascript-full-api-reference#mixpanel.track_pageview
- *
- * @api public
- * @param {Page} page
- */
-
-Mixpanel.prototype.page = function(page) {
-  var category = page.category();
-  var name = page.name();
-  var opts = this.options;
-
-  // consolidated Page Calls
-  if (opts.consolidatedPageCalls) {
-    this.track(page.track());
-    return;
-  }
-
-  // all pages
-  if (opts.trackAllPages) {
-    this.track(page.track());
-    return;
-  }
-
-  // categorized pages
-  if (opts.trackCategorizedPages && category) {
-    // If this option is checked and name was also passed, used the full name which includes both category & name
-    if (name) {
-      this.track(page.track(page.fullName()));
-      return;
-    }
-    this.track(page.track(category));
-    return;
-  }
-
-  // named pages
-  if (name && opts.trackNamedPages) {
-    this.track(page.track(name));
-  }
-};
-
-/**
- * Trait aliases.
- */
-
-var traitAliases = {
-  created: '$created',
-  email: '$email',
-  firstName: '$first_name',
-  lastName: '$last_name',
-  lastSeen: '$last_seen',
-  name: '$name',
-  username: '$username',
-  phone: '$phone'
-};
-
-/**
- * Identify.
- *
- * https://mixpanel.com/help/reference/javascript#super-properties
- * https://mixpanel.com/help/reference/javascript#user-identity
- * https://mixpanel.com/help/reference/javascript#storing-user-profiles
- *
- * @api public
- * @param {Identify} identify
- */
-
-Mixpanel.prototype.identify = function(identify) {
-  var username = identify.username();
-  var email = identify.email();
-  var id = identify.userId();
-  var setAllTraitsByDefault = this.options.setAllTraitsByDefault;
-  var people = this.options.people;
-  var peopleProperties = extendTraits(this.options.peopleProperties);
-  var superProperties = this.options.superProperties;
-
-  // id
-  if (id) window.mixpanel.identify(id);
-
-  // name tag
-  var nametag = email || username || id;
-  if (nametag) window.mixpanel.name_tag(nametag);
-
-  var traits = identify.traits(traitAliases);
-  if (traits.$created) del(traits, 'createdAt');
-  traits = dates(traits, iso);
-
-  // determine which traits to union to existing properties and which to set as new properties
-  var traitsToUnion = {};
-  var traitsToSet = {};
-  for (var key in traits) {
-    if (!traits.hasOwnProperty(key)) continue;
-
-    var trait = traits[key];
-    if (Array.isArray(trait) && trait.length > 0) {
-      traitsToUnion[key] = trait;
-      // since mixpanel doesn't offer a union method for super properties we have to do it manually by retrieving the existing list super property
-      // from mixpanel and manually unioning to it ourselves
-      var existingTrait = window.mixpanel.get_property(key);
-      if (existingTrait && Array.isArray(existingTrait)) {
-        traits[key] = unionArrays(existingTrait, trait);
-      }
-    } else {
-      traitsToSet[key] = trait;
-    }
-  }
-
-  if (setAllTraitsByDefault) {
-    window.mixpanel.register(traits);
-    if (people) {
-      window.mixpanel.people.set(traitsToSet);
-      window.mixpanel.people.union(traitsToUnion);
-    }
-  } else {
-    // explicitly set select traits as people and super properties
-    var mappedSuperProps = mapTraits(superProperties);
-    var superProps = pick(mappedSuperProps || [], traits);
-    if (!is.empty(superProps)) window.mixpanel.register(superProps);
-    if (people) {
-      var mappedPeopleProps = mapTraits(peopleProperties);
-      var peoplePropsToSet = pick(mappedPeopleProps || [], traitsToSet);
-      var peoplePropsToUnion = pick(mappedPeopleProps || [], traitsToUnion);
-      if (!is.empty(peoplePropsToSet)) window.mixpanel.people.set(peoplePropsToSet);
-      if (!is.empty(peoplePropsToUnion)) window.mixpanel.people.union(peoplePropsToUnion);
-    }
-  }
-};
-
-/**
- * Track.
- *
- * https://mixpanel.com/help/reference/javascript#sending-events
- * https://mixpanel.com/help/reference/javascript#tracking-revenue
- *
- * @api public
- * @param {Track} track
- */
-
-Mixpanel.prototype.track = function(track) {
-  var eventIncrements = this.options.eventIncrements || this.options.increments; // TODO: remove settings.increments check, it's only here as we cutover from increments to eventIncrements
-  var propIncrements = this.options.propIncrements;
-  var eventLowercase = track.event().toLowerCase();
-  var people = this.options.people;
-  var props = track.properties();
-  var revenue = track.revenue();
-  // Don't map traits, clients should use identify instead.
-  var superProps = pick(this.options.superProperties, props);
-  var sourceName = this.options.sourceName;
-
-  if (sourceName) props.segment_source_name = sourceName;
-
-  // delete mixpanel's reserved properties, so they don't conflict
-  delete props.distinct_id;
-  delete props.ip;
-  delete props.mp_name_tag;
-  delete props.mp_note;
-  delete props.token;
-
-  props = dates(props, iso);
-  invertObjectArrays(props);
-
-  // Mixpanel People operations
-  if (people) {
-    // increment event count
-    if (includes(eventLowercase, eventIncrements)) {
-      window.mixpanel.people.increment(track.event());
-      window.mixpanel.people.set('Last ' + track.event(), new Date());
-    }
-    // increment property counts
-    for (var key in props) {
-      if (!Object.prototype.hasOwnProperty.call(props, key)) {
-        continue;
-      }
-      var prop = props[key];
-      if (includes(key.toLowerCase(), propIncrements)) {
-        window.mixpanel.people.increment(key, prop);
-      }
-    }
-    // track revenue
-    if (revenue) {
-      window.mixpanel.people.track_charge(revenue);
-    }
-  }
-
-  // track the event
-  var query;
-  if (props.link_query) {
-    query = props.link_query; // DOM query
-    delete props.link_query;
-    window.mixpanel.track_links(query, track.event(), props);
-  } else if (props.form_query) {  // DOM query
-    query = props.form_query;
-    delete props.form_query;
-    window.mixpanel.track_forms(query, track.event(), props);
-  } else {
-    window.mixpanel.track(track.event(), props);
-  }
-
-  // register super properties if present in context.mixpanel.superProperties
-  if (!is.empty(superProps)) {
-    window.mixpanel.register(superProps);
-  }
-};
-
-/**
- * Alias.
- *
- * https://mixpanel.com/help/reference/javascript#user-identity
- * https://mixpanel.com/help/reference/javascript-full-api-reference#mixpanel.alias
- *
- * @api public
- * @param {Alias} alias
- */
-
-Mixpanel.prototype.alias = function(alias) {
-  var mp = window.mixpanel;
-  var to = alias.to();
-  if (mp.get_distinct_id && mp.get_distinct_id() === to) return;
-  // HACK: internal mixpanel API to ensure we don't overwrite
-  if (mp.get_property && mp.get_property('$people_distinct_id') === to) return;
-  // although undocumented, mixpanel takes an optional original id
-  mp.alias(to, alias.from());
-};
-
-/**
- * Lowercase the given `arr`.
- *
- * @api private
- * @param {Array} arr
- * @return {Array}
- */
-
-function lowercase(arr) {
-  var ret = new Array(arr.length);
-
-  for (var i = 0; i < arr.length; ++i) {
-    ret[i] = String(arr[i]).toLowerCase();
-  }
-
-  return ret;
-}
-
-/**
- * Map Special traits in the given `arr`.
- * From the TraitAliases for Mixpanel's special props
- *
- * @api private
- * @param {Array} arr
- * @return {Array}
- */
-
-function mapTraits(arr) {
-  var ret = new Array(arr.length);
-
-  for (var i = 0; i < arr.length; ++i) {
-    if (traitAliases.hasOwnProperty(arr[i])) {
-      ret.push(traitAliases[arr[i]]);
-    } else {
-      ret.push(arr[i]);
-    }
-  }
-
-  return ret;
-}
-
-/**
- * extend Mixpanel's special trait keys in the given `arr`.
- *
- * @api private
- * @param {Array} arr
- * @return {Array}
- */
-
-function extendTraits(arr) {
-  var keys = [];
-
-  for (var key in traitAliases) {
-    if (traitAliases.hasOwnProperty(key)) {
-      keys.push(key);
-    }
-  }
-
-  for (var i = 0; i < keys.length; ++i) {
-    if (indexOf(arr, keys[i]) < 0) {
-      arr.push(keys[i]);
-    }
-  }
-
-  return arr;
-}
-
-/**
- * Since Mixpanel doesn't support lists of objects, invert each list of objects to a set of lists of object properties.
- * Treats list transformation atomically, e.g. will only transform if EVERY item in list is an object
- *
- * @api private
- * @param {Object} props
+ * @param {Event} e
  * @example
- * input: {products: [{sku: 32, revenue: 99}, {sku:2, revenue: 103}]}
- * output: {products_skus: [32, 2], products_revenues: [99, 103]}
+ * anchor.onclick = prevent;
+ * anchor.onclick = function(e){
+ *   if (something) return prevent(e);
+ * };
  */
 
-function invertObjectArrays(props) {
-  for (var propName in props) {  // eslint-disable-line
-    var propValue = props[propName];
-    if (!props.hasOwnProperty(propName) || !Array.isArray(propValue)) {
-      continue;
-    }
-
-    var invertedArrays = invertObjectArray(propName, propValue);
-    if (Object.keys(invertedArrays).length !== 0) { // make sure obj isn't empty
-      mergeArraysIntoObj(props, invertedArrays);
-      delete props[propName];
-    }
-  }
+function preventDefault(e) {
+  e = e || window.event;
+  return e.preventDefault ? e.preventDefault() : e.returnValue = false;
 }
 
-// Example:
-// input: 'products', [{sku: 32, revenue: 99}, {sku:2, revenue: 103}]
-// output: {products_skus: [32, 2], products_revenues: [99, 103]}
-function invertObjectArray(propName, arr) {
-  var invertedArrays = {};
-
-  // invert object lists and collect into invertedLists
-  for (var i=0; i<arr.length; i++) {
-    var elem = arr[i];
-
-    // abort operation if non-object encountered in array
-    if (typeof elem !== 'object') {
-      return {};
-    }
-    for (var key in elem) {
-      if (!elem.hasOwnProperty(key)) {
-        continue;
-      }
-      var attrKey = propName+'_'+key+'s';  // e.g. products_skus
-
-      // append to list if it exists or create new one if not
-      if (attrKey in invertedArrays) {
-        invertedArrays[attrKey].push(elem[key]);
-      } else {
-        invertedArrays[attrKey] = [elem[key]];
-      }
-    }
-  }
-  return invertedArrays;
-}
-
-function mergeArraysIntoObj(destination, source) {
-  for (var arrayName in source) {
-    if (source.hasOwnProperty(arrayName)) {
-      var arr = source[arrayName];
-      destination[arrayName] = arrayName in destination ? destination[arrayName].concat(arr) : arr;
-    }
-  }
-}
-
-
-/**
- * Return union of two arrays
- * Pulled from https://stackoverflow.com/a/3629861
- *
- * @param {Array} x
- * @param {Array} y
- * @return {Array} res
- * @api private
- */
-
-function unionArrays(x, y) {
-  var obj = {};
-  // store items of each array as keys/values of obj, implicitly overwriting duplicates
-  var i;
-  for (i = 0; i < x.length; i++) {
-    obj[x[i]] = x[i];
-  }
-  for (i = 0; i < y.length; i++) {
-    obj[y[i]] = y[i];
-  }
-  return Object.keys(obj);
-}
-
-},{"@ndhoule/includes":12,"@ndhoule/pick":15,"@segment/alias":18,"@segment/analytics.js-integration":38,"@segment/convert-dates":57,"@segment/to-iso-string":79,"component-indexof":92,"is":105,"obj-case":115}],38:[function(require,module,exports){
-'use strict';
-
-/**
- * Module dependencies.
- */
-
-var bind = require('component-bind');
-var clone = require('@ndhoule/clone');
-var debug = require('debug');
-var defaults = require('@ndhoule/defaults');
-var extend = require('@ndhoule/extend');
-var slug = require('slug-component');
-var protos = require('./protos');
-var statics = require('./statics');
-
-/**
- * Create a new `Integration` constructor.
- *
- * @constructs Integration
- * @param {string} name
- * @return {Function} Integration
- */
-
-function createIntegration(name) {
-  /**
-   * Initialize a new `Integration`.
-   *
-   * @class
-   * @param {Object} options
-   */
-
-  function Integration(options) {
-    if (options && options.addIntegration) {
-      // plugin
-      return options.addIntegration(Integration);
-    }
-    this.debug = debug('analytics:integration:' + slug(name));
-    this.options = defaults(clone(options) || {}, this.defaults);
-    this._queue = [];
-    this.once('ready', bind(this, this.flush));
-
-    Integration.emit('construct', this);
-    this.ready = bind(this, this.ready);
-    this._wrapInitialize();
-    this._wrapPage();
-    this._wrapTrack();
-  }
-
-  Integration.prototype.defaults = {};
-  Integration.prototype.globals = [];
-  Integration.prototype.templates = {};
-  Integration.prototype.name = name;
-  extend(Integration, statics);
-  extend(Integration.prototype, protos);
-
-  return Integration;
-}
-
-/**
+/*
  * Exports.
  */
 
-module.exports = createIntegration;
+module.exports = preventDefault;
 
-},{"./protos":39,"./statics":40,"@ndhoule/clone":5,"@ndhoule/defaults":6,"@ndhoule/extend":10,"component-bind":83,"debug":98,"slug-component":130}],39:[function(require,module,exports){
+},{}],51:[function(require,module,exports){
+'use strict';
+
+/**
+ * Convenience alias
+ */
+
+var define = Object.defineProperty;
+
+
+/**
+ *  The base protocol
+ */
+
+var initialProtocol = window.location.protocol;
+
+/**
+ * Fallback mocked protocol in case Object.defineProperty doesn't exist.
+ */
+
+var mockedProtocol;
+
+
+module.exports = function(protocol) {
+  if (arguments.length === 0) {
+    return get();
+  }
+  return set(protocol);
+};
+
+
+/**
+ * Sets the protocol to be http:
+ */
+
+module.exports.http = function() {
+  set('http:');
+};
+
+
+/**
+ * Sets the protocol to be https:
+ */
+
+module.exports.https = function() {
+  set('https:');
+};
+
+
+/**
+ * Reset to the initial protocol.
+ */
+
+module.exports.reset = function() {
+  set(initialProtocol);
+};
+
+
+/**
+ * Gets the current protocol, using the fallback and then the native protocol.
+ *
+ * @return {String} protocol
+ */
+
+function get() {
+  return mockedProtocol || window.location.protocol;
+}
+
+
+/**
+ * Sets the protocol
+ *
+ * @param {String} protocol
+ */
+
+function set(protocol) {
+  try {
+    define(window.location, 'protocol', {
+      get: function() { return protocol; }
+    });
+  } catch (err) {
+    mockedProtocol = protocol;
+  }
+}
+
+},{}],52:[function(require,module,exports){
+'use strict';
+
+/*
+ * Module dependencies.
+ */
+
+var JSON = require('json3');
+var base64encode = require('@segment/base64-encode');
+var cors = require('has-cors');
+var jsonp = require('jsonp');
+
+/*
+ * Exports.
+ */
+
+exports = module.exports = cors ? json : base64;
+
+/**
+ * Expose `callback`
+ */
+
+exports.callback = 'callback';
+
+/**
+ * Expose `prefix`
+ */
+
+exports.prefix = 'data';
+
+/**
+ * Expose `json`.
+ */
+
+exports.json = json;
+
+/**
+ * Expose `base64`.
+ */
+
+exports.base64 = base64;
+
+/**
+ * Expose `type`
+ */
+
+exports.type = cors ? 'xhr' : 'jsonp';
+
+/**
+ * Send the given `obj` to `url` with `fn(err, req)`.
+ *
+ * @param {String} url
+ * @param {Object} obj
+ * @param {Object} headers
+ * @param {Function} fn
+ * @api private
+ */
+
+function json(url, obj, headers, fn) {
+  if (arguments.length === 3) fn = headers, headers = {};
+
+  var req = new XMLHttpRequest;
+  req.onerror = fn;
+  req.onreadystatechange = done;
+  req.open('POST', url, true);
+
+  // TODO: Remove this eslint disable
+  // eslint-disable-next-line guard-for-in
+  for (var k in headers) {
+    req.setRequestHeader(k, headers[k]);
+  }
+  req.send(JSON.stringify(obj));
+
+  function done() {
+    if (req.readyState === 4) {
+      return fn(null, req);
+    }
+  }
+}
+
+/**
+ * Send the given `obj` to `url` with `fn(err, req)`.
+ *
+ * @param {String} url
+ * @param {Object} obj
+ * @param {Function} fn
+ * @api private
+ */
+
+function base64(url, obj, _, fn) {
+  if (arguments.length === 3) fn = _;
+
+  var prefix = exports.prefix;
+  var data = encode(obj);
+  url += '?' + prefix + '=' + data;
+  jsonp(url, { param: exports.callback }, function(err, obj) {
+    if (err) return fn(err);
+    fn(null, {
+      url: url,
+      body: obj
+    });
+  });
+}
+
+/**
+ * Encodes `obj`.
+ *
+ * @param {Object} obj
+ */
+
+function encode(obj) {
+  var str = '';
+  str = JSON.stringify(obj);
+  str = base64encode(str);
+  str = str.replace(/\+/g, '-').replace(/\//g, '_');
+  return encodeURIComponent(str);
+}
+
+},{"@segment/base64-encode":33,"has-cors":80,"json3":84,"jsonp":85}],53:[function(require,module,exports){
+(function (global){
+"use strict"
+
+var JSON = require('json3');
+
+module.exports = (function() {
+	// Store.js
+	var store = {},
+		win = (typeof window != 'undefined' ? window : global),
+		doc = win.document,
+		localStorageName = 'localStorage',
+		scriptTag = 'script',
+		storage
+
+	store.disabled = false
+	store.version = '1.3.20'
+	store.set = function(key, value) {}
+	store.get = function(key, defaultVal) {}
+	store.has = function(key) { return store.get(key) !== undefined }
+	store.remove = function(key) {}
+	store.clear = function() {}
+	store.transact = function(key, defaultVal, transactionFn) {
+		if (transactionFn == null) {
+			transactionFn = defaultVal
+			defaultVal = null
+		}
+		if (defaultVal == null) {
+			defaultVal = {}
+		}
+		var val = store.get(key, defaultVal)
+		transactionFn(val)
+		store.set(key, val)
+	}
+	store.getAll = function() {
+		var ret = {}
+		store.forEach(function(key, val) {
+			ret[key] = val
+		})
+		return ret
+	}
+	store.forEach = function() {}
+	store.serialize = function(value) {
+		return JSON.stringify(value)
+	}
+	store.deserialize = function(value) {
+		if (typeof value != 'string') { return undefined }
+		try { return JSON.parse(value) }
+		catch(e) { return value || undefined }
+	}
+
+	// Functions to encapsulate questionable FireFox 3.6.13 behavior
+	// when about.config::dom.storage.enabled === false
+	// See https://github.com/marcuswestin/store.js/issues#issue/13
+	function isLocalStorageNameSupported() {
+		try { return (localStorageName in win && win[localStorageName]) }
+		catch(err) { return false }
+	}
+
+	if (isLocalStorageNameSupported()) {
+		storage = win[localStorageName]
+		store.set = function(key, val) {
+			if (val === undefined) { return store.remove(key) }
+			storage.setItem(key, store.serialize(val))
+			return val
+		}
+		store.get = function(key, defaultVal) {
+			var val = store.deserialize(storage.getItem(key))
+			return (val === undefined ? defaultVal : val)
+		}
+		store.remove = function(key) { storage.removeItem(key) }
+		store.clear = function() { storage.clear() }
+		store.forEach = function(callback) {
+			for (var i=0; i<storage.length; i++) {
+				var key = storage.key(i)
+				callback(key, store.get(key))
+			}
+		}
+	} else if (doc && doc.documentElement.addBehavior) {
+		var storageOwner,
+			storageContainer
+		// Since #userData storage applies only to specific paths, we need to
+		// somehow link our data to a specific path.  We choose /favicon.ico
+		// as a pretty safe option, since all browsers already make a request to
+		// this URL anyway and being a 404 will not hurt us here.  We wrap an
+		// iframe pointing to the favicon in an ActiveXObject(htmlfile) object
+		// (see: http://msdn.microsoft.com/en-us/library/aa752574(v=VS.85).aspx)
+		// since the iframe access rules appear to allow direct access and
+		// manipulation of the document element, even for a 404 page.  This
+		// document can be used instead of the current document (which would
+		// have been limited to the current path) to perform #userData storage.
+		try {
+			storageContainer = new ActiveXObject('htmlfile')
+			storageContainer.open()
+			storageContainer.write('<'+scriptTag+'>document.w=window</'+scriptTag+'><iframe src="/favicon.ico"></iframe>')
+			storageContainer.close()
+			storageOwner = storageContainer.w.frames[0].document
+			storage = storageOwner.createElement('div')
+		} catch(e) {
+			// somehow ActiveXObject instantiation failed (perhaps some special
+			// security settings or otherwse), fall back to per-path storage
+			storage = doc.createElement('div')
+			storageOwner = doc.body
+		}
+		var withIEStorage = function(storeFunction) {
+			return function() {
+				var args = Array.prototype.slice.call(arguments, 0)
+				args.unshift(storage)
+				// See http://msdn.microsoft.com/en-us/library/ms531081(v=VS.85).aspx
+				// and http://msdn.microsoft.com/en-us/library/ms531424(v=VS.85).aspx
+				storageOwner.appendChild(storage)
+				storage.addBehavior('#default#userData')
+				storage.load(localStorageName)
+				var result = storeFunction.apply(store, args)
+				storageOwner.removeChild(storage)
+				return result
+			}
+		}
+
+		// In IE7, keys cannot start with a digit or contain certain chars.
+		// See https://github.com/marcuswestin/store.js/issues/40
+		// See https://github.com/marcuswestin/store.js/issues/83
+		var forbiddenCharsRegex = new RegExp("[!\"#$%&'()*+,/\\\\:;<=>?@[\\]^`{|}~]", "g")
+		var ieKeyFix = function(key) {
+			return key.replace(/^d/, '___$&').replace(forbiddenCharsRegex, '___')
+		}
+		store.set = withIEStorage(function(storage, key, val) {
+			key = ieKeyFix(key)
+			if (val === undefined) { return store.remove(key) }
+			storage.setAttribute(key, store.serialize(val))
+			storage.save(localStorageName)
+			return val
+		})
+		store.get = withIEStorage(function(storage, key, defaultVal) {
+			key = ieKeyFix(key)
+			var val = store.deserialize(storage.getAttribute(key))
+			return (val === undefined ? defaultVal : val)
+		})
+		store.remove = withIEStorage(function(storage, key) {
+			key = ieKeyFix(key)
+			storage.removeAttribute(key)
+			storage.save(localStorageName)
+		})
+		store.clear = withIEStorage(function(storage) {
+			var attributes = storage.XMLDocument.documentElement.attributes
+			storage.load(localStorageName)
+			for (var i=attributes.length-1; i>=0; i--) {
+				storage.removeAttribute(attributes[i].name)
+			}
+			storage.save(localStorageName)
+		})
+		store.forEach = withIEStorage(function(storage, callback) {
+			var attributes = storage.XMLDocument.documentElement.attributes
+			for (var i=0, attr; attr=attributes[i]; ++i) {
+				callback(attr.name, store.deserialize(storage.getAttribute(attr.name)))
+			}
+		})
+	}
+
+	try {
+		var testKey = '__storejs__'
+		store.set(testKey, testKey)
+		if (store.get(testKey) != testKey) { store.disabled = true }
+		store.remove(testKey)
+	} catch(e) {
+		store.disabled = true
+	}
+	store.enabled = !store.disabled
+	
+	return store
+}())
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"json3":84}],54:[function(require,module,exports){
 'use strict';
 
 /**
  * Module dependencies.
  */
 
-var Emitter = require('component-emitter');
-var after = require('@ndhoule/after');
-var each = require('@ndhoule/each');
-var events = require('analytics-events');
-var every = require('@ndhoule/every');
-var fmt = require('@segment/fmt');
+var parse = require('component-url').parse;
+var cookie = require('component-cookie');
+
+/**
+ * Get the top domain.
+ *
+ * The function constructs the levels of domain and attempts to set a global
+ * cookie on each one when it succeeds it returns the top level domain.
+ *
+ * The method returns an empty string when the hostname is an ip or `localhost`.
+ *
+ * Example levels:
+ *
+ *      domain.levels('http://www.google.co.uk');
+ *      // => ["co.uk", "google.co.uk", "www.google.co.uk"]
+ *
+ * Example:
+ *
+ *      domain('http://localhost:3000/baz');
+ *      // => ''
+ *      domain('http://dev:3000/baz');
+ *      // => ''
+ *      domain('http://127.0.0.1:3000/baz');
+ *      // => ''
+ *      domain('http://segment.io/baz');
+ *      // => 'segment.io'
+ *
+ * @param {string} url
+ * @return {string}
+ * @api public
+ */
+function domain(url) {
+  var cookie = exports.cookie;
+  var levels = exports.levels(url);
+
+  // Lookup the real top level one.
+  for (var i = 0; i < levels.length; ++i) {
+    var cname = '__tld__';
+    var domain = levels[i];
+    var opts = { domain: '.' + domain };
+
+    cookie(cname, 1, opts);
+    if (cookie(cname)) {
+      cookie(cname, null, opts);
+      return domain;
+    }
+  }
+
+  return '';
+}
+
+/**
+ * Levels returns all levels of the given url.
+ *
+ * @param {string} url
+ * @return {Array}
+ * @api public
+ */
+domain.levels = function(url) {
+  var host = parse(url).hostname;
+  var parts = host.split('.');
+  var last = parts[parts.length - 1];
+  var levels = [];
+
+  // Ip address.
+  if (parts.length === 4 && last === parseInt(last, 10)) {
+    return levels;
+  }
+
+  // Localhost.
+  if (parts.length <= 1) {
+    return levels;
+  }
+
+  // Create levels.
+  for (var i = parts.length - 2; i >= 0; --i) {
+    levels.push(parts.slice(i).join('.'));
+  }
+
+  return levels;
+};
+
+/**
+ * Expose cookie on domain.
+ */
+domain.cookie = cookie;
+
+/*
+ * Exports.
+ */
+
+exports = module.exports = domain;
+
+},{"component-cookie":64,"component-url":76}],55:[function(require,module,exports){
+'use strict';
+
+/**
+ * Module dependencies.
+ */
+
 var foldl = require('@ndhoule/foldl');
-var is = require('is');
-var loadIframe = require('load-iframe');
-var loadScript = require('@segment/load-script');
-var nextTick = require('next-tick');
-var normalize = require('to-no-case');
+var parse = require('component-querystring').parse;
 
 /**
  * hasOwnProperty reference.
@@ -4760,764 +5452,69 @@ var normalize = require('to-no-case');
 var has = Object.prototype.hasOwnProperty;
 
 /**
- * No operation.
- */
-
-var noop = function noop() {};
-
-/**
- * Window defaults.
- */
-
-var onerror = window.onerror;
-var onload = null;
-
-/**
- * Mixin emitter.
- */
-
-/* eslint-disable new-cap */
-Emitter(exports);
-/* eslint-enable new-cap */
-
-/**
- * Initialize.
- */
-
-exports.initialize = function() {
-  var ready = this.ready;
-  nextTick(ready);
-};
-
-/**
- * Loaded?
+ * Get all utm params from the given `querystring`
  *
- * @api private
- * @return {boolean}
- */
-
-exports.loaded = function() {
-  return false;
-};
-
-/**
- * Page.
- *
- * @api public
- * @param {Page} page
- */
-
-/* eslint-disable no-unused-vars */
-exports.page = function(page) {};
-/* eslint-enable no-unused-vars */
-
-/**
- * Track.
- *
- * @api public
- * @param {Track} track
- */
-
-/* eslint-disable no-unused-vars */
-exports.track = function(track) {};
-/* eslint-enable no-unused-vars */
-
-/**
- * Get values from items in `options` that are mapped to `key`.
- * `options` is an integration setting which is a collection
- * of type 'map', 'array', or 'mixed'
- *
- * Use cases include mapping events to pixelIds (map), sending generic
- * conversion pixels only for specific events (array), or configuring dynamic
- * mappings of event properties to query string parameters based on event (mixed)
- *
- * @api public
- * @param {Object|Object[]|String[]} options An object, array of objects, or
- * array of strings pulled from settings.mapping.
- * @param {string} key The name of the item in options whose metadata
- * we're looking for.
- * @return {Array} An array of settings that match the input `key` name.
- * @example
- *
- * // 'Map'
- * var events = { my_event: 'a4991b88' };
- * .map(events, 'My Event');
- * // => ["a4991b88"]
- * .map(events, 'whatever');
- * // => []
- *
- * // 'Array'
- * * var events = ['Completed Order', 'My Event'];
- * .map(events, 'My Event');
- * // => ["My Event"]
- * .map(events, 'whatever');
- * // => []
- *
- * // 'Mixed'
- * var events = [{ key: 'my event', value: '9b5eb1fa' }];
- * .map(events, 'my_event');
- * // => ["9b5eb1fa"]
- * .map(events, 'whatever');
- * // => []
- */
-
-exports.map = function(options, key) {
-  var normalizedComparator = normalize(key);
-  var mappingType = getMappingType(options);
-
-  if (mappingType === 'unknown') {
-    return [];
-  }
-
-  return foldl(function(matchingValues, val, key) {
-    var compare;
-    var result;
-
-    if (mappingType === 'map') {
-      compare = key;
-      result = val;
-    }
-
-    if (mappingType === 'array') {
-      compare = val;
-      result = val;
-    }
-
-    if (mappingType === 'mixed') {
-      compare = val.key;
-      result = val.value;
-    }
-
-    if (normalize(compare) === normalizedComparator) {
-      matchingValues.push(result);
-    }
-
-    return matchingValues;
-  }, [], options);
-};
-
-/**
- * Invoke a `method` that may or may not exist on the prototype with `args`,
- * queueing or not depending on whether the integration is "ready". Don't
- * trust the method call, since it contains integration party code.
- *
- * @api private
- * @param {string} method
- * @param {...*} args
- */
-
-exports.invoke = function(method) {
-  if (!this[method]) return;
-  var args = Array.prototype.slice.call(arguments, 1);
-  if (!this._ready) return this.queue(method, args);
-
-  this.debug('%s with %o', method, args);
-  return this[method].apply(this, args);
-};
-
-/**
- * Queue a `method` with `args`. If the integration assumes an initial
- * pageview, then let the first call to `page` pass through.
- *
- * @api private
- * @param {string} method
- * @param {Array} args
- */
-
-exports.queue = function(method, args) {
-  if (method === 'page' && this._assumesPageview && !this._initialized) {
-    return this.page.apply(this, args);
-  }
-
-  this._queue.push({ method: method, args: args });
-};
-
-/**
- * Flush the internal queue.
- *
- * @api private
- */
-
-exports.flush = function() {
-  this._ready = true;
-  var self = this;
-
-  each(function(call) {
-    self[call.method].apply(self, call.args);
-  }, this._queue);
-
-  // Empty the queue.
-  this._queue.length = 0;
-};
-
-/**
- * Reset the integration, removing its global variables.
- *
- * @api private
- */
-
-exports.reset = function() {
-  for (var i = 0; i < this.globals.length; i++) {
-    window[this.globals[i]] = undefined;
-  }
-
-  window.onerror = onerror;
-  window.onload = onload;
-};
-
-/**
- * Load a tag by `name`.
- *
- * @param {string} name The name of the tag.
- * @param {Object} locals Locals used to populate the tag's template variables
- * (e.g. `userId` in '<img src="https://whatever.com/{{ userId }}">').
- * @param {Function} [callback=noop] A callback, invoked when the tag finishes
- * loading.
- */
-
-exports.load = function(name, locals, callback) {
-  // Argument shuffling
-  if (typeof name === 'function') { callback = name; locals = null; name = null; }
-  if (name && typeof name === 'object') { callback = locals; locals = name; name = null; }
-  if (typeof locals === 'function') { callback = locals; locals = null; }
-
-  // Default arguments
-  name = name || 'library';
-  locals = locals || {};
-
-  locals = this.locals(locals);
-  var template = this.templates[name];
-  if (!template) throw new Error(fmt('template "%s" not defined.', name));
-  var attrs = render(template, locals);
-  callback = callback || noop;
-  var self = this;
-  var el;
-
-  switch (template.type) {
-  case 'img':
-    attrs.width = 1;
-    attrs.height = 1;
-    el = loadImage(attrs, callback);
-    break;
-  case 'script':
-    el = loadScript(attrs, function(err) {
-      if (!err) return callback();
-      self.debug('error loading "%s" error="%s"', self.name, err);
-    });
-      // TODO: hack until refactoring load-script
-    delete attrs.src;
-    each(function(val, key) {
-      el.setAttribute(key, val);
-    }, attrs);
-    break;
-  case 'iframe':
-    el = loadIframe(attrs, callback);
-    break;
-  default:
-      // No default case
-  }
-
-  return el;
-};
-
-/**
- * Locals for tag templates.
- *
- * By default it includes a cache buster and all of the options.
- *
- * @param {Object} [locals]
+ * @param {String} query
  * @return {Object}
- */
-
-exports.locals = function(locals) {
-  locals = locals || {};
-  var cache = Math.floor(new Date().getTime() / 3600000);
-  if (!locals.hasOwnProperty('cache')) locals.cache = cache;
-  each(function(val, key) {
-    if (!locals.hasOwnProperty(key)) locals[key] = val;
-  }, this.options);
-  return locals;
-};
-
-/**
- * Simple way to emit ready.
- *
- * @api public
- */
-
-exports.ready = function() {
-  this.emit('ready');
-};
-
-/**
- * Wrap the initialize method in an exists check, so we don't have to do it for
- * every single integration.
- *
  * @api private
  */
 
-exports._wrapInitialize = function() {
-  var initialize = this.initialize;
-  this.initialize = function() {
-    this.debug('initialize');
-    this._initialized = true;
-    var ret = initialize.apply(this, arguments);
-    this.emit('initialize');
-    return ret;
-  };
+function utm(query) {
+  // Remove leading ? if present
+  if (query.charAt(0) === '?') {
+    query = query.substring(1);
+  }
 
-  if (this._assumesPageview) this.initialize = after(2, this.initialize);
-};
+  query = query.replace(/\?/g, '&');
 
-/**
- * Wrap the page method to call `initialize` instead if the integration assumes
- * a pageview.
- *
- * @api private
- */
+  var param;
+  var params = parse(query);
+  var results = {};
 
-exports._wrapPage = function() {
-  var page = this.page;
-  this.page = function() {
-    if (this._assumesPageview && !this._initialized) {
-      return this.initialize.apply(this, arguments);
-    }
-
-    return page.apply(this, arguments);
-  };
-};
-
-/**
- * Wrap the track method to call other ecommerce methods if available depending
- * on the `track.event()`.
- *
- * @api private
- */
-
-exports._wrapTrack = function() {
-  var t = this.track;
-  this.track = function(track) {
-    var event = track.event();
-    var called;
-    var ret;
-
-    for (var method in events) {
-      if (has.call(events, method)) {
-        var regexp = events[method];
-        if (!this[method]) continue;
-        if (!regexp.test(event)) continue;
-        ret = this[method].apply(this, arguments);
-        called = true;
-        break;
+  for (var key in params) {
+    if (has.call(params, key)) {
+      if (key.substr(0, 4) === 'utm_') {
+        param = key.substr(4);
+        if (param === 'campaign') param = 'name';
+        results[param] = params[key];
       }
     }
-
-    if (!called) ret = t.apply(this, arguments);
-    return ret;
-  };
-};
-
-/**
- * Determine the type of the option passed to `#map`
- *
- * @api private
- * @param {Object|Object[]} mapping
- * @return {String} mappingType
- */
-
-function getMappingType(mapping) {
-  if (is.array(mapping)) {
-    return every(isMixed, mapping) ? 'mixed' : 'array';
   }
-  if (is.object(mapping)) return 'map';
-  return 'unknown';
+
+  return results;
 }
 
-/**
- * Determine if item in mapping array is a valid "mixed" type value
- *
- * Must be an object with properties "key" (of type string)
- * and "value" (of any type)
- *
- * @api private
- * @param {*} item
- * @return {Boolean}
- */
-
-function isMixed(item) {
-  if (!is.object(item)) return false;
-  if (!is.string(item.key)) return false;
-  if (!has.call(item, 'value')) return false;
-  return true;
-}
+var allowedKeys = {
+  name: true,
+  term: true,
+  source: true,
+  medium: true,
+  content: true
+};
 
 /**
- * TODO: Document me
+ * Get strict utm params - from the given `querystring`
  *
- * @api private
- * @param {Object} attrs
- * @param {Function} fn
- * @return {Image}
- */
-
-function loadImage(attrs, fn) {
-  fn = fn || function() {};
-  var img = new Image();
-  img.onerror = error(fn, 'failed to load pixel', img);
-  img.onload = function() { fn(); };
-  img.src = attrs.src;
-  img.width = 1;
-  img.height = 1;
-  return img;
-}
-
-/**
- * TODO: Document me
- *
- * @api private
- * @param {Function} fn
- * @param {string} message
- * @param {Element} img
- * @return {Function}
- */
-
-function error(fn, message, img) {
-  return function(e) {
-    e = e || window.event;
-    var err = new Error(message);
-    err.event = e;
-    err.source = img;
-    fn(err);
-  };
-}
-
-/**
- * Render template + locals into an `attrs` object.
- *
- * @api private
- * @param {Object} template
- * @param {Object} locals
+ * @param {String} query
  * @return {Object}
- */
-
-function render(template, locals) {
-  return foldl(function(attrs, val, key) {
-    attrs[key] = val.replace(/\{\{\ *(\w+)\ *\}\}/g, function(_, $1) {
-      return locals[$1];
-    });
-    return attrs;
-  }, {}, template.attrs);
-}
-
-},{"@ndhoule/after":3,"@ndhoule/each":8,"@ndhoule/every":9,"@ndhoule/foldl":11,"@segment/fmt":58,"@segment/load-script":62,"analytics-events":41,"component-emitter":42,"is":105,"load-iframe":108,"next-tick":43,"to-no-case":44}],40:[function(require,module,exports){
-'use strict';
-
-/**
- * Module dependencies.
- */
-
-var Emitter = require('component-emitter');
-var domify = require('domify');
-var each = require('@ndhoule/each');
-var includes = require('@ndhoule/includes');
-
-/**
- * Mix in emitter.
- */
-
-/* eslint-disable new-cap */
-Emitter(exports);
-/* eslint-enable new-cap */
-
-/**
- * Add a new option to the integration by `key` with default `value`.
- *
- * @api public
- * @param {string} key
- * @param {*} value
- * @return {Integration}
- */
-
-exports.option = function(key, value) {
-  this.prototype.defaults[key] = value;
-  return this;
-};
-
-/**
- * Add a new mapping option.
- *
- * This will create a method `name` that will return a mapping for you to use.
- *
- * @api public
- * @param {string} name
- * @return {Integration}
- * @example
- * Integration('My Integration')
- *   .mapping('events');
- *
- * new MyIntegration().track('My Event');
- *
- * .track = function(track){
- *   var events = this.events(track.event());
- *   each(send, events);
- *  };
- */
-
-exports.mapping = function(name) {
-  this.option(name, []);
-  this.prototype[name] = function(key) {
-    return this.map(this.options[name], key);
-  };
-  return this;
-};
-
-/**
- * Register a new global variable `key` owned by the integration, which will be
- * used to test whether the integration is already on the page.
- *
- * @api public
- * @param {string} key
- * @return {Integration}
- */
-
-exports.global = function(key) {
-  this.prototype.globals.push(key);
-  return this;
-};
-
-/**
- * Mark the integration as assuming an initial pageview, so to defer loading
- * the script until the first `page` call, noop the first `initialize`.
- *
- * @api public
- * @return {Integration}
- */
-
-exports.assumesPageview = function() {
-  this.prototype._assumesPageview = true;
-  return this;
-};
-
-/**
- * Mark the integration as being "ready" once `load` is called.
- *
- * @api public
- * @return {Integration}
- */
-
-exports.readyOnLoad = function() {
-  this.prototype._readyOnLoad = true;
-  return this;
-};
-
-/**
- * Mark the integration as being "ready" once `initialize` is called.
- *
- * @api public
- * @return {Integration}
- */
-
-exports.readyOnInitialize = function() {
-  this.prototype._readyOnInitialize = true;
-  return this;
-};
-
-/**
- * Define a tag to be loaded.
- *
- * @api public
- * @param {string} [name='library'] A nicename for the tag, commonly used in
- * #load. Helpful when the integration has multiple tags and you need a way to
- * specify which of the tags you want to load at a given time.
- * @param {String} str DOM tag as string or URL.
- * @return {Integration}
- */
-
-exports.tag = function(name, tag) {
-  if (tag == null) {
-    tag = name;
-    name = 'library';
-  }
-  this.prototype.templates[name] = objectify(tag);
-  return this;
-};
-
-/**
- * Given a string, give back DOM attributes.
- *
- * Do it in a way where the browser doesn't load images or iframes. It turns
- * out domify will load images/iframes because whenever you construct those
- * DOM elements, the browser immediately loads them.
- *
  * @api private
- * @param {string} str
- * @return {Object}
  */
 
-function objectify(str) {
-  // replace `src` with `data-src` to prevent image loading
-  str = str.replace(' src="', ' data-src="');
-
-  var el = domify(str);
-  var attrs = {};
-
-  each(function(attr) {
-    // then replace it back
-    var name = attr.name === 'data-src' ? 'src' : attr.name;
-    if (!includes(attr.name + '=', str)) return;
-    attrs[name] = attr.value;
-  }, el.attributes);
-
-  return {
-    type: el.tagName.toLowerCase(),
-    attrs: attrs
-  };
+function strict(query) {
+  return foldl(function(acc, val, key) {
+    if (has.call(allowedKeys, key)) acc[key] = val;
+    return acc;
+  }, {}, utm(query));
 }
 
-},{"@ndhoule/each":8,"@ndhoule/includes":12,"component-emitter":42,"domify":100}],41:[function(require,module,exports){
-
-module.exports = {
-  // Promotions
-  promotionViewed: /^[ _]?promotion[ _]?viewed?[ _]?$/i,
-  viewedPromotion: /^[ _]?viewed[ _]?promotion?[ _]?$/i,
-  promotionClicked: /^[ _]?promotion[ _]?clicked?[ _]?$/i,
-  clickedPromotion: /^[ _]?clicked[ _]?promotion?[ _]?$/i,
-  // Browsing
-  productsSearched: /^[ _]?products[ _]?searched[ _]?$/i,
-  productListViewed: /^[ _]?product[ _]?list[ _]?viewed[ _]?$/i,
-  productListFiltered: /^[ _]?product[ _]?list[ _]?filtered[ _]?$/i,
-  viewedProductCategory: /^[ _]?viewed[ _]?product[ _]?category[ _]?$/i,
-  viewedProductDetails: /^[ _]?viewed[ _]?product[ _]?details?[ _]?$/i,
-  // Core Ordering
-  productClicked: /^[ _]?product[ _]?clicked[ _]?$/i,
-  clickedProduct: /^[ _]?clicked[ _]?product[ _]?$/i,
-  productViewed: /^[ _]?product[ _]?viewed[ _]?$/i,
-  viewedProduct: /^[ _]?viewed[ _]?product[ _]?$/i,
-  productAdded: /^[ _]?product[ _]?added[ _]?$/i,
-  addedProduct: /^[ _]?added[ _]?product[ _]?$/i,
-  productRemoved: /^[ _]?product[ _]?removed[ _]?$/i,
-  removedProduct: /^[ _]?removed[ _]?product[ _]?$/i,
-  cartViewed: /^[ _]?cart[ _]?viewed[ _]?$/i,
-  orderStarted: /^[ _]?order[ _]?started[ _]?$/i,
-  startedOrder: /^[ _]?started[ _]?order[ _]?$/i,
-  orderUpdated: /^[ _]?order[ _]?updated[ _]?$/i,
-  updatedOrder: /^[ _]?updated[ _]?order[ _]?$/i,
-  orderCompleted: /^[ _]?order[ _]?completed[ _]?$/i,
-  completedOrder: /^[ _]?completed[ _]?order[ _]?$/i,
-  orderRefunded: /^[ _]?order[ _]?refunded[ _]?$/i,
-  refundedOrder: /^[ _]?refunded[ _]?order[ _]?$/i,
-  orderCancelled: /^[ _]?order[ _]?cancelled[ _]?$/i,
-  paymentInfoAdded: /^[ _]?payment[ _]?info[ _]?added[ _]?$/i,
-  checkoutStarted: /^[ _]?checkout[ _]?started[ _]?$/i,
-  checkoutStepViewed: /^[ _]?checkout[ _]?step[ _]?viewed[ _]?$/i,
-  viewedCheckoutStep: /^[ _]?viewed[ _]?checkout[ _]?step[ _]?$/i,
-  checkoutStepCompleted: /^[ _]?checkout[ _]?step[ _]?completed[ _]?$/i,
-  completedCheckoutStep: /^[ _]?completed[ _]?checkout[ _]?step[ _]?$/i,
-  // Coupons
-  couponEntered: /^[ _]?coupon[ _]?entered[ _]?$/i,
-  couponApplied: /^[ _]?coupon[ _]?applied[ _]?$/i,
-  couponDenied: /^[ _]?coupon[ _]?denied[ _]?$/i,
-  couponRemoved: /^[ _]?coupon[ _]?removed[ _]?$/i,
-  // Wishlisting
-  productAddedToWishlist: /^[ _]?product[ _]?added[ _]?to[ _]?wishlist[ _]?$/i,
-  wishlistProductRemoved: /^[ _]?wishlist[ _]?product[ _]?removed[ _]?$/i,
-  wishlistProductAddedToCart: /^[ _]?wishlist[ _]?product[ _]?added[ _]?to[ _]?cart[ _]?$/i,
-  // Sharing
-  productShared: /^[ _]?product[ _]?shared[ _]?$/i,
-  cartShared: /^[ _]?cart[ _]?shared[ _]?$/i,
-  // Reviewing
-  productRemoved: /^[ _]?product[ _]?removed[ _]?$/i,
-  // App Lifecycle
-  applicationInstalled: /^[ _]?application[ _]?installed[ _]?$/i,
-  applicationUpdated: /^[ _]?application[ _]?updated[ _]?$/i,
-  applicationOpened: /^[ _]?application[ _]?opened[ _]?$/i,
-  applicationBackgrounded: /^[ _]?application[ _]?backgrounded[ _]?$/i,
-  applicationUninstalled: /^[ _]?application[ _]?uninstalled[ _]?$/i,
-  // App Campaign and Referral Events
-  installAttributed: /^[ _]?install[ _]?attributed[ _]?$/i,
-  deepLinkOpened: /^[ _]?deep[ _]?link[ _]?opened[ _]?$/i,
-  pushNotificationReceived: /^[ _]?push[ _]?notification[ _]?received[ _]?$/i,
-  pushNotificationTapped: /^[ _]?push[ _]?notification[ _]?received[ _]?$/i,
-  pushNotificationBounced: /^[ _]?push[ _]?notification[ _]?bounced[ _]?$/i
-};
-
-},{}],42:[function(require,module,exports){
-arguments[4][31][0].apply(exports,arguments)
-},{"dup":31}],43:[function(require,module,exports){
-arguments[4][33][0].apply(exports,arguments)
-},{"_process":116,"dup":33,"timers":132}],44:[function(require,module,exports){
-
-/**
- * Expose `toNoCase`.
+/*
+ * Exports.
  */
 
-module.exports = toNoCase;
+module.exports = utm;
+module.exports.strict = strict;
 
-
-/**
- * Test whether a string is camel-case.
- */
-
-var hasSpace = /\s/;
-var hasSeparator = /[\W_]/;
-
-
-/**
- * Remove any starting case from a `string`, like camel or snake, but keep
- * spaces and punctuation that may be important otherwise.
- *
- * @param {String} string
- * @return {String}
- */
-
-function toNoCase (string) {
-  if (hasSpace.test(string)) return string.toLowerCase();
-  if (hasSeparator.test(string)) return (unseparate(string) || string).toLowerCase();
-  return uncamelize(string).toLowerCase();
-}
-
-
-/**
- * Separator splitter.
- */
-
-var separatorSplitter = /[\W_]+(.|$)/g;
-
-
-/**
- * Un-separate a `string`.
- *
- * @param {String} string
- * @return {String}
- */
-
-function unseparate (string) {
-  return string.replace(separatorSplitter, function (m, next) {
-    return next ? ' ' + next : '';
-  });
-}
-
-
-/**
- * Camelcase splitter.
- */
-
-var camelSplitter = /(.)([A-Z]+)/g;
-
-
-/**
- * Un-camelcase a `string`.
- *
- * @param {String} string
- * @return {String}
- */
-
-function uncamelize (string) {
-  return string.replace(camelSplitter, function (m, previous, uppers) {
-    return previous + ' ' + uppers.toLowerCase().split('').join(' ');
-  });
-}
-},{}],45:[function(require,module,exports){
+},{"@ndhoule/foldl":11,"component-querystring":73}],56:[function(require,module,exports){
 'use strict';
 
 /**
@@ -6221,1788 +6218,90 @@ function getTld(domain) {
   return domain.split('.').splice(-2).join('.');
 }
 
-},{"@ndhoule/extend":10,"@ndhoule/keys":13,"@segment/ad-params":17,"@segment/analytics.js-integration":46,"@segment/localstorage-retry":65,"@segment/protocol":76,"@segment/send-json":77,"@segment/top-domain":80,"@segment/utm-params":81,"component-clone":84,"component-cookie":85,"json3":106,"uuid":54,"yields-store":137}],46:[function(require,module,exports){
-arguments[4][38][0].apply(exports,arguments)
-},{"./protos":47,"./statics":48,"@ndhoule/clone":5,"@ndhoule/defaults":6,"@ndhoule/extend":10,"component-bind":83,"debug":98,"dup":38,"slug-component":130}],47:[function(require,module,exports){
-arguments[4][39][0].apply(exports,arguments)
-},{"@ndhoule/after":3,"@ndhoule/each":8,"@ndhoule/every":9,"@ndhoule/foldl":11,"@segment/fmt":58,"@segment/load-script":62,"analytics-events":49,"component-emitter":50,"dup":39,"is":105,"load-iframe":108,"next-tick":51,"to-no-case":52}],48:[function(require,module,exports){
-arguments[4][40][0].apply(exports,arguments)
-},{"@ndhoule/each":8,"@ndhoule/includes":12,"component-emitter":50,"domify":100,"dup":40}],49:[function(require,module,exports){
-arguments[4][41][0].apply(exports,arguments)
-},{"dup":41}],50:[function(require,module,exports){
-arguments[4][31][0].apply(exports,arguments)
-},{"dup":31}],51:[function(require,module,exports){
-arguments[4][33][0].apply(exports,arguments)
-},{"_process":116,"dup":33,"timers":132}],52:[function(require,module,exports){
-arguments[4][44][0].apply(exports,arguments)
-},{"dup":44}],53:[function(require,module,exports){
-arguments[4][34][0].apply(exports,arguments)
-},{"dup":34}],54:[function(require,module,exports){
-arguments[4][35][0].apply(exports,arguments)
-},{"./rng":53,"dup":35}],55:[function(require,module,exports){
-var utf8Encode = require('utf8-encode');
-var keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
-
-module.exports = encode;
-function encode(input) {
-    var output = "";
-    var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
-    var i = 0;
-
-    input = utf8Encode(input);
-
-    while (i < input.length) {
-
-        chr1 = input.charCodeAt(i++);
-        chr2 = input.charCodeAt(i++);
-        chr3 = input.charCodeAt(i++);
-
-        enc1 = chr1 >> 2;
-        enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
-        enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
-        enc4 = chr3 & 63;
-
-        if (isNaN(chr2)) {
-            enc3 = enc4 = 64;
-        } else if (isNaN(chr3)) {
-            enc4 = 64;
-        }
-
-        output = output +
-            keyStr.charAt(enc1) + keyStr.charAt(enc2) +
-            keyStr.charAt(enc3) + keyStr.charAt(enc4);
-
-    }
-
-    return output;
-}
-},{"utf8-encode":136}],56:[function(require,module,exports){
+},{"@ndhoule/extend":10,"@ndhoule/keys":13,"@segment/ad-params":17,"@segment/analytics.js-integration":57,"@segment/localstorage-retry":41,"@segment/protocol":51,"@segment/send-json":52,"@segment/top-domain":54,"@segment/utm-params":55,"component-clone":63,"component-cookie":64,"json3":84,"uuid":117,"yields-store":118}],57:[function(require,module,exports){
 'use strict';
 
 /**
- * Get the current page's canonical URL.
- *
- * @return {string|undefined}
- */
-function canonical() {
-  var tags = document.getElementsByTagName('link');
-  // eslint-disable-next-line no-cond-assign
-  for (var i = 0, tag; tag = tags[i]; i++) {
-    if (tag.getAttribute('rel') === 'canonical') {
-      return tag.getAttribute('href');
-    }
-  }
-}
-
-/*
- * Exports.
- */
-
-module.exports = canonical;
-
-},{}],57:[function(require,module,exports){
-'use strict';
-
-/*
  * Module dependencies.
  */
 
+var bind = require('component-bind');
 var clone = require('@ndhoule/clone');
-var each = require('@ndhoule/each');
-var type = require('component-type');
+var debug = require('debug');
+var defaults = require('@ndhoule/defaults');
+var extend = require('@ndhoule/extend');
+var slug = require('slug-component');
+var protos = require('./protos');
+var statics = require('./statics');
 
 /**
- * Recursively convert an `obj`'s dates to new values.
+ * Create a new `Integration` constructor.
  *
- * @param {Object} obj
- * @param {Function} convert
- * @return {Object}
+ * @constructs Integration
+ * @param {string} name
+ * @return {Function} Integration
  */
-function convertDates(obj, convert) {
-  obj = clone(obj);
-  each(function(val, key) {
-    if (type(val) === 'date') {
-      obj[key] = convert(val);
+
+function createIntegration(name) {
+  /**
+   * Initialize a new `Integration`.
+   *
+   * @class
+   * @param {Object} options
+   */
+
+  function Integration(options) {
+    if (options && options.addIntegration) {
+      // plugin
+      return options.addIntegration(Integration);
     }
-    if (type(val) === 'object' || type(val) === 'array') {
-      obj[key] = convertDates(val, convert);
-    }
-  }, obj);
-  return obj;
+    this.debug = debug('analytics:integration:' + slug(name));
+    this.options = defaults(clone(options) || {}, this.defaults);
+    this._queue = [];
+    this.once('ready', bind(this, this.flush));
+
+    Integration.emit('construct', this);
+    this.ready = bind(this, this.ready);
+    this._wrapInitialize();
+    this._wrapPage();
+    this._wrapTrack();
+  }
+
+  Integration.prototype.defaults = {};
+  Integration.prototype.globals = [];
+  Integration.prototype.templates = {};
+  Integration.prototype.name = name;
+  extend(Integration, statics);
+  extend(Integration.prototype, protos);
+
+  return Integration;
 }
 
-/*
+/**
  * Exports.
  */
 
-module.exports = convertDates;
+module.exports = createIntegration;
 
-},{"@ndhoule/clone":5,"@ndhoule/each":8,"component-type":96}],58:[function(require,module,exports){
-(function (global){
-'use strict';
-
-// Stringifier
-var toString = global.JSON && typeof JSON.stringify === 'function' ? JSON.stringify : String;
-
-/**
- * Format the given `str`.
- *
- * @param {string} str
- * @param {...*} [args]
- * @return {string}
- */
-function fmt(str) {
-  var args = Array.prototype.slice.call(arguments, 1);
-  var j = 0;
-
-  return str.replace(/%([a-z])/gi, function(match, f) {
-    return fmt[f] ? fmt[f](args[j++]) : match + f;
-  });
-}
-
-// Formatters
-fmt.o = toString;
-fmt.s = String;
-fmt.d = parseInt;
-
-/*
- * Exports.
- */
-
-module.exports = fmt;
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],59:[function(require,module,exports){
-'use strict';
-
-function isMeta(e) {
-  if (e.metaKey || e.altKey || e.ctrlKey || e.shiftKey) {
-    return true;
-  }
-
-  // Logic that handles checks for the middle mouse button, based
-  // on [jQuery](https://github.com/jquery/jquery/blob/master/src/event.js#L466).
-  var which = e.which;
-  var button = e.button;
-  if (!which && button !== undefined) {
-    // eslint-disable-next-line no-bitwise, no-extra-parens
-    return (!button & 1) && (!button & 2) && (button & 4);
-  } else if (which === 2) {
-    return true;
-  }
-
-  return false;
-}
-
-/*
- * Exports.
- */
-
-module.exports = isMeta;
-
-},{}],60:[function(require,module,exports){
-'use strict';
-
-var type = require('component-type');
-var each = require('component-each');
-var isodate = require('@segment/isodate');
-
-/**
- * Expose `traverse`.
- */
-
-module.exports = traverse;
-
-/**
- * Traverse an object or array, and return a clone with all ISO strings parsed
- * into Date objects.
- *
- * @param {Object} obj
- * @return {Object}
- */
-
-function traverse(input, strict) {
-  if (strict === undefined) strict = true;
-
-  if (type(input) === 'object') return object(input, strict);
-  if (type(input) === 'array') return array(input, strict);
-  return input;
-}
-
-/**
- * Object traverser.
- *
- * @param {Object} obj
- * @param {Boolean} strict
- * @return {Object}
- */
-
-function object(obj, strict) {
-  // 'each' utility uses obj.length to check whether the obj is array. To avoid incorrect classification, wrap call to 'each' with rename of obj.length
-  if (obj.length && typeof obj.length === 'number' && !(obj.length - 1 in obj)) { // cross browser compatible way of checking has length and is not array
-    obj.lengthNonArray = obj.length;
-    delete obj.length;
-  }
-  each(obj, function(key, val) {
-    if (isodate.is(val, strict)) {
-      obj[key] = isodate.parse(val);
-    } else if (type(val) === 'object' || type(val) === 'array') {
-      traverse(val, strict);
-    }
-  });
-  // restore obj.length if it was renamed
-  if (obj.lengthNonArray) {
-    obj.length = obj.lengthNonArray;
-    delete obj.lengthNonArray;
-  }
-  return obj;
-}
-
-/**
- * Array traverser.
- *
- * @param {Array} arr
- * @param {Boolean} strict
- * @return {Array}
- */
-
-function array(arr, strict) {
-  each(arr, function(val, x) {
-    if (type(val) === 'object') {
-      traverse(val, strict);
-    } else if (isodate.is(val, strict)) {
-      arr[x] = isodate.parse(val);
-    }
-  });
-  return arr;
-}
-
-},{"@segment/isodate":61,"component-each":89,"component-type":96}],61:[function(require,module,exports){
+},{"./protos":58,"./statics":59,"@ndhoule/clone":5,"@ndhoule/defaults":6,"@ndhoule/extend":10,"component-bind":62,"debug":77,"slug-component":108}],58:[function(require,module,exports){
 'use strict';
 
 /**
- * Matcher, slightly modified from:
- *
- * https://github.com/csnover/js-iso8601/blob/lax/iso8601.js
- */
-
-var matcher = /^(\d{4})(?:-?(\d{2})(?:-?(\d{2}))?)?(?:([ T])(\d{2}):?(\d{2})(?::?(\d{2})(?:[,\.](\d{1,}))?)?(?:(Z)|([+\-])(\d{2})(?::?(\d{2}))?)?)?$/;
-
-/**
- * Convert an ISO date string to a date. Fallback to native `Date.parse`.
- *
- * https://github.com/csnover/js-iso8601/blob/lax/iso8601.js
- *
- * @param {String} iso
- * @return {Date}
- */
-
-exports.parse = function(iso) {
-  var numericKeys = [1, 5, 6, 7, 11, 12];
-  var arr = matcher.exec(iso);
-  var offset = 0;
-
-  // fallback to native parsing
-  if (!arr) {
-    return new Date(iso);
-  }
-
-  /* eslint-disable no-cond-assign */
-  // remove undefined values
-  for (var i = 0, val; val = numericKeys[i]; i++) {
-    arr[val] = parseInt(arr[val], 10) || 0;
-  }
-  /* eslint-enable no-cond-assign */
-
-  // allow undefined days and months
-  arr[2] = parseInt(arr[2], 10) || 1;
-  arr[3] = parseInt(arr[3], 10) || 1;
-
-  // month is 0-11
-  arr[2]--;
-
-  // allow abitrary sub-second precision
-  arr[8] = arr[8] ? (arr[8] + '00').substring(0, 3) : 0;
-
-  // apply timezone if one exists
-  if (arr[4] === ' ') {
-    offset = new Date().getTimezoneOffset();
-  } else if (arr[9] !== 'Z' && arr[10]) {
-    offset = arr[11] * 60 + arr[12];
-    if (arr[10] === '+') {
-      offset = 0 - offset;
-    }
-  }
-
-  var millis = Date.UTC(arr[1], arr[2], arr[3], arr[5], arr[6] + offset, arr[7], arr[8]);
-  return new Date(millis);
-};
-
-
-/**
- * Checks whether a `string` is an ISO date string. `strict` mode requires that
- * the date string at least have a year, month and date.
- *
- * @param {String} string
- * @param {Boolean} strict
- * @return {Boolean}
- */
-
-exports.is = function(string, strict) {
-  if (typeof string !== 'string') {
-    return false;
-  }
-  if (strict && (/^\d{4}-\d{2}-\d{2}/).test(string) === false) {
-    return false;
-  }
-  return matcher.test(string);
-};
-
-},{}],62:[function(require,module,exports){
-'use strict';
-
-/*
  * Module dependencies.
  */
 
-var onload = require('script-onload');
-var tick = require('next-tick');
-var type = require('component-type');
-
-/**
- * Loads a script asynchronously.
- *
- * @param {Object} options
- * @param {Function} cb
- */
-function loadScript(options, cb) {
-  if (!options) {
-    throw new Error('Can\'t load nothing...');
-  }
-
-  // Allow for the simplest case, just passing a `src` string.
-  if (type(options) === 'string') {
-    options = { src : options };
-  }
-
-  var https = document.location.protocol === 'https:' || document.location.protocol === 'chrome-extension:';
-
-  // If you use protocol relative URLs, third-party scripts like Google
-  // Analytics break when testing with `file:` so this fixes that.
-  if (options.src && options.src.indexOf('//') === 0) {
-    options.src = (https ? 'https:' : 'http:') + options.src;
-  }
-
-  // Allow them to pass in different URLs depending on the protocol.
-  if (https && options.https) {
-    options.src = options.https;
-  } else if (!https && options.http) {
-    options.src = options.http;
-  }
-
-  // Make the `<script>` element and insert it before the first script on the
-  // page, which is guaranteed to exist since this Javascript is running.
-  var script = document.createElement('script');
-  script.type = 'text/javascript';
-  script.async = true;
-  script.src = options.src;
-
-  // If we have a cb, attach event handlers. Does not work on < IE9 because
-  // older browser versions don't register element.onerror
-  if (type(cb) === 'function') {
-    onload(script, cb);
-  }
-
-  tick(function() {
-    // Append after event listeners are attached for IE.
-    var firstScript = document.getElementsByTagName('script')[0];
-    firstScript.parentNode.insertBefore(script, firstScript);
-  });
-
-  // Return the script element in case they want to do anything special, like
-  // give it an ID or attributes.
-  return script;
-}
-
-/*
- * Exports.
- */
-
-module.exports = loadScript;
-
-},{"component-type":96,"next-tick":63,"script-onload":117}],63:[function(require,module,exports){
-arguments[4][33][0].apply(exports,arguments)
-},{"_process":116,"dup":33,"timers":132}],64:[function(require,module,exports){
-'use strict';
-
-var keys = require('@ndhoule/keys');
-var uuid = require('uuid').v4;
-
-var inMemoryStore = {
-  _data: {},
-  length: 0,
-  setItem: function(key, value) {
-    this._data[key] = value;
-    this.length = keys(this._data).length;
-    return value;
-  },
-  getItem: function(key) {
-    if (key in this._data) {
-      return this._data[key];
-    }
-    return null;
-  },
-  removeItem: function(key) {
-    if (key in this._data) {
-      delete this._data[key];
-    }
-    this.length = keys(this._data).length;
-    return null;
-  },
-  clear: function() {
-    this._data = {};
-    this.length = 0;
-  },
-  key: function(index) {
-    return keys(this._data)[index];
-  }
-};
-
-function isSupportedNatively() {
-  try {
-    if (!window.localStorage) return false;
-    var key = uuid();
-    window.localStorage.setItem(key, 'test_value');
-    var value = window.localStorage.getItem(key);
-    window.localStorage.removeItem(key);
-
-    // handle localStorage silently failing
-    return value === 'test_value';
-  } catch (e) {
-    // Can throw if localStorage is disabled
-    return false;
-  }
-}
-
-function pickStorage() {
-  if (isSupportedNatively()) {
-    return window.localStorage;
-  }
-  // fall back to in-memory
-  return inMemoryStore;
-}
-
-// Return a shared instance
-module.exports.defaultEngine = pickStorage();
-// Expose the in-memory store explicitly for testing
-module.exports.inMemoryEngine = inMemoryStore;
-
-},{"@ndhoule/keys":13,"uuid":70}],65:[function(require,module,exports){
-'use strict';
-
-var uuid = require('uuid').v4;
-var Store = require('./store');
-var each = require('@ndhoule/each');
-var Schedule = require('./schedule');
-var debug = require('debug')('localstorage-retry');
 var Emitter = require('component-emitter');
-
-// Some browsers don't support Function.prototype.bind, so just including a simplified version here
-function bind(func, obj) {
-  return function() {
-    return func.apply(obj, arguments);
-  };
-}
-
-/**
- * @callback processFunc
- * @param {Mixed} item The item added to the queue to process
- * @param {Function} done A function to call when processing is completed.
- *   @param {Error} Optional error parameter if the processing failed
- *   @param {Response} Optional response parameter to emit for async handling
- */
-
-/**
- * Constructs a Queue backed by localStorage
- *
- * @constructor
- * @param {String} name The name of the queue. Will be used to find abandoned queues and retry their items
- * @param {processFunc} fn The function to call in order to process an item added to the queue
- */
-function Queue(name, opts, fn) {
-  if (typeof opts === 'function') fn = opts;
-  this.name = name;
-  this.id = uuid();
-  this.fn = fn;
-  this.maxItems = opts.maxItems || Infinity;
-  this.maxAttempts = opts.maxAttempts || Infinity;
-
-  this.backoff = {
-    MIN_RETRY_DELAY: opts.minRetryDelay || 1000,
-    MAX_RETRY_DELAY: opts.maxRetryDelay || 30000,
-    FACTOR: opts.backoffFactor || 2,
-    JITTER: opts.backoffJitter || 0
-  };
-
-  // painstakingly tuned. that's why they're not "easily" configurable
-  this.timeouts = {
-    ACK_TIMER: 1000,
-    RECLAIM_TIMER: 3000,
-    RECLAIM_TIMEOUT: 10000,
-    RECLAIM_WAIT: 500
-  };
-
-  this.keys = {
-    IN_PROGRESS: 'inProgress',
-    QUEUE: 'queue',
-    ACK: 'ack',
-    RECLAIM_START: 'reclaimStart',
-    RECLAIM_END: 'reclaimEnd'
-  };
-
-  this._schedule = new Schedule();
-  this._processId = 0;
-
-  // Set up our empty queues
-  this._store = new Store(this.name, this.id, this.keys);
-  this._store.set(this.keys.IN_PROGRESS, {});
-  this._store.set(this.keys.QUEUE, []);
-
-  // bind recurring tasks for ease of use
-  this._ack = bind(this._ack, this);
-  this._checkReclaim = bind(this._checkReclaim, this);
-  this._processHead = bind(this._processHead, this);
-
-  this._running = false;
-}
-
-/**
- * Mix in event emitter
- */
-
-Emitter(Queue.prototype);
-
-/**
- * Starts processing the queue
- */
-Queue.prototype.start = function() {
-  if (this._running) {
-    this.stop();
-  }
-  this._running = true;
-  this._ack();
-  this._checkReclaim();
-  this._processHead();
-};
-
-/**
- * Stops processing the queue
- */
-Queue.prototype.stop = function() {
-  this._schedule.cancelAll();
-  this._running = false;
-};
-
-/**
- * Decides whether to retry. Overridable.
- *
- * @param {Object} item The item being processed
- * @param {Number} attemptNumber The attemptNumber (1 for first retry)
- * @param {Error} error The error from previous attempt, if there was one
- * @return {Boolean} Whether to requeue the message
- */
-Queue.prototype.shouldRetry = function(_, attemptNumber) {
-  if (attemptNumber > this.maxAttempts) return false;
-  return true;
-};
-
-/**
- * Calculates the delay (in ms) for a retry attempt
- *
- * @param {Number} attemptNumber The attemptNumber (1 for first retry)
- * @return {Number} The delay in milliseconds to wait before attempting a retry
- */
-Queue.prototype.getDelay = function(attemptNumber) {
-  var ms = this.backoff.MIN_RETRY_DELAY * Math.pow(this.backoff.FACTOR, attemptNumber);
-  if (this.backoff.JITTER) {
-    var rand =  Math.random();
-    var deviation = Math.floor(rand * this.backoff.JITTER * ms);
-    if (Math.floor(rand * 10) < 5) {
-      ms -= deviation;
-    } else {
-      ms += deviation;
-    }
-  }
-  return Number(Math.min(ms, this.backoff.MAX_RETRY_DELAY).toPrecision(1));
-};
-
-/**
- * Adds an item to the queue
- *
- * @param {Mixed} item The item to process
- */
-Queue.prototype.addItem = function(item) {
-  this._enqueue({
-    item: item,
-    attemptNumber: 0,
-    time: this._schedule.now()
-  });
-};
-
-/**
- * Adds an item to the retry queue
- *
- * @param {Mixed} item The item to retry
- * @param {Number} attemptNumber The attempt number (1 for first retry)
- * @param {Error} [error] The error from previous attempt, if there was one
- */
-Queue.prototype.requeue = function(item, attemptNumber, error) {
-  if (this.shouldRetry(item, attemptNumber, error)) {
-    this._enqueue({
-      item: item,
-      attemptNumber: attemptNumber,
-      time: this._schedule.now() + this.getDelay(attemptNumber)
-    });
-  } else {
-    this.emit('discard', item, attemptNumber);
-  }
-};
-
-Queue.prototype._enqueue = function(entry) {
-  var queue = this._store.get(this.keys.QUEUE) || [];
-  queue = queue.slice(-(this.maxItems - 1));
-  queue.push(entry);
-  queue = queue.sort(function(a,b) {
-    return a.time - b.time;
-  });
-
-  this._store.set(this.keys.QUEUE, queue);
-
-  if (this._running) {
-    this._processHead();
-  }
-};
-
-Queue.prototype._processHead = function() {
-  var self = this;
-  var store = this._store;
-
-  // cancel the scheduled task if it exists
-  this._schedule.cancel(this._processId);
-
-  // Pop the head off the queue
-  var queue = store.get(this.keys.QUEUE) || [];
-  var inProgress = store.get(this.keys.IN_PROGRESS) || {};
-  var now = this._schedule.now();
-  var toRun = [];
-
-  function enqueue(el, id) {
-    toRun.push({
-      item: el.item,
-      done: function handle(err, res) {
-        var inProgress = store.get(self.keys.IN_PROGRESS) || {};
-        delete inProgress[id];
-        store.set(self.keys.IN_PROGRESS, inProgress);
-        self.emit('processed', err, res, el.item);
-        if (err) {
-          self.requeue(el.item, el.attemptNumber + 1, err);
-        }
-      }
-    });
-  }
-
-  var inProgressSize = Object.keys(inProgress).length;
-
-  while (queue.length && queue[0].time <= now && inProgressSize++ < self.maxItems) {
-    var el = queue.shift();
-    var id = uuid();
-
-    // Save this to the in progress map
-    inProgress[id] = {
-      item: el.item,
-      attemptNumber: el.attemptNumber,
-      time: self._schedule.now()
-    };
-
-    enqueue(el, id);
-  }
-
-  store.set(this.keys.QUEUE, queue);
-  store.set(this.keys.IN_PROGRESS, inProgress);
-
-  each(function(el) {
-    // TODO: handle fn timeout
-    try {
-      self.fn(el.item, el.done);
-    } catch (err) {
-      debug('Process function threw error: ' + err);
-    }
-  }, toRun);
-
-  // re-read the queue in case the process function finished immediately or added another item
-  queue = store.get(this.keys.QUEUE) || [];
-  this._schedule.cancel(this._processId);
-  if (queue.length > 0) {
-    this._processId = this._schedule.run(this._processHead, queue[0].time - now);
-  }
-};
-
-// Ack continuously to prevent other tabs from claiming our queue
-Queue.prototype._ack = function() {
-  this._store.set(this.keys.ACK, this._schedule.now());
-  this._store.set(this.keys.RECLAIM_START, null);
-  this._store.set(this.keys.RECLAIM_END, null);
-  this._schedule.run(this._ack, this.timeouts.ACK_TIMER);
-};
-
-Queue.prototype._checkReclaim = function() {
-  var self = this;
-
-  function tryReclaim(store) {
-    store.set(self.keys.RECLAIM_START, self.id);
-    store.set(self.keys.ACK, self._schedule.now());
-
-    self._schedule.run(function() {
-      if (store.get(self.keys.RECLAIM_START) !== self.id) return;
-      store.set(self.keys.RECLAIM_END, self.id);
-
-      self._schedule.run(function() {
-        if (store.get(self.keys.RECLAIM_END) !== self.id) return;
-        if (store.get(self.keys.RECLAIM_START) !== self.id) return;
-        self._reclaim(store.id);
-      }, self.timeouts.RECLAIM_WAIT);
-    }, self.timeouts.RECLAIM_WAIT);
-  }
-
-  function findOtherQueues(name) {
-    var res = [];
-    var storage = self._store.engine;
-    for (var i = 0; i < storage.length; i++) {
-      var k = storage.key(i);
-      var parts = k.split('.');
-      if (parts.length !== 3) continue;
-      if (parts[0] !== name) continue;
-      if (parts[2] !== 'ack') continue;
-      res.push(new Store(name, parts[1], self.keys));
-    }
-    return res;
-  }
-
-  each(function(store) {
-    if (store.id === self.id) return;
-    if (self._schedule.now() - store.get(self.keys.ACK) < self.timeouts.RECLAIM_TIMEOUT) return;
-    tryReclaim(store);
-  }, findOtherQueues(this.name));
-
-  this._schedule.run(this._checkReclaim, this.timeouts.RECLAIM_TIMER);
-};
-
-Queue.prototype._reclaim = function(id) {
-  var self = this;
-  var other = new Store(this.name, id, this.keys);
-
-  var our = {
-    queue: this._store.get(this.keys.QUEUE) || []
-  };
-
-  var their = {
-    inProgress: other.get(this.keys.IN_PROGRESS) || {},
-    queue: other.get(this.keys.QUEUE) || []
-  };
-
-  // add their queue to ours, resetting run-time to immediate and copying the attempt#
-  each(function(el) {
-    our.queue.push({
-      item: el.item,
-      attemptNumber: el.attemptNumber,
-      time: self._schedule.now()
-    });
-  }, their.queue);
-
-  // if the queue is abandoned, all the in-progress are failed. retry them immediately and increment the attempt#
-  each(function(el) {
-    our.queue.push({
-      item: el.item,
-      attemptNumber: el.attemptNumber + 1,
-      time: self._schedule.now()
-    });
-  }, their.inProgress);
-
-  our.queue = our.queue.sort(function(a,b) {
-    return a.time - b.time;
-  });
-
-  this._store.set(this.keys.QUEUE, our.queue);
-
-  // remove all keys
-  other.remove(this.keys.ACK);
-  other.remove(this.keys.RECLAIM_START);
-  other.remove(this.keys.RECLAIM_END);
-  other.remove(this.keys.IN_PROGRESS);
-  other.remove(this.keys.QUEUE);
-
-  // process the new items we claimed
-  this._processHead();
-};
-
-module.exports = Queue;
-
-},{"./schedule":66,"./store":67,"@ndhoule/each":8,"component-emitter":68,"debug":69,"uuid":70}],66:[function(require,module,exports){
-'use strict';
-
+var after = require('@ndhoule/after');
 var each = require('@ndhoule/each');
-
-var defaultClock = {
-  setTimeout: function(fn, ms) {
-    return window.setTimeout(fn, ms);
-  },
-  clearTimeout: function(id) {
-    return window.clearTimeout(id);
-  },
-  Date: window.Date
-};
-
-var clock = defaultClock;
-
-function Schedule() {
-  this.tasks = {};
-  this.nextId = 1;
-}
-
-Schedule.prototype.now = function() {
-  return +new clock.Date();
-};
-
-Schedule.prototype.run = function(task, timeout) {
-  var id = this.nextId++;
-  this.tasks[id] = clock.setTimeout(this._handle(id, task), timeout);
-  return id;
-};
-
-Schedule.prototype.cancel = function(id) {
-  if (this.tasks[id]) {
-    clock.clearTimeout(this.tasks[id]);
-    delete this.tasks[id];
-  }
-};
-
-Schedule.prototype.cancelAll = function() {
-  each(clock.clearTimeout, this.tasks);
-  this.tasks = {};
-};
-
-Schedule.prototype._handle = function(id, callback) {
-  var self = this;
-  return function() {
-    delete self.tasks[id];
-    return callback();
-  };
-};
-
-Schedule.setClock = function(newClock) {
-  clock = newClock;
-};
-
-Schedule.resetClock = function() {
-  clock = defaultClock;
-};
-
-module.exports = Schedule;
-
-},{"@ndhoule/each":8}],67:[function(require,module,exports){
-'use strict';
-
-var defaultEngine = require('./engine').defaultEngine;
-var inMemoryEngine = require('./engine').inMemoryEngine;
-var each = require('@ndhoule/each');
-var keys = require('@ndhoule/keys');
-var json = require('json3');
-
-/**
-* Store Implementation with dedicated
-*/
-
-function Store(name, id, keys, optionalEngine) {
-  this.id = id;
-  this.name = name;
-  this.keys = keys || {};
-  this.engine = optionalEngine || defaultEngine;
-}
-
-/**
-* Set value by key.
-*/
-
-Store.prototype.set = function(key, value) {
-  var compoundKey = this._createValidKey(key);
-  if (!compoundKey) return;
-  try {
-    this.engine.setItem(compoundKey, json.stringify(value));
-  } catch (err) {
-    if (isQuotaExceeded(err)) {
-      // switch to inMemory engine
-      this._swapEngine();
-      // and save it there
-      this.set(key, value);
-    }
-  }
-};
-
-/**
-* Get by Key.
-*/
-
-Store.prototype.get = function(key) {
-  try {
-    var str = this.engine.getItem(this._createValidKey(key));
-    if (str === null) {
-      return null;
-    }
-    return json.parse(str);
-  } catch (err) {
-    return null;
-  }
-};
-
-/**
-* Remove by Key.
-*/
-
-Store.prototype.remove = function(key) {
-  this.engine.removeItem(this._createValidKey(key));
-};
-
-/**
-* Ensure the key is valid
-*/
-
-Store.prototype._createValidKey = function(key) {
-  var name = this.name;
-  var id = this.id;
-
-  if (!keys(this.keys).length) return [name, id, key].join('.');
-
-  // validate and return undefined if invalid key
-  var compoundKey;
-  each(function(value) {
-    if (value === key) {
-      compoundKey = [name, id, key].join('.');
-    }
-  }, this.keys);
-  return compoundKey;
-};
-
-/**
-* Switch to inMemoryEngine, bringing any existing data with.
-*/
-
-Store.prototype._swapEngine = function() {
-  var self = this;
-
-  // grab existing data, but only for this page's queue instance, not all
-  // better to keep other queues in localstorage to be flushed later
-  // than to pull them into memory and remove them from durable storage
-  each(function(key) {
-    var value = self.get(key);
-    inMemoryEngine.setItem([self.name, self.id, key].join('.'), value);
-    self.remove(key);
-  }, this.keys);
-
-  this.engine = inMemoryEngine;
-};
-
-module.exports = Store;
-
-function isQuotaExceeded(e) {
-  var quotaExceeded = false;
-  if (e.code) {
-    switch (e.code) {
-    case 22:
-      quotaExceeded = true;
-      break;
-    case 1014:
-      // Firefox
-      if (e.name === 'NS_ERROR_DOM_QUOTA_REACHED') {
-        quotaExceeded = true;
-      }
-      break;
-    default:
-      break;
-    }
-  } else if (e.number === -2147024882) {
-    // Internet Explorer 8
-    quotaExceeded = true;
-  }
-  return quotaExceeded;
-}
-
-},{"./engine":64,"@ndhoule/each":8,"@ndhoule/keys":13,"json3":106}],68:[function(require,module,exports){
-arguments[4][31][0].apply(exports,arguments)
-},{"dup":31}],69:[function(require,module,exports){
-arguments[4][32][0].apply(exports,arguments)
-},{"dup":32}],70:[function(require,module,exports){
-var v1 = require('./v1');
-var v4 = require('./v4');
-
-var uuid = v4;
-uuid.v1 = v1;
-uuid.v4 = v4;
-
-module.exports = uuid;
-
-},{"./v1":73,"./v4":74}],71:[function(require,module,exports){
-/**
- * Convert array of 16 byte values to UUID string format of the form:
- * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
- */
-var byteToHex = [];
-for (var i = 0; i < 256; ++i) {
-  byteToHex[i] = (i + 0x100).toString(16).substr(1);
-}
-
-function bytesToUuid(buf, offset) {
-  var i = offset || 0;
-  var bth = byteToHex;
-  // join used to fix memory issue caused by concatenation: https://bugs.chromium.org/p/v8/issues/detail?id=3175#c4
-  return ([bth[buf[i++]], bth[buf[i++]], 
-	bth[buf[i++]], bth[buf[i++]], '-',
-	bth[buf[i++]], bth[buf[i++]], '-',
-	bth[buf[i++]], bth[buf[i++]], '-',
-	bth[buf[i++]], bth[buf[i++]], '-',
-	bth[buf[i++]], bth[buf[i++]],
-	bth[buf[i++]], bth[buf[i++]],
-	bth[buf[i++]], bth[buf[i++]]]).join('');
-}
-
-module.exports = bytesToUuid;
-
-},{}],72:[function(require,module,exports){
-// Unique ID creation requires a high quality random # generator.  In the
-// browser this is a little complicated due to unknown quality of Math.random()
-// and inconsistent support for the `crypto` API.  We do the best we can via
-// feature-detection
-
-// getRandomValues needs to be invoked in a context where "this" is a Crypto
-// implementation. Also, find the complete implementation of crypto on IE11.
-var getRandomValues = (typeof(crypto) != 'undefined' && crypto.getRandomValues && crypto.getRandomValues.bind(crypto)) ||
-                      (typeof(msCrypto) != 'undefined' && typeof window.msCrypto.getRandomValues == 'function' && msCrypto.getRandomValues.bind(msCrypto));
-
-if (getRandomValues) {
-  // WHATWG crypto RNG - http://wiki.whatwg.org/wiki/Crypto
-  var rnds8 = new Uint8Array(16); // eslint-disable-line no-undef
-
-  module.exports = function whatwgRNG() {
-    getRandomValues(rnds8);
-    return rnds8;
-  };
-} else {
-  // Math.random()-based (RNG)
-  //
-  // If all else fails, use Math.random().  It's fast, but is of unspecified
-  // quality.
-  var rnds = new Array(16);
-
-  module.exports = function mathRNG() {
-    for (var i = 0, r; i < 16; i++) {
-      if ((i & 0x03) === 0) r = Math.random() * 0x100000000;
-      rnds[i] = r >>> ((i & 0x03) << 3) & 0xff;
-    }
-
-    return rnds;
-  };
-}
-
-},{}],73:[function(require,module,exports){
-var rng = require('./lib/rng');
-var bytesToUuid = require('./lib/bytesToUuid');
-
-// **`v1()` - Generate time-based UUID**
-//
-// Inspired by https://github.com/LiosK/UUID.js
-// and http://docs.python.org/library/uuid.html
-
-var _nodeId;
-var _clockseq;
-
-// Previous uuid creation time
-var _lastMSecs = 0;
-var _lastNSecs = 0;
-
-// See https://github.com/broofa/node-uuid for API details
-function v1(options, buf, offset) {
-  var i = buf && offset || 0;
-  var b = buf || [];
-
-  options = options || {};
-  var node = options.node || _nodeId;
-  var clockseq = options.clockseq !== undefined ? options.clockseq : _clockseq;
-
-  // node and clockseq need to be initialized to random values if they're not
-  // specified.  We do this lazily to minimize issues related to insufficient
-  // system entropy.  See #189
-  if (node == null || clockseq == null) {
-    var seedBytes = rng();
-    if (node == null) {
-      // Per 4.5, create and 48-bit node id, (47 random bits + multicast bit = 1)
-      node = _nodeId = [
-        seedBytes[0] | 0x01,
-        seedBytes[1], seedBytes[2], seedBytes[3], seedBytes[4], seedBytes[5]
-      ];
-    }
-    if (clockseq == null) {
-      // Per 4.2.2, randomize (14 bit) clockseq
-      clockseq = _clockseq = (seedBytes[6] << 8 | seedBytes[7]) & 0x3fff;
-    }
-  }
-
-  // UUID timestamps are 100 nano-second units since the Gregorian epoch,
-  // (1582-10-15 00:00).  JSNumbers aren't precise enough for this, so
-  // time is handled internally as 'msecs' (integer milliseconds) and 'nsecs'
-  // (100-nanoseconds offset from msecs) since unix epoch, 1970-01-01 00:00.
-  var msecs = options.msecs !== undefined ? options.msecs : new Date().getTime();
-
-  // Per 4.2.1.2, use count of uuid's generated during the current clock
-  // cycle to simulate higher resolution clock
-  var nsecs = options.nsecs !== undefined ? options.nsecs : _lastNSecs + 1;
-
-  // Time since last uuid creation (in msecs)
-  var dt = (msecs - _lastMSecs) + (nsecs - _lastNSecs)/10000;
-
-  // Per 4.2.1.2, Bump clockseq on clock regression
-  if (dt < 0 && options.clockseq === undefined) {
-    clockseq = clockseq + 1 & 0x3fff;
-  }
-
-  // Reset nsecs if clock regresses (new clockseq) or we've moved onto a new
-  // time interval
-  if ((dt < 0 || msecs > _lastMSecs) && options.nsecs === undefined) {
-    nsecs = 0;
-  }
-
-  // Per 4.2.1.2 Throw error if too many uuids are requested
-  if (nsecs >= 10000) {
-    throw new Error('uuid.v1(): Can\'t create more than 10M uuids/sec');
-  }
-
-  _lastMSecs = msecs;
-  _lastNSecs = nsecs;
-  _clockseq = clockseq;
-
-  // Per 4.1.4 - Convert from unix epoch to Gregorian epoch
-  msecs += 12219292800000;
-
-  // `time_low`
-  var tl = ((msecs & 0xfffffff) * 10000 + nsecs) % 0x100000000;
-  b[i++] = tl >>> 24 & 0xff;
-  b[i++] = tl >>> 16 & 0xff;
-  b[i++] = tl >>> 8 & 0xff;
-  b[i++] = tl & 0xff;
-
-  // `time_mid`
-  var tmh = (msecs / 0x100000000 * 10000) & 0xfffffff;
-  b[i++] = tmh >>> 8 & 0xff;
-  b[i++] = tmh & 0xff;
-
-  // `time_high_and_version`
-  b[i++] = tmh >>> 24 & 0xf | 0x10; // include version
-  b[i++] = tmh >>> 16 & 0xff;
-
-  // `clock_seq_hi_and_reserved` (Per 4.2.2 - include variant)
-  b[i++] = clockseq >>> 8 | 0x80;
-
-  // `clock_seq_low`
-  b[i++] = clockseq & 0xff;
-
-  // `node`
-  for (var n = 0; n < 6; ++n) {
-    b[i + n] = node[n];
-  }
-
-  return buf ? buf : bytesToUuid(b);
-}
-
-module.exports = v1;
-
-},{"./lib/bytesToUuid":71,"./lib/rng":72}],74:[function(require,module,exports){
-var rng = require('./lib/rng');
-var bytesToUuid = require('./lib/bytesToUuid');
-
-function v4(options, buf, offset) {
-  var i = buf && offset || 0;
-
-  if (typeof(options) == 'string') {
-    buf = options === 'binary' ? new Array(16) : null;
-    options = null;
-  }
-  options = options || {};
-
-  var rnds = options.random || (options.rng || rng)();
-
-  // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
-  rnds[6] = (rnds[6] & 0x0f) | 0x40;
-  rnds[8] = (rnds[8] & 0x3f) | 0x80;
-
-  // Copy bytes to buffer, if provided
-  if (buf) {
-    for (var ii = 0; ii < 16; ++ii) {
-      buf[i + ii] = rnds[ii];
-    }
-  }
-
-  return buf || bytesToUuid(rnds);
-}
-
-module.exports = v4;
-
-},{"./lib/bytesToUuid":71,"./lib/rng":72}],75:[function(require,module,exports){
-'use strict';
-
-/**
- * Prevent default on a given event.
- *
- * @param {Event} e
- * @example
- * anchor.onclick = prevent;
- * anchor.onclick = function(e){
- *   if (something) return prevent(e);
- * };
- */
-
-function preventDefault(e) {
-  e = e || window.event;
-  return e.preventDefault ? e.preventDefault() : e.returnValue = false;
-}
-
-/*
- * Exports.
- */
-
-module.exports = preventDefault;
-
-},{}],76:[function(require,module,exports){
-'use strict';
-
-/**
- * Convenience alias
- */
-
-var define = Object.defineProperty;
-
-
-/**
- *  The base protocol
- */
-
-var initialProtocol = window.location.protocol;
-
-/**
- * Fallback mocked protocol in case Object.defineProperty doesn't exist.
- */
-
-var mockedProtocol;
-
-
-module.exports = function(protocol) {
-  if (arguments.length === 0) {
-    return get();
-  }
-  return set(protocol);
-};
-
-
-/**
- * Sets the protocol to be http:
- */
-
-module.exports.http = function() {
-  set('http:');
-};
-
-
-/**
- * Sets the protocol to be https:
- */
-
-module.exports.https = function() {
-  set('https:');
-};
-
-
-/**
- * Reset to the initial protocol.
- */
-
-module.exports.reset = function() {
-  set(initialProtocol);
-};
-
-
-/**
- * Gets the current protocol, using the fallback and then the native protocol.
- *
- * @return {String} protocol
- */
-
-function get() {
-  return mockedProtocol || window.location.protocol;
-}
-
-
-/**
- * Sets the protocol
- *
- * @param {String} protocol
- */
-
-function set(protocol) {
-  try {
-    define(window.location, 'protocol', {
-      get: function() { return protocol; }
-    });
-  } catch (err) {
-    mockedProtocol = protocol;
-  }
-}
-
-},{}],77:[function(require,module,exports){
-'use strict';
-
-/*
- * Module dependencies.
- */
-
-var JSON = require('json3');
-var base64encode = require('@segment/base64-encode');
-var cors = require('has-cors');
-var jsonp = require('jsonp');
-
-/*
- * Exports.
- */
-
-exports = module.exports = cors ? json : base64;
-
-/**
- * Expose `callback`
- */
-
-exports.callback = 'callback';
-
-/**
- * Expose `prefix`
- */
-
-exports.prefix = 'data';
-
-/**
- * Expose `json`.
- */
-
-exports.json = json;
-
-/**
- * Expose `base64`.
- */
-
-exports.base64 = base64;
-
-/**
- * Expose `type`
- */
-
-exports.type = cors ? 'xhr' : 'jsonp';
-
-/**
- * Send the given `obj` to `url` with `fn(err, req)`.
- *
- * @param {String} url
- * @param {Object} obj
- * @param {Object} headers
- * @param {Function} fn
- * @api private
- */
-
-function json(url, obj, headers, fn) {
-  if (arguments.length === 3) fn = headers, headers = {};
-
-  var req = new XMLHttpRequest;
-  req.onerror = fn;
-  req.onreadystatechange = done;
-  req.open('POST', url, true);
-
-  // TODO: Remove this eslint disable
-  // eslint-disable-next-line guard-for-in
-  for (var k in headers) {
-    req.setRequestHeader(k, headers[k]);
-  }
-  req.send(JSON.stringify(obj));
-
-  function done() {
-    if (req.readyState === 4) {
-      return fn(null, req);
-    }
-  }
-}
-
-/**
- * Send the given `obj` to `url` with `fn(err, req)`.
- *
- * @param {String} url
- * @param {Object} obj
- * @param {Function} fn
- * @api private
- */
-
-function base64(url, obj, _, fn) {
-  if (arguments.length === 3) fn = _;
-
-  var prefix = exports.prefix;
-  var data = encode(obj);
-  url += '?' + prefix + '=' + data;
-  jsonp(url, { param: exports.callback }, function(err, obj) {
-    if (err) return fn(err);
-    fn(null, {
-      url: url,
-      body: obj
-    });
-  });
-}
-
-/**
- * Encodes `obj`.
- *
- * @param {Object} obj
- */
-
-function encode(obj) {
-  var str = '';
-  str = JSON.stringify(obj);
-  str = base64encode(str);
-  str = str.replace(/\+/g, '-').replace(/\//g, '_');
-  return encodeURIComponent(str);
-}
-
-},{"@segment/base64-encode":55,"has-cors":102,"json3":106,"jsonp":107}],78:[function(require,module,exports){
-(function (global){
-"use strict"
-
-var JSON = require('json3');
-
-module.exports = (function() {
-	// Store.js
-	var store = {},
-		win = (typeof window != 'undefined' ? window : global),
-		doc = win.document,
-		localStorageName = 'localStorage',
-		scriptTag = 'script',
-		storage
-
-	store.disabled = false
-	store.version = '1.3.20'
-	store.set = function(key, value) {}
-	store.get = function(key, defaultVal) {}
-	store.has = function(key) { return store.get(key) !== undefined }
-	store.remove = function(key) {}
-	store.clear = function() {}
-	store.transact = function(key, defaultVal, transactionFn) {
-		if (transactionFn == null) {
-			transactionFn = defaultVal
-			defaultVal = null
-		}
-		if (defaultVal == null) {
-			defaultVal = {}
-		}
-		var val = store.get(key, defaultVal)
-		transactionFn(val)
-		store.set(key, val)
-	}
-	store.getAll = function() {
-		var ret = {}
-		store.forEach(function(key, val) {
-			ret[key] = val
-		})
-		return ret
-	}
-	store.forEach = function() {}
-	store.serialize = function(value) {
-		return JSON.stringify(value)
-	}
-	store.deserialize = function(value) {
-		if (typeof value != 'string') { return undefined }
-		try { return JSON.parse(value) }
-		catch(e) { return value || undefined }
-	}
-
-	// Functions to encapsulate questionable FireFox 3.6.13 behavior
-	// when about.config::dom.storage.enabled === false
-	// See https://github.com/marcuswestin/store.js/issues#issue/13
-	function isLocalStorageNameSupported() {
-		try { return (localStorageName in win && win[localStorageName]) }
-		catch(err) { return false }
-	}
-
-	if (isLocalStorageNameSupported()) {
-		storage = win[localStorageName]
-		store.set = function(key, val) {
-			if (val === undefined) { return store.remove(key) }
-			storage.setItem(key, store.serialize(val))
-			return val
-		}
-		store.get = function(key, defaultVal) {
-			var val = store.deserialize(storage.getItem(key))
-			return (val === undefined ? defaultVal : val)
-		}
-		store.remove = function(key) { storage.removeItem(key) }
-		store.clear = function() { storage.clear() }
-		store.forEach = function(callback) {
-			for (var i=0; i<storage.length; i++) {
-				var key = storage.key(i)
-				callback(key, store.get(key))
-			}
-		}
-	} else if (doc && doc.documentElement.addBehavior) {
-		var storageOwner,
-			storageContainer
-		// Since #userData storage applies only to specific paths, we need to
-		// somehow link our data to a specific path.  We choose /favicon.ico
-		// as a pretty safe option, since all browsers already make a request to
-		// this URL anyway and being a 404 will not hurt us here.  We wrap an
-		// iframe pointing to the favicon in an ActiveXObject(htmlfile) object
-		// (see: http://msdn.microsoft.com/en-us/library/aa752574(v=VS.85).aspx)
-		// since the iframe access rules appear to allow direct access and
-		// manipulation of the document element, even for a 404 page.  This
-		// document can be used instead of the current document (which would
-		// have been limited to the current path) to perform #userData storage.
-		try {
-			storageContainer = new ActiveXObject('htmlfile')
-			storageContainer.open()
-			storageContainer.write('<'+scriptTag+'>document.w=window</'+scriptTag+'><iframe src="/favicon.ico"></iframe>')
-			storageContainer.close()
-			storageOwner = storageContainer.w.frames[0].document
-			storage = storageOwner.createElement('div')
-		} catch(e) {
-			// somehow ActiveXObject instantiation failed (perhaps some special
-			// security settings or otherwse), fall back to per-path storage
-			storage = doc.createElement('div')
-			storageOwner = doc.body
-		}
-		var withIEStorage = function(storeFunction) {
-			return function() {
-				var args = Array.prototype.slice.call(arguments, 0)
-				args.unshift(storage)
-				// See http://msdn.microsoft.com/en-us/library/ms531081(v=VS.85).aspx
-				// and http://msdn.microsoft.com/en-us/library/ms531424(v=VS.85).aspx
-				storageOwner.appendChild(storage)
-				storage.addBehavior('#default#userData')
-				storage.load(localStorageName)
-				var result = storeFunction.apply(store, args)
-				storageOwner.removeChild(storage)
-				return result
-			}
-		}
-
-		// In IE7, keys cannot start with a digit or contain certain chars.
-		// See https://github.com/marcuswestin/store.js/issues/40
-		// See https://github.com/marcuswestin/store.js/issues/83
-		var forbiddenCharsRegex = new RegExp("[!\"#$%&'()*+,/\\\\:;<=>?@[\\]^`{|}~]", "g")
-		var ieKeyFix = function(key) {
-			return key.replace(/^d/, '___$&').replace(forbiddenCharsRegex, '___')
-		}
-		store.set = withIEStorage(function(storage, key, val) {
-			key = ieKeyFix(key)
-			if (val === undefined) { return store.remove(key) }
-			storage.setAttribute(key, store.serialize(val))
-			storage.save(localStorageName)
-			return val
-		})
-		store.get = withIEStorage(function(storage, key, defaultVal) {
-			key = ieKeyFix(key)
-			var val = store.deserialize(storage.getAttribute(key))
-			return (val === undefined ? defaultVal : val)
-		})
-		store.remove = withIEStorage(function(storage, key) {
-			key = ieKeyFix(key)
-			storage.removeAttribute(key)
-			storage.save(localStorageName)
-		})
-		store.clear = withIEStorage(function(storage) {
-			var attributes = storage.XMLDocument.documentElement.attributes
-			storage.load(localStorageName)
-			for (var i=attributes.length-1; i>=0; i--) {
-				storage.removeAttribute(attributes[i].name)
-			}
-			storage.save(localStorageName)
-		})
-		store.forEach = withIEStorage(function(storage, callback) {
-			var attributes = storage.XMLDocument.documentElement.attributes
-			for (var i=0, attr; attr=attributes[i]; ++i) {
-				callback(attr.name, store.deserialize(storage.getAttribute(attr.name)))
-			}
-		})
-	}
-
-	try {
-		var testKey = '__storejs__'
-		store.set(testKey, testKey)
-		if (store.get(testKey) != testKey) { store.disabled = true }
-		store.remove(testKey)
-	} catch(e) {
-		store.disabled = true
-	}
-	store.enabled = !store.disabled
-	
-	return store
-}())
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"json3":106}],79:[function(require,module,exports){
-'use strict';
-
-/**
- * Pad a `number` with a ten's place zero.
- *
- * @param {number} number
- * @return {string}
- */
-function pad(number) {
-  var n = number.toString();
-  return n.length === 1 ? '0' + n : n;
-}
-
-/**
- * Turn a `date` into an ISO string.
- *
- * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
- *
- * @param {Date} date
- * @return {string}
- */
-function toISOString(date) {
-  return date.getUTCFullYear()
-    + '-' + pad(date.getUTCMonth() + 1)
-    + '-' + pad(date.getUTCDate())
-    + 'T' + pad(date.getUTCHours())
-    + ':' + pad(date.getUTCMinutes())
-    + ':' + pad(date.getUTCSeconds())
-    + '.' + String((date.getUTCMilliseconds()/1000).toFixed(3)).slice(2, 5)
-    + 'Z';
-}
-
-/*
- * Exports.
- */
-
-module.exports = toISOString;
-
-},{}],80:[function(require,module,exports){
-'use strict';
-
-/**
- * Module dependencies.
- */
-
-var parse = require('component-url').parse;
-var cookie = require('component-cookie');
-
-/**
- * Get the top domain.
- *
- * The function constructs the levels of domain and attempts to set a global
- * cookie on each one when it succeeds it returns the top level domain.
- *
- * The method returns an empty string when the hostname is an ip or `localhost`.
- *
- * Example levels:
- *
- *      domain.levels('http://www.google.co.uk');
- *      // => ["co.uk", "google.co.uk", "www.google.co.uk"]
- *
- * Example:
- *
- *      domain('http://localhost:3000/baz');
- *      // => ''
- *      domain('http://dev:3000/baz');
- *      // => ''
- *      domain('http://127.0.0.1:3000/baz');
- *      // => ''
- *      domain('http://segment.io/baz');
- *      // => 'segment.io'
- *
- * @param {string} url
- * @return {string}
- * @api public
- */
-function domain(url) {
-  var cookie = exports.cookie;
-  var levels = exports.levels(url);
-
-  // Lookup the real top level one.
-  for (var i = 0; i < levels.length; ++i) {
-    var cname = '__tld__';
-    var domain = levels[i];
-    var opts = { domain: '.' + domain };
-
-    cookie(cname, 1, opts);
-    if (cookie(cname)) {
-      cookie(cname, null, opts);
-      return domain;
-    }
-  }
-
-  return '';
-}
-
-/**
- * Levels returns all levels of the given url.
- *
- * @param {string} url
- * @return {Array}
- * @api public
- */
-domain.levels = function(url) {
-  var host = parse(url).hostname;
-  var parts = host.split('.');
-  var last = parts[parts.length - 1];
-  var levels = [];
-
-  // Ip address.
-  if (parts.length === 4 && last === parseInt(last, 10)) {
-    return levels;
-  }
-
-  // Localhost.
-  if (parts.length <= 1) {
-    return levels;
-  }
-
-  // Create levels.
-  for (var i = parts.length - 2; i >= 0; --i) {
-    levels.push(parts.slice(i).join('.'));
-  }
-
-  return levels;
-};
-
-/**
- * Expose cookie on domain.
- */
-domain.cookie = cookie;
-
-/*
- * Exports.
- */
-
-exports = module.exports = domain;
-
-},{"component-cookie":85,"component-url":97}],81:[function(require,module,exports){
-'use strict';
-
-/**
- * Module dependencies.
- */
-
+var events = require('analytics-events');
+var every = require('@ndhoule/every');
+var fmt = require('@segment/fmt');
 var foldl = require('@ndhoule/foldl');
-var parse = require('component-querystring').parse;
+var is = require('is');
+var loadIframe = require('load-iframe');
+var loadScript = require('@segment/load-script');
+var nextTick = require('next-tick');
+var normalize = require('to-no-case');
 
 /**
  * hasOwnProperty reference.
@@ -8011,69 +6310,688 @@ var parse = require('component-querystring').parse;
 var has = Object.prototype.hasOwnProperty;
 
 /**
- * Get all utm params from the given `querystring`
- *
- * @param {String} query
- * @return {Object}
- * @api private
+ * No operation.
  */
 
-function utm(query) {
-  // Remove leading ? if present
-  if (query.charAt(0) === '?') {
-    query = query.substring(1);
-  }
+var noop = function noop() {};
 
-  query = query.replace(/\?/g, '&');
+/**
+ * Window defaults.
+ */
 
-  var param;
-  var params = parse(query);
-  var results = {};
+var onerror = window.onerror;
+var onload = null;
 
-  for (var key in params) {
-    if (has.call(params, key)) {
-      if (key.substr(0, 4) === 'utm_') {
-        param = key.substr(4);
-        if (param === 'campaign') param = 'name';
-        results[param] = params[key];
-      }
-    }
-  }
+/**
+ * Mixin emitter.
+ */
 
-  return results;
-}
+/* eslint-disable new-cap */
+Emitter(exports);
+/* eslint-enable new-cap */
 
-var allowedKeys = {
-  name: true,
-  term: true,
-  source: true,
-  medium: true,
-  content: true
+/**
+ * Initialize.
+ */
+
+exports.initialize = function() {
+  var ready = this.ready;
+  nextTick(ready);
 };
 
 /**
- * Get strict utm params - from the given `querystring`
+ * Loaded?
  *
- * @param {String} query
- * @return {Object}
+ * @api private
+ * @return {boolean}
+ */
+
+exports.loaded = function() {
+  return false;
+};
+
+/**
+ * Page.
+ *
+ * @api public
+ * @param {Page} page
+ */
+
+/* eslint-disable no-unused-vars */
+exports.page = function(page) {};
+/* eslint-enable no-unused-vars */
+
+/**
+ * Track.
+ *
+ * @api public
+ * @param {Track} track
+ */
+
+/* eslint-disable no-unused-vars */
+exports.track = function(track) {};
+/* eslint-enable no-unused-vars */
+
+/**
+ * Get values from items in `options` that are mapped to `key`.
+ * `options` is an integration setting which is a collection
+ * of type 'map', 'array', or 'mixed'
+ *
+ * Use cases include mapping events to pixelIds (map), sending generic
+ * conversion pixels only for specific events (array), or configuring dynamic
+ * mappings of event properties to query string parameters based on event (mixed)
+ *
+ * @api public
+ * @param {Object|Object[]|String[]} options An object, array of objects, or
+ * array of strings pulled from settings.mapping.
+ * @param {string} key The name of the item in options whose metadata
+ * we're looking for.
+ * @return {Array} An array of settings that match the input `key` name.
+ * @example
+ *
+ * // 'Map'
+ * var events = { my_event: 'a4991b88' };
+ * .map(events, 'My Event');
+ * // => ["a4991b88"]
+ * .map(events, 'whatever');
+ * // => []
+ *
+ * // 'Array'
+ * * var events = ['Completed Order', 'My Event'];
+ * .map(events, 'My Event');
+ * // => ["My Event"]
+ * .map(events, 'whatever');
+ * // => []
+ *
+ * // 'Mixed'
+ * var events = [{ key: 'my event', value: '9b5eb1fa' }];
+ * .map(events, 'my_event');
+ * // => ["9b5eb1fa"]
+ * .map(events, 'whatever');
+ * // => []
+ */
+
+exports.map = function(options, key) {
+  var normalizedComparator = normalize(key);
+  var mappingType = getMappingType(options);
+
+  if (mappingType === 'unknown') {
+    return [];
+  }
+
+  return foldl(function(matchingValues, val, key) {
+    var compare;
+    var result;
+
+    if (mappingType === 'map') {
+      compare = key;
+      result = val;
+    }
+
+    if (mappingType === 'array') {
+      compare = val;
+      result = val;
+    }
+
+    if (mappingType === 'mixed') {
+      compare = val.key;
+      result = val.value;
+    }
+
+    if (normalize(compare) === normalizedComparator) {
+      matchingValues.push(result);
+    }
+
+    return matchingValues;
+  }, [], options);
+};
+
+/**
+ * Invoke a `method` that may or may not exist on the prototype with `args`,
+ * queueing or not depending on whether the integration is "ready". Don't
+ * trust the method call, since it contains integration party code.
+ *
+ * @api private
+ * @param {string} method
+ * @param {...*} args
+ */
+
+exports.invoke = function(method) {
+  if (!this[method]) return;
+  var args = Array.prototype.slice.call(arguments, 1);
+  if (!this._ready) return this.queue(method, args);
+
+  this.debug('%s with %o', method, args);
+  return this[method].apply(this, args);
+};
+
+/**
+ * Queue a `method` with `args`. If the integration assumes an initial
+ * pageview, then let the first call to `page` pass through.
+ *
+ * @api private
+ * @param {string} method
+ * @param {Array} args
+ */
+
+exports.queue = function(method, args) {
+  if (method === 'page' && this._assumesPageview && !this._initialized) {
+    return this.page.apply(this, args);
+  }
+
+  this._queue.push({ method: method, args: args });
+};
+
+/**
+ * Flush the internal queue.
+ *
  * @api private
  */
 
-function strict(query) {
-  return foldl(function(acc, val, key) {
-    if (has.call(allowedKeys, key)) acc[key] = val;
-    return acc;
-  }, {}, utm(query));
-}
+exports.flush = function() {
+  this._ready = true;
+  var self = this;
 
-/*
- * Exports.
+  each(function(call) {
+    self[call.method].apply(self, call.args);
+  }, this._queue);
+
+  // Empty the queue.
+  this._queue.length = 0;
+};
+
+/**
+ * Reset the integration, removing its global variables.
+ *
+ * @api private
  */
 
-module.exports = utm;
-module.exports.strict = strict;
+exports.reset = function() {
+  for (var i = 0; i < this.globals.length; i++) {
+    window[this.globals[i]] = undefined;
+  }
 
-},{"@ndhoule/foldl":11,"component-querystring":94}],82:[function(require,module,exports){
+  window.onerror = onerror;
+  window.onload = onload;
+};
+
+/**
+ * Load a tag by `name`.
+ *
+ * @param {string} name The name of the tag.
+ * @param {Object} locals Locals used to populate the tag's template variables
+ * (e.g. `userId` in '<img src="https://whatever.com/{{ userId }}">').
+ * @param {Function} [callback=noop] A callback, invoked when the tag finishes
+ * loading.
+ */
+
+exports.load = function(name, locals, callback) {
+  // Argument shuffling
+  if (typeof name === 'function') { callback = name; locals = null; name = null; }
+  if (name && typeof name === 'object') { callback = locals; locals = name; name = null; }
+  if (typeof locals === 'function') { callback = locals; locals = null; }
+
+  // Default arguments
+  name = name || 'library';
+  locals = locals || {};
+
+  locals = this.locals(locals);
+  var template = this.templates[name];
+  if (!template) throw new Error(fmt('template "%s" not defined.', name));
+  var attrs = render(template, locals);
+  callback = callback || noop;
+  var self = this;
+  var el;
+
+  switch (template.type) {
+  case 'img':
+    attrs.width = 1;
+    attrs.height = 1;
+    el = loadImage(attrs, callback);
+    break;
+  case 'script':
+    el = loadScript(attrs, function(err) {
+      if (!err) return callback();
+      self.debug('error loading "%s" error="%s"', self.name, err);
+    });
+      // TODO: hack until refactoring load-script
+    delete attrs.src;
+    each(function(val, key) {
+      el.setAttribute(key, val);
+    }, attrs);
+    break;
+  case 'iframe':
+    el = loadIframe(attrs, callback);
+    break;
+  default:
+      // No default case
+  }
+
+  return el;
+};
+
+/**
+ * Locals for tag templates.
+ *
+ * By default it includes a cache buster and all of the options.
+ *
+ * @param {Object} [locals]
+ * @return {Object}
+ */
+
+exports.locals = function(locals) {
+  locals = locals || {};
+  var cache = Math.floor(new Date().getTime() / 3600000);
+  if (!locals.hasOwnProperty('cache')) locals.cache = cache;
+  each(function(val, key) {
+    if (!locals.hasOwnProperty(key)) locals[key] = val;
+  }, this.options);
+  return locals;
+};
+
+/**
+ * Simple way to emit ready.
+ *
+ * @api public
+ */
+
+exports.ready = function() {
+  this.emit('ready');
+};
+
+/**
+ * Wrap the initialize method in an exists check, so we don't have to do it for
+ * every single integration.
+ *
+ * @api private
+ */
+
+exports._wrapInitialize = function() {
+  var initialize = this.initialize;
+  this.initialize = function() {
+    this.debug('initialize');
+    this._initialized = true;
+    var ret = initialize.apply(this, arguments);
+    this.emit('initialize');
+    return ret;
+  };
+
+  if (this._assumesPageview) this.initialize = after(2, this.initialize);
+};
+
+/**
+ * Wrap the page method to call `initialize` instead if the integration assumes
+ * a pageview.
+ *
+ * @api private
+ */
+
+exports._wrapPage = function() {
+  var page = this.page;
+  this.page = function() {
+    if (this._assumesPageview && !this._initialized) {
+      return this.initialize.apply(this, arguments);
+    }
+
+    return page.apply(this, arguments);
+  };
+};
+
+/**
+ * Wrap the track method to call other ecommerce methods if available depending
+ * on the `track.event()`.
+ *
+ * @api private
+ */
+
+exports._wrapTrack = function() {
+  var t = this.track;
+  this.track = function(track) {
+    var event = track.event();
+    var called;
+    var ret;
+
+    for (var method in events) {
+      if (has.call(events, method)) {
+        var regexp = events[method];
+        if (!this[method]) continue;
+        if (!regexp.test(event)) continue;
+        ret = this[method].apply(this, arguments);
+        called = true;
+        break;
+      }
+    }
+
+    if (!called) ret = t.apply(this, arguments);
+    return ret;
+  };
+};
+
+/**
+ * Determine the type of the option passed to `#map`
+ *
+ * @api private
+ * @param {Object|Object[]} mapping
+ * @return {String} mappingType
+ */
+
+function getMappingType(mapping) {
+  if (is.array(mapping)) {
+    return every(isMixed, mapping) ? 'mixed' : 'array';
+  }
+  if (is.object(mapping)) return 'map';
+  return 'unknown';
+}
+
+/**
+ * Determine if item in mapping array is a valid "mixed" type value
+ *
+ * Must be an object with properties "key" (of type string)
+ * and "value" (of any type)
+ *
+ * @api private
+ * @param {*} item
+ * @return {Boolean}
+ */
+
+function isMixed(item) {
+  if (!is.object(item)) return false;
+  if (!is.string(item.key)) return false;
+  if (!has.call(item, 'value')) return false;
+  return true;
+}
+
+/**
+ * TODO: Document me
+ *
+ * @api private
+ * @param {Object} attrs
+ * @param {Function} fn
+ * @return {Image}
+ */
+
+function loadImage(attrs, fn) {
+  fn = fn || function() {};
+  var img = new Image();
+  img.onerror = error(fn, 'failed to load pixel', img);
+  img.onload = function() { fn(); };
+  img.src = attrs.src;
+  img.width = 1;
+  img.height = 1;
+  return img;
+}
+
+/**
+ * TODO: Document me
+ *
+ * @api private
+ * @param {Function} fn
+ * @param {string} message
+ * @param {Element} img
+ * @return {Function}
+ */
+
+function error(fn, message, img) {
+  return function(e) {
+    e = e || window.event;
+    var err = new Error(message);
+    err.event = e;
+    err.source = img;
+    fn(err);
+  };
+}
+
+/**
+ * Render template + locals into an `attrs` object.
+ *
+ * @api private
+ * @param {Object} template
+ * @param {Object} locals
+ * @return {Object}
+ */
+
+function render(template, locals) {
+  return foldl(function(attrs, val, key) {
+    attrs[key] = val.replace(/\{\{\ *(\w+)\ *\}\}/g, function(_, $1) {
+      return locals[$1];
+    });
+    return attrs;
+  }, {}, template.attrs);
+}
+
+},{"@ndhoule/after":3,"@ndhoule/each":8,"@ndhoule/every":9,"@ndhoule/foldl":11,"@segment/fmt":35,"@segment/load-script":39,"analytics-events":60,"component-emitter":70,"is":83,"load-iframe":86,"next-tick":92,"to-no-case":112}],59:[function(require,module,exports){
+'use strict';
+
+/**
+ * Module dependencies.
+ */
+
+var Emitter = require('component-emitter');
+var domify = require('domify');
+var each = require('@ndhoule/each');
+var includes = require('@ndhoule/includes');
+
+/**
+ * Mix in emitter.
+ */
+
+/* eslint-disable new-cap */
+Emitter(exports);
+/* eslint-enable new-cap */
+
+/**
+ * Add a new option to the integration by `key` with default `value`.
+ *
+ * @api public
+ * @param {string} key
+ * @param {*} value
+ * @return {Integration}
+ */
+
+exports.option = function(key, value) {
+  this.prototype.defaults[key] = value;
+  return this;
+};
+
+/**
+ * Add a new mapping option.
+ *
+ * This will create a method `name` that will return a mapping for you to use.
+ *
+ * @api public
+ * @param {string} name
+ * @return {Integration}
+ * @example
+ * Integration('My Integration')
+ *   .mapping('events');
+ *
+ * new MyIntegration().track('My Event');
+ *
+ * .track = function(track){
+ *   var events = this.events(track.event());
+ *   each(send, events);
+ *  };
+ */
+
+exports.mapping = function(name) {
+  this.option(name, []);
+  this.prototype[name] = function(key) {
+    return this.map(this.options[name], key);
+  };
+  return this;
+};
+
+/**
+ * Register a new global variable `key` owned by the integration, which will be
+ * used to test whether the integration is already on the page.
+ *
+ * @api public
+ * @param {string} key
+ * @return {Integration}
+ */
+
+exports.global = function(key) {
+  this.prototype.globals.push(key);
+  return this;
+};
+
+/**
+ * Mark the integration as assuming an initial pageview, so to defer loading
+ * the script until the first `page` call, noop the first `initialize`.
+ *
+ * @api public
+ * @return {Integration}
+ */
+
+exports.assumesPageview = function() {
+  this.prototype._assumesPageview = true;
+  return this;
+};
+
+/**
+ * Mark the integration as being "ready" once `load` is called.
+ *
+ * @api public
+ * @return {Integration}
+ */
+
+exports.readyOnLoad = function() {
+  this.prototype._readyOnLoad = true;
+  return this;
+};
+
+/**
+ * Mark the integration as being "ready" once `initialize` is called.
+ *
+ * @api public
+ * @return {Integration}
+ */
+
+exports.readyOnInitialize = function() {
+  this.prototype._readyOnInitialize = true;
+  return this;
+};
+
+/**
+ * Define a tag to be loaded.
+ *
+ * @api public
+ * @param {string} [name='library'] A nicename for the tag, commonly used in
+ * #load. Helpful when the integration has multiple tags and you need a way to
+ * specify which of the tags you want to load at a given time.
+ * @param {String} str DOM tag as string or URL.
+ * @return {Integration}
+ */
+
+exports.tag = function(name, tag) {
+  if (tag == null) {
+    tag = name;
+    name = 'library';
+  }
+  this.prototype.templates[name] = objectify(tag);
+  return this;
+};
+
+/**
+ * Given a string, give back DOM attributes.
+ *
+ * Do it in a way where the browser doesn't load images or iframes. It turns
+ * out domify will load images/iframes because whenever you construct those
+ * DOM elements, the browser immediately loads them.
+ *
+ * @api private
+ * @param {string} str
+ * @return {Object}
+ */
+
+function objectify(str) {
+  // replace `src` with `data-src` to prevent image loading
+  str = str.replace(' src="', ' data-src="');
+
+  var el = domify(str);
+  var attrs = {};
+
+  each(function(attr) {
+    // then replace it back
+    var name = attr.name === 'data-src' ? 'src' : attr.name;
+    if (!includes(attr.name + '=', str)) return;
+    attrs[name] = attr.value;
+  }, el.attributes);
+
+  return {
+    type: el.tagName.toLowerCase(),
+    attrs: attrs
+  };
+}
+
+},{"@ndhoule/each":8,"@ndhoule/includes":12,"component-emitter":70,"domify":79}],60:[function(require,module,exports){
+
+module.exports = {
+  // Promotions
+  promotionViewed: /^[ _]?promotion[ _]?viewed?[ _]?$/i,
+  viewedPromotion: /^[ _]?viewed[ _]?promotion?[ _]?$/i,
+  promotionClicked: /^[ _]?promotion[ _]?clicked?[ _]?$/i,
+  clickedPromotion: /^[ _]?clicked[ _]?promotion?[ _]?$/i,
+  // Browsing
+  productsSearched: /^[ _]?products[ _]?searched[ _]?$/i,
+  productListViewed: /^[ _]?product[ _]?list[ _]?viewed[ _]?$/i,
+  productListFiltered: /^[ _]?product[ _]?list[ _]?filtered[ _]?$/i,
+  viewedProductCategory: /^[ _]?viewed[ _]?product[ _]?category[ _]?$/i,
+  viewedProductDetails: /^[ _]?viewed[ _]?product[ _]?details?[ _]?$/i,
+  // Core Ordering
+  productClicked: /^[ _]?product[ _]?clicked[ _]?$/i,
+  clickedProduct: /^[ _]?clicked[ _]?product[ _]?$/i,
+  productViewed: /^[ _]?product[ _]?viewed[ _]?$/i,
+  viewedProduct: /^[ _]?viewed[ _]?product[ _]?$/i,
+  productAdded: /^[ _]?product[ _]?added[ _]?$/i,
+  addedProduct: /^[ _]?added[ _]?product[ _]?$/i,
+  productRemoved: /^[ _]?product[ _]?removed[ _]?$/i,
+  removedProduct: /^[ _]?removed[ _]?product[ _]?$/i,
+  cartViewed: /^[ _]?cart[ _]?viewed[ _]?$/i,
+  orderStarted: /^[ _]?order[ _]?started[ _]?$/i,
+  startedOrder: /^[ _]?started[ _]?order[ _]?$/i,
+  orderUpdated: /^[ _]?order[ _]?updated[ _]?$/i,
+  updatedOrder: /^[ _]?updated[ _]?order[ _]?$/i,
+  orderCompleted: /^[ _]?order[ _]?completed[ _]?$/i,
+  completedOrder: /^[ _]?completed[ _]?order[ _]?$/i,
+  orderRefunded: /^[ _]?order[ _]?refunded[ _]?$/i,
+  refundedOrder: /^[ _]?refunded[ _]?order[ _]?$/i,
+  orderCancelled: /^[ _]?order[ _]?cancelled[ _]?$/i,
+  paymentInfoAdded: /^[ _]?payment[ _]?info[ _]?added[ _]?$/i,
+  checkoutStarted: /^[ _]?checkout[ _]?started[ _]?$/i,
+  checkoutStepViewed: /^[ _]?checkout[ _]?step[ _]?viewed[ _]?$/i,
+  viewedCheckoutStep: /^[ _]?viewed[ _]?checkout[ _]?step[ _]?$/i,
+  checkoutStepCompleted: /^[ _]?checkout[ _]?step[ _]?completed[ _]?$/i,
+  completedCheckoutStep: /^[ _]?completed[ _]?checkout[ _]?step[ _]?$/i,
+  // Coupons
+  couponEntered: /^[ _]?coupon[ _]?entered[ _]?$/i,
+  couponApplied: /^[ _]?coupon[ _]?applied[ _]?$/i,
+  couponDenied: /^[ _]?coupon[ _]?denied[ _]?$/i,
+  couponRemoved: /^[ _]?coupon[ _]?removed[ _]?$/i,
+  // Wishlisting
+  productAddedToWishlist: /^[ _]?product[ _]?added[ _]?to[ _]?wishlist[ _]?$/i,
+  wishlistProductRemoved: /^[ _]?wishlist[ _]?product[ _]?removed[ _]?$/i,
+  wishlistProductAddedToCart: /^[ _]?wishlist[ _]?product[ _]?added[ _]?to[ _]?cart[ _]?$/i,
+  // Sharing
+  productShared: /^[ _]?product[ _]?shared[ _]?$/i,
+  cartShared: /^[ _]?cart[ _]?shared[ _]?$/i,
+  // Reviewing
+  productRemoved: /^[ _]?product[ _]?removed[ _]?$/i,
+  // App Lifecycle
+  applicationInstalled: /^[ _]?application[ _]?installed[ _]?$/i,
+  applicationUpdated: /^[ _]?application[ _]?updated[ _]?$/i,
+  applicationOpened: /^[ _]?application[ _]?opened[ _]?$/i,
+  applicationBackgrounded: /^[ _]?application[ _]?backgrounded[ _]?$/i,
+  applicationUninstalled: /^[ _]?application[ _]?uninstalled[ _]?$/i,
+  // App Campaign and Referral Events
+  installAttributed: /^[ _]?install[ _]?attributed[ _]?$/i,
+  deepLinkOpened: /^[ _]?deep[ _]?link[ _]?opened[ _]?$/i,
+  pushNotificationReceived: /^[ _]?push[ _]?notification[ _]?received[ _]?$/i,
+  pushNotificationTapped: /^[ _]?push[ _]?notification[ _]?received[ _]?$/i,
+  pushNotificationBounced: /^[ _]?push[ _]?notification[ _]?bounced[ _]?$/i
+};
+
+},{}],61:[function(require,module,exports){
 'use strict';
 
 var bind = require('component-bind');
@@ -8091,7 +7009,7 @@ function bindAll(obj) {
 
 module.exports = bindAll;
 
-},{"component-bind":83}],83:[function(require,module,exports){
+},{"component-bind":62}],62:[function(require,module,exports){
 /**
  * Slice reference.
  */
@@ -8116,7 +7034,7 @@ module.exports = function(obj, fn){
   }
 };
 
-},{}],84:[function(require,module,exports){
+},{}],63:[function(require,module,exports){
 /**
  * Module dependencies.
  */
@@ -8175,7 +7093,7 @@ function clone(obj){
   }
 }
 
-},{"component-type":96,"type":96}],85:[function(require,module,exports){
+},{"component-type":75,"type":75}],64:[function(require,module,exports){
 
 /**
  * Module dependencies.
@@ -8308,7 +7226,7 @@ function decode(value) {
   }
 }
 
-},{"debug":86}],86:[function(require,module,exports){
+},{"debug":65}],65:[function(require,module,exports){
 
 /**
  * This is the web browser implementation of `debug()`.
@@ -8478,7 +7396,7 @@ function localstorage(){
   } catch (e) {}
 }
 
-},{"./debug":87}],87:[function(require,module,exports){
+},{"./debug":66}],66:[function(require,module,exports){
 
 /**
  * This is the common logic for both the Node.js and web browser
@@ -8677,7 +7595,7 @@ function coerce(val) {
   return val;
 }
 
-},{"ms":88}],88:[function(require,module,exports){
+},{"ms":67}],67:[function(require,module,exports){
 /**
  * Helpers.
  */
@@ -8804,7 +7722,7 @@ function plural(ms, n, name) {
   return Math.ceil(ms / n) + ' ' + name + 's';
 }
 
-},{}],89:[function(require,module,exports){
+},{}],68:[function(require,module,exports){
 
 /**
  * Module dependencies.
@@ -8895,7 +7813,7 @@ function array(obj, fn, ctx) {
   }
 }
 
-},{"component-type":90,"to-function":133,"type":90}],90:[function(require,module,exports){
+},{"component-type":69,"to-function":111,"type":69}],69:[function(require,module,exports){
 
 /**
  * toString ref.
@@ -8929,7 +7847,184 @@ module.exports = function(val){
   return typeof val;
 };
 
-},{}],91:[function(require,module,exports){
+},{}],70:[function(require,module,exports){
+
+/**
+ * Expose `Emitter`.
+ */
+
+if (typeof module !== 'undefined') {
+  module.exports = Emitter;
+}
+
+/**
+ * Initialize a new `Emitter`.
+ *
+ * @api public
+ */
+
+function Emitter(obj) {
+  if (obj) return mixin(obj);
+};
+
+/**
+ * Mixin the emitter properties.
+ *
+ * @param {Object} obj
+ * @return {Object}
+ * @api private
+ */
+
+function mixin(obj) {
+  for (var key in Emitter.prototype) {
+    obj[key] = Emitter.prototype[key];
+  }
+  return obj;
+}
+
+/**
+ * Listen on the given `event` with `fn`.
+ *
+ * @param {String} event
+ * @param {Function} fn
+ * @return {Emitter}
+ * @api public
+ */
+
+Emitter.prototype.on =
+Emitter.prototype.addEventListener = function(event, fn){
+  this._callbacks = this._callbacks || {};
+  (this._callbacks['$' + event] = this._callbacks['$' + event] || [])
+    .push(fn);
+  return this;
+};
+
+/**
+ * Adds an `event` listener that will be invoked a single
+ * time then automatically removed.
+ *
+ * @param {String} event
+ * @param {Function} fn
+ * @return {Emitter}
+ * @api public
+ */
+
+Emitter.prototype.once = function(event, fn){
+  function on() {
+    this.off(event, on);
+    fn.apply(this, arguments);
+  }
+
+  on.fn = fn;
+  this.on(event, on);
+  return this;
+};
+
+/**
+ * Remove the given callback for `event` or all
+ * registered callbacks.
+ *
+ * @param {String} event
+ * @param {Function} fn
+ * @return {Emitter}
+ * @api public
+ */
+
+Emitter.prototype.off =
+Emitter.prototype.removeListener =
+Emitter.prototype.removeAllListeners =
+Emitter.prototype.removeEventListener = function(event, fn){
+  this._callbacks = this._callbacks || {};
+
+  // all
+  if (0 == arguments.length) {
+    this._callbacks = {};
+    return this;
+  }
+
+  // specific event
+  var callbacks = this._callbacks['$' + event];
+  if (!callbacks) return this;
+
+  // remove all handlers
+  if (1 == arguments.length) {
+    delete this._callbacks['$' + event];
+    return this;
+  }
+
+  // remove specific handler
+  var cb;
+  for (var i = 0; i < callbacks.length; i++) {
+    cb = callbacks[i];
+    if (cb === fn || cb.fn === fn) {
+      callbacks.splice(i, 1);
+      break;
+    }
+  }
+
+  // Remove event specific arrays for event types that no
+  // one is subscribed for to avoid memory leak.
+  if (callbacks.length === 0) {
+    delete this._callbacks['$' + event];
+  }
+
+  return this;
+};
+
+/**
+ * Emit `event` with the given args.
+ *
+ * @param {String} event
+ * @param {Mixed} ...
+ * @return {Emitter}
+ */
+
+Emitter.prototype.emit = function(event){
+  this._callbacks = this._callbacks || {};
+
+  var args = new Array(arguments.length - 1)
+    , callbacks = this._callbacks['$' + event];
+
+  for (var i = 1; i < arguments.length; i++) {
+    args[i - 1] = arguments[i];
+  }
+
+  if (callbacks) {
+    callbacks = callbacks.slice(0);
+    for (var i = 0, len = callbacks.length; i < len; ++i) {
+      callbacks[i].apply(this, args);
+    }
+  }
+
+  return this;
+};
+
+/**
+ * Return array of callbacks for `event`.
+ *
+ * @param {String} event
+ * @return {Array}
+ * @api public
+ */
+
+Emitter.prototype.listeners = function(event){
+  this._callbacks = this._callbacks || {};
+  return this._callbacks['$' + event] || [];
+};
+
+/**
+ * Check if this emitter has `event` handlers.
+ *
+ * @param {String} event
+ * @return {Boolean}
+ * @api public
+ */
+
+Emitter.prototype.hasListeners = function(event){
+  return !! this.listeners(event).length;
+};
+
+},{}],71:[function(require,module,exports){
 var bind = window.addEventListener ? 'addEventListener' : 'attachEvent',
     unbind = window.removeEventListener ? 'removeEventListener' : 'detachEvent',
     prefix = bind !== 'addEventListener' ? 'on' : '';
@@ -8965,15 +8060,7 @@ exports.unbind = function(el, type, fn, capture){
   el[unbind](prefix + type, fn, capture || false);
   return fn;
 };
-},{}],92:[function(require,module,exports){
-module.exports = function(arr, obj){
-  if (arr.indexOf) return arr.indexOf(obj);
-  for (var i = 0; i < arr.length; ++i) {
-    if (arr[i] === obj) return i;
-  }
-  return -1;
-};
-},{}],93:[function(require,module,exports){
+},{}],72:[function(require,module,exports){
 /**
  * Global Names
  */
@@ -9060,7 +8147,7 @@ function prefixed(str) {
   };
 }
 
-},{}],94:[function(require,module,exports){
+},{}],73:[function(require,module,exports){
 
 /**
  * Module dependencies.
@@ -9167,7 +8254,7 @@ exports.stringify = function(obj){
   return pairs.join('&');
 };
 
-},{"trim":134,"type":95}],95:[function(require,module,exports){
+},{"trim":113,"type":74}],74:[function(require,module,exports){
 /**
  * toString ref.
  */
@@ -9203,7 +8290,7 @@ module.exports = function(val){
   return typeof val;
 };
 
-},{}],96:[function(require,module,exports){
+},{}],75:[function(require,module,exports){
 /**
  * toString ref.
  */
@@ -9251,7 +8338,7 @@ function isBuffer(obj) {
     ))
 }
 
-},{}],97:[function(require,module,exports){
+},{}],76:[function(require,module,exports){
 
 /**
  * Parse the given `url`.
@@ -9335,7 +8422,7 @@ function port (protocol){
   }
 }
 
-},{}],98:[function(require,module,exports){
+},{}],77:[function(require,module,exports){
 (function (process){
 /**
  * This is the web browser implementation of `debug()`.
@@ -9524,7 +8611,7 @@ function localstorage() {
 }
 
 }).call(this,require('_process'))
-},{"./debug":99,"_process":116}],99:[function(require,module,exports){
+},{"./debug":78,"_process":94}],78:[function(require,module,exports){
 
 /**
  * This is the common logic for both the Node.js and web browser
@@ -9728,7 +8815,7 @@ function coerce(val) {
   return val;
 }
 
-},{"ms":110}],100:[function(require,module,exports){
+},{"ms":87}],79:[function(require,module,exports){
 
 /**
  * Expose `parse`.
@@ -9842,126 +8929,7 @@ function parse(html, doc) {
   return fragment;
 }
 
-},{}],101:[function(require,module,exports){
-'use strict';
-
-var hasOwn = Object.prototype.hasOwnProperty;
-var toStr = Object.prototype.toString;
-var defineProperty = Object.defineProperty;
-var gOPD = Object.getOwnPropertyDescriptor;
-
-var isArray = function isArray(arr) {
-	if (typeof Array.isArray === 'function') {
-		return Array.isArray(arr);
-	}
-
-	return toStr.call(arr) === '[object Array]';
-};
-
-var isPlainObject = function isPlainObject(obj) {
-	if (!obj || toStr.call(obj) !== '[object Object]') {
-		return false;
-	}
-
-	var hasOwnConstructor = hasOwn.call(obj, 'constructor');
-	var hasIsPrototypeOf = obj.constructor && obj.constructor.prototype && hasOwn.call(obj.constructor.prototype, 'isPrototypeOf');
-	// Not own constructor property must be Object
-	if (obj.constructor && !hasOwnConstructor && !hasIsPrototypeOf) {
-		return false;
-	}
-
-	// Own properties are enumerated firstly, so to speed up,
-	// if last one is own, then all properties are own.
-	var key;
-	for (key in obj) { /**/ }
-
-	return typeof key === 'undefined' || hasOwn.call(obj, key);
-};
-
-// If name is '__proto__', and Object.defineProperty is available, define __proto__ as an own property on target
-var setProperty = function setProperty(target, options) {
-	if (defineProperty && options.name === '__proto__') {
-		defineProperty(target, options.name, {
-			enumerable: true,
-			configurable: true,
-			value: options.newValue,
-			writable: true
-		});
-	} else {
-		target[options.name] = options.newValue;
-	}
-};
-
-// Return undefined instead of __proto__ if '__proto__' is not an own property
-var getProperty = function getProperty(obj, name) {
-	if (name === '__proto__') {
-		if (!hasOwn.call(obj, name)) {
-			return void 0;
-		} else if (gOPD) {
-			// In early versions of node, obj['__proto__'] is buggy when obj has
-			// __proto__ as an own property. Object.getOwnPropertyDescriptor() works.
-			return gOPD(obj, name).value;
-		}
-	}
-
-	return obj[name];
-};
-
-module.exports = function extend() {
-	var options, name, src, copy, copyIsArray, clone;
-	var target = arguments[0];
-	var i = 1;
-	var length = arguments.length;
-	var deep = false;
-
-	// Handle a deep copy situation
-	if (typeof target === 'boolean') {
-		deep = target;
-		target = arguments[1] || {};
-		// skip the boolean and the target
-		i = 2;
-	}
-	if (target == null || (typeof target !== 'object' && typeof target !== 'function')) {
-		target = {};
-	}
-
-	for (; i < length; ++i) {
-		options = arguments[i];
-		// Only deal with non-null/undefined values
-		if (options != null) {
-			// Extend the base object
-			for (name in options) {
-				src = getProperty(target, name);
-				copy = getProperty(options, name);
-
-				// Prevent never-ending loop
-				if (target !== copy) {
-					// Recurse if we're merging plain objects or arrays
-					if (deep && copy && (isPlainObject(copy) || (copyIsArray = isArray(copy)))) {
-						if (copyIsArray) {
-							copyIsArray = false;
-							clone = src && isArray(src) ? src : [];
-						} else {
-							clone = src && isPlainObject(src) ? src : {};
-						}
-
-						// Never move original objects, clone them
-						setProperty(target, { name: name, newValue: extend(deep, clone, copy) });
-
-					// Don't bring in undefined values
-					} else if (typeof copy !== 'undefined') {
-						setProperty(target, { name: name, newValue: copy });
-					}
-				}
-			}
-		}
-	}
-
-	// Return the modified object
-	return target;
-};
-
-},{}],102:[function(require,module,exports){
+},{}],80:[function(require,module,exports){
 
 /**
  * Module exports.
@@ -9980,7 +8948,7 @@ try {
   module.exports = false;
 }
 
-},{}],103:[function(require,module,exports){
+},{}],81:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -10009,12 +8977,12 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],104:[function(require,module,exports){
+},{}],82:[function(require,module,exports){
 
 module.exports = function isEmail (string) {
     return (/.+\@.+\..+/).test(string);
 };
-},{}],105:[function(require,module,exports){
+},{}],83:[function(require,module,exports){
 /* globals window, HTMLElement */
 
 'use strict';
@@ -10834,7 +9802,7 @@ is.bigint = function (value) {
 
 module.exports = is;
 
-},{}],106:[function(require,module,exports){
+},{}],84:[function(require,module,exports){
 (function (global){
 /*! JSON v3.3.2 | https://bestiejs.github.io/json3 | Copyright 2012-2015, Kit Cambridge, Benjamin Tan | http://kit.mit-license.org */
 ;(function () {
@@ -11776,7 +10744,7 @@ module.exports = is;
 }).call(this);
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],107:[function(require,module,exports){
+},{}],85:[function(require,module,exports){
 /**
  * Module dependencies
  */
@@ -11875,7 +10843,7 @@ function jsonp(url, opts, fn){
   return cancel;
 }
 
-},{"debug":98}],108:[function(require,module,exports){
+},{"debug":77}],86:[function(require,module,exports){
 /**
  * Module dependencies.
  */
@@ -11937,9 +10905,7 @@ module.exports = function loadIframe(options, fn){
   return iframe;
 };
 
-},{"is":105,"next-tick":109,"script-onload":117}],109:[function(require,module,exports){
-arguments[4][33][0].apply(exports,arguments)
-},{"_process":116,"dup":33,"timers":132}],110:[function(require,module,exports){
+},{"is":83,"next-tick":92,"script-onload":95}],87:[function(require,module,exports){
 /**
  * Helpers.
  */
@@ -12093,7 +11059,7 @@ function plural(ms, n, name) {
   return Math.ceil(ms / n) + ' ' + name + 's';
 }
 
-},{}],111:[function(require,module,exports){
+},{}],88:[function(require,module,exports){
 'use strict';
 
 var is = require('is');
@@ -12138,7 +11104,7 @@ function toMs(num) {
   return num;
 }
 
-},{"./milliseconds":112,"./seconds":113,"@segment/isodate":114,"is":105}],112:[function(require,module,exports){
+},{"./milliseconds":89,"./seconds":90,"@segment/isodate":91,"is":83}],89:[function(require,module,exports){
 'use strict';
 
 /**
@@ -12170,7 +11136,7 @@ exports.parse = function(millis) {
   return new Date(millis);
 };
 
-},{}],113:[function(require,module,exports){
+},{}],90:[function(require,module,exports){
 'use strict';
 
 /**
@@ -12202,7 +11168,7 @@ exports.parse = function(seconds) {
   return new Date(millis);
 };
 
-},{}],114:[function(require,module,exports){
+},{}],91:[function(require,module,exports){
 'use strict';
 
 /**
@@ -12280,7 +11246,75 @@ exports.is = function(string, strict) {
   return matcher.test(string);
 };
 
-},{}],115:[function(require,module,exports){
+},{}],92:[function(require,module,exports){
+(function (process,setImmediate){
+'use strict';
+
+var callable, byObserver;
+
+callable = function (fn) {
+	if (typeof fn !== 'function') throw new TypeError(fn + " is not a function");
+	return fn;
+};
+
+byObserver = function (Observer) {
+	var node = document.createTextNode(''), queue, i = 0;
+	new Observer(function () {
+		var data;
+		if (!queue) return;
+		data = queue;
+		queue = null;
+		if (typeof data === 'function') {
+			data();
+			return;
+		}
+		data.forEach(function (fn) { fn(); });
+	}).observe(node, { characterData: true });
+	return function (fn) {
+		callable(fn);
+		if (queue) {
+			if (typeof queue === 'function') queue = [queue, fn];
+			else queue.push(fn);
+			return;
+		}
+		queue = fn;
+		node.data = (i = ++i % 2);
+	};
+};
+
+module.exports = (function () {
+	// Node.js
+	if ((typeof process !== 'undefined') && process &&
+			(typeof process.nextTick === 'function')) {
+		return process.nextTick;
+	}
+
+	// MutationObserver=
+	if ((typeof document === 'object') && document) {
+		if (typeof MutationObserver === 'function') {
+			return byObserver(MutationObserver);
+		}
+		if (typeof WebKitMutationObserver === 'function') {
+			return byObserver(WebKitMutationObserver);
+		}
+	}
+
+	// W3C Draft
+	// http://dvcs.w3.org/hg/webperf/raw-file/tip/specs/setImmediate/Overview.html
+	if (typeof setImmediate === 'function') {
+		return function (cb) { setImmediate(callable(cb)); };
+	}
+
+	// Wide available standard
+	if (typeof setTimeout === 'function') {
+		return function (cb) { setTimeout(callable(cb), 0); };
+	}
+
+	return null;
+}());
+
+}).call(this,require('_process'),require("timers").setImmediate)
+},{"_process":94,"timers":110}],93:[function(require,module,exports){
 
 var identity = function(_){ return _; };
 
@@ -12434,7 +11468,7 @@ function isFunction(val) {
   return typeof val === 'function';
 }
 
-},{}],116:[function(require,module,exports){
+},{}],94:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -12620,7 +11654,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],117:[function(require,module,exports){
+},{}],95:[function(require,module,exports){
 
 // https://github.com/thirdpartyjs/thirdpartyjs-code/blob/master/examples/templates/02/loading-files/index.html
 
@@ -12675,7 +11709,7 @@ function attach(el, fn){
   });
 }
 
-},{}],118:[function(require,module,exports){
+},{}],96:[function(require,module,exports){
 'use strict';
 
 var get = require('obj-case');
@@ -12711,7 +11745,7 @@ module.exports = function(proto) {
   }
 };
 
-},{"obj-case":115}],119:[function(require,module,exports){
+},{"obj-case":93}],97:[function(require,module,exports){
 'use strict';
 
 var inherit = require('./utils').inherit;
@@ -12792,7 +11826,7 @@ Alias.prototype.to = Alias.prototype.userId;
 
 module.exports = Alias;
 
-},{"./facade":121,"./utils":129}],120:[function(require,module,exports){
+},{"./facade":99,"./utils":107}],98:[function(require,module,exports){
 'use strict';
 
 var inherit = require('./utils').inherit;
@@ -12826,7 +11860,7 @@ Delete.prototype.type = function() {
 
 module.exports = Delete;
 
-},{"./facade":121,"./utils":129}],121:[function(require,module,exports){
+},{"./facade":99,"./utils":107}],99:[function(require,module,exports){
 'use strict';
 
 var address = require('./address');
@@ -13372,7 +12406,7 @@ function transform(obj) {
 
 module.exports = Facade;
 
-},{"./address":118,"./is-enabled":125,"./utils":129,"@segment/isodate-traverse":60,"new-date":111,"obj-case":115}],122:[function(require,module,exports){
+},{"./address":96,"./is-enabled":103,"./utils":107,"@segment/isodate-traverse":37,"new-date":88,"obj-case":93}],100:[function(require,module,exports){
 'use strict';
 
 var inherit = require('./utils').inherit;
@@ -13539,7 +12573,7 @@ Group.prototype.properties = function() {
 
 module.exports = Group;
 
-},{"./facade":121,"./utils":129,"is-email":104,"new-date":111}],123:[function(require,module,exports){
+},{"./facade":99,"./utils":107,"is-email":82,"new-date":88}],101:[function(require,module,exports){
 'use strict';
 
 var Facade = require('./facade');
@@ -13919,7 +12953,7 @@ Identify.prototype.birthday = Facade.proxy('traits.birthday');
 
 module.exports = Identify;
 
-},{"./facade":121,"./utils":129,"is-email":104,"new-date":111,"obj-case":115,"trim":134}],124:[function(require,module,exports){
+},{"./facade":99,"./utils":107,"is-email":82,"new-date":88,"obj-case":93,"trim":113}],102:[function(require,module,exports){
 'use strict';
 
 var Facade = require('./facade');
@@ -13934,7 +12968,7 @@ Facade.Delete = require('./delete');
 
 module.exports = Facade;
 
-},{"./alias":119,"./delete":120,"./facade":121,"./group":122,"./identify":123,"./page":126,"./screen":127,"./track":128}],125:[function(require,module,exports){
+},{"./alias":97,"./delete":98,"./facade":99,"./group":100,"./identify":101,"./page":104,"./screen":105,"./track":106}],103:[function(require,module,exports){
 'use strict';
 
 // A few integrations are disabled by default. They must be explicitly enabled
@@ -13954,7 +12988,7 @@ module.exports = function(integration) {
   return !disabled[integration];
 };
 
-},{}],126:[function(require,module,exports){
+},{}],104:[function(require,module,exports){
 'use strict';
 
 var inherit = require('./utils').inherit;
@@ -14170,7 +13204,7 @@ Page.prototype.track = function(name) {
 
 module.exports = Page;
 
-},{"./facade":121,"./track":128,"./utils":129,"is-email":104}],127:[function(require,module,exports){
+},{"./facade":99,"./track":106,"./utils":107,"is-email":82}],105:[function(require,module,exports){
 'use strict';
 
 var inherit = require('./utils').inherit;
@@ -14242,7 +13276,7 @@ Screen.prototype.track = function(name) {
 
 module.exports = Screen;
 
-},{"./page":126,"./track":128,"./utils":129}],128:[function(require,module,exports){
+},{"./page":104,"./track":106,"./utils":107}],106:[function(require,module,exports){
 'use strict';
 
 var inherit = require('./utils').inherit;
@@ -14831,14 +13865,14 @@ function currency(val) {
 
 module.exports = Track;
 
-},{"./facade":121,"./identify":123,"./utils":129,"is-email":104,"obj-case":115}],129:[function(require,module,exports){
+},{"./facade":99,"./identify":101,"./utils":107,"is-email":82,"obj-case":93}],107:[function(require,module,exports){
 'use strict';
 
 exports.inherit = require('inherits');
 exports.clone = require('@ndhoule/clone');
 exports.type = require('type-component');
 
-},{"@ndhoule/clone":5,"inherits":103,"type-component":135}],130:[function(require,module,exports){
+},{"@ndhoule/clone":5,"inherits":81,"type-component":114}],108:[function(require,module,exports){
 
 /**
  * Generate a slug from the given `str`.
@@ -14863,7 +13897,7 @@ module.exports = function (str, options) {
     .replace(/ +/g, options.separator || '-')
 };
 
-},{}],131:[function(require,module,exports){
+},{}],109:[function(require,module,exports){
 (function (factory) {
     if (typeof exports === 'object') {
         // Node/CommonJS
@@ -15568,7 +14602,7 @@ module.exports = function (str, options) {
     return SparkMD5;
 }));
 
-},{}],132:[function(require,module,exports){
+},{}],110:[function(require,module,exports){
 (function (setImmediate,clearImmediate){
 var nextTick = require('process/browser.js').nextTick;
 var apply = Function.prototype.apply;
@@ -15647,7 +14681,7 @@ exports.clearImmediate = typeof clearImmediate === "function" ? clearImmediate :
   delete immediateIds[id];
 };
 }).call(this,require("timers").setImmediate,require("timers").clearImmediate)
-},{"process/browser.js":116,"timers":132}],133:[function(require,module,exports){
+},{"process/browser.js":94,"timers":110}],111:[function(require,module,exports){
 
 /**
  * Module Dependencies
@@ -15801,7 +14835,79 @@ function stripNested (prop, str, val) {
   });
 }
 
-},{"component-props":93,"props":93}],134:[function(require,module,exports){
+},{"component-props":72,"props":72}],112:[function(require,module,exports){
+
+/**
+ * Expose `toNoCase`.
+ */
+
+module.exports = toNoCase;
+
+
+/**
+ * Test whether a string is camel-case.
+ */
+
+var hasSpace = /\s/;
+var hasSeparator = /[\W_]/;
+
+
+/**
+ * Remove any starting case from a `string`, like camel or snake, but keep
+ * spaces and punctuation that may be important otherwise.
+ *
+ * @param {String} string
+ * @return {String}
+ */
+
+function toNoCase (string) {
+  if (hasSpace.test(string)) return string.toLowerCase();
+  if (hasSeparator.test(string)) return (unseparate(string) || string).toLowerCase();
+  return uncamelize(string).toLowerCase();
+}
+
+
+/**
+ * Separator splitter.
+ */
+
+var separatorSplitter = /[\W_]+(.|$)/g;
+
+
+/**
+ * Un-separate a `string`.
+ *
+ * @param {String} string
+ * @return {String}
+ */
+
+function unseparate (string) {
+  return string.replace(separatorSplitter, function (m, next) {
+    return next ? ' ' + next : '';
+  });
+}
+
+
+/**
+ * Camelcase splitter.
+ */
+
+var camelSplitter = /(.)([A-Z]+)/g;
+
+
+/**
+ * Un-camelcase a `string`.
+ *
+ * @param {String} string
+ * @return {String}
+ */
+
+function uncamelize (string) {
+  return string.replace(camelSplitter, function (m, previous, uppers) {
+    return previous + ' ' + uppers.toLowerCase().split('').join(' ');
+  });
+}
+},{}],113:[function(require,module,exports){
 
 exports = module.exports = trim;
 
@@ -15817,7 +14923,7 @@ exports.right = function(str){
   return str.replace(/\s*$/, '');
 };
 
-},{}],135:[function(require,module,exports){
+},{}],114:[function(require,module,exports){
 
 /**
  * toString ref.
@@ -15849,7 +14955,7 @@ module.exports = function(val){
   return typeof val;
 };
 
-},{}],136:[function(require,module,exports){
+},{}],115:[function(require,module,exports){
 module.exports = encode;
 
 function encode(string) {
@@ -15877,7 +14983,228 @@ function encode(string) {
 
     return utftext;
 }
-},{}],137:[function(require,module,exports){
+},{}],116:[function(require,module,exports){
+(function (global){
+
+var rng;
+
+var crypto = global.crypto || global.msCrypto; // for IE 11
+if (crypto && crypto.getRandomValues) {
+  // WHATWG crypto-based RNG - http://wiki.whatwg.org/wiki/Crypto
+  // Moderately fast, high quality
+  var _rnds8 = new Uint8Array(16);
+  rng = function whatwgRNG() {
+    crypto.getRandomValues(_rnds8);
+    return _rnds8;
+  };
+}
+
+if (!rng) {
+  // Math.random()-based (RNG)
+  //
+  // If all else fails, use Math.random().  It's fast, but is of unspecified
+  // quality.
+  var  _rnds = new Array(16);
+  rng = function() {
+    for (var i = 0, r; i < 16; i++) {
+      if ((i & 0x03) === 0) r = Math.random() * 0x100000000;
+      _rnds[i] = r >>> ((i & 0x03) << 3) & 0xff;
+    }
+
+    return _rnds;
+  };
+}
+
+module.exports = rng;
+
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],117:[function(require,module,exports){
+//     uuid.js
+//
+//     Copyright (c) 2010-2012 Robert Kieffer
+//     MIT License - http://opensource.org/licenses/mit-license.php
+
+// Unique ID creation requires a high quality random # generator.  We feature
+// detect to determine the best RNG source, normalizing to a function that
+// returns 128-bits of randomness, since that's what's usually required
+var _rng = require('./rng');
+
+// Maps for number <-> hex string conversion
+var _byteToHex = [];
+var _hexToByte = {};
+for (var i = 0; i < 256; i++) {
+  _byteToHex[i] = (i + 0x100).toString(16).substr(1);
+  _hexToByte[_byteToHex[i]] = i;
+}
+
+// **`parse()` - Parse a UUID into it's component bytes**
+function parse(s, buf, offset) {
+  var i = (buf && offset) || 0, ii = 0;
+
+  buf = buf || [];
+  s.toLowerCase().replace(/[0-9a-f]{2}/g, function(oct) {
+    if (ii < 16) { // Don't overflow!
+      buf[i + ii++] = _hexToByte[oct];
+    }
+  });
+
+  // Zero out remaining bytes if string was short
+  while (ii < 16) {
+    buf[i + ii++] = 0;
+  }
+
+  return buf;
+}
+
+// **`unparse()` - Convert UUID byte array (ala parse()) into a string**
+function unparse(buf, offset) {
+  var i = offset || 0, bth = _byteToHex;
+  return  bth[buf[i++]] + bth[buf[i++]] +
+          bth[buf[i++]] + bth[buf[i++]] + '-' +
+          bth[buf[i++]] + bth[buf[i++]] + '-' +
+          bth[buf[i++]] + bth[buf[i++]] + '-' +
+          bth[buf[i++]] + bth[buf[i++]] + '-' +
+          bth[buf[i++]] + bth[buf[i++]] +
+          bth[buf[i++]] + bth[buf[i++]] +
+          bth[buf[i++]] + bth[buf[i++]];
+}
+
+// **`v1()` - Generate time-based UUID**
+//
+// Inspired by https://github.com/LiosK/UUID.js
+// and http://docs.python.org/library/uuid.html
+
+// random #'s we need to init node and clockseq
+var _seedBytes = _rng();
+
+// Per 4.5, create and 48-bit node id, (47 random bits + multicast bit = 1)
+var _nodeId = [
+  _seedBytes[0] | 0x01,
+  _seedBytes[1], _seedBytes[2], _seedBytes[3], _seedBytes[4], _seedBytes[5]
+];
+
+// Per 4.2.2, randomize (14 bit) clockseq
+var _clockseq = (_seedBytes[6] << 8 | _seedBytes[7]) & 0x3fff;
+
+// Previous uuid creation time
+var _lastMSecs = 0, _lastNSecs = 0;
+
+// See https://github.com/broofa/node-uuid for API details
+function v1(options, buf, offset) {
+  var i = buf && offset || 0;
+  var b = buf || [];
+
+  options = options || {};
+
+  var clockseq = options.clockseq !== undefined ? options.clockseq : _clockseq;
+
+  // UUID timestamps are 100 nano-second units since the Gregorian epoch,
+  // (1582-10-15 00:00).  JSNumbers aren't precise enough for this, so
+  // time is handled internally as 'msecs' (integer milliseconds) and 'nsecs'
+  // (100-nanoseconds offset from msecs) since unix epoch, 1970-01-01 00:00.
+  var msecs = options.msecs !== undefined ? options.msecs : new Date().getTime();
+
+  // Per 4.2.1.2, use count of uuid's generated during the current clock
+  // cycle to simulate higher resolution clock
+  var nsecs = options.nsecs !== undefined ? options.nsecs : _lastNSecs + 1;
+
+  // Time since last uuid creation (in msecs)
+  var dt = (msecs - _lastMSecs) + (nsecs - _lastNSecs)/10000;
+
+  // Per 4.2.1.2, Bump clockseq on clock regression
+  if (dt < 0 && options.clockseq === undefined) {
+    clockseq = clockseq + 1 & 0x3fff;
+  }
+
+  // Reset nsecs if clock regresses (new clockseq) or we've moved onto a new
+  // time interval
+  if ((dt < 0 || msecs > _lastMSecs) && options.nsecs === undefined) {
+    nsecs = 0;
+  }
+
+  // Per 4.2.1.2 Throw error if too many uuids are requested
+  if (nsecs >= 10000) {
+    throw new Error('uuid.v1(): Can\'t create more than 10M uuids/sec');
+  }
+
+  _lastMSecs = msecs;
+  _lastNSecs = nsecs;
+  _clockseq = clockseq;
+
+  // Per 4.1.4 - Convert from unix epoch to Gregorian epoch
+  msecs += 12219292800000;
+
+  // `time_low`
+  var tl = ((msecs & 0xfffffff) * 10000 + nsecs) % 0x100000000;
+  b[i++] = tl >>> 24 & 0xff;
+  b[i++] = tl >>> 16 & 0xff;
+  b[i++] = tl >>> 8 & 0xff;
+  b[i++] = tl & 0xff;
+
+  // `time_mid`
+  var tmh = (msecs / 0x100000000 * 10000) & 0xfffffff;
+  b[i++] = tmh >>> 8 & 0xff;
+  b[i++] = tmh & 0xff;
+
+  // `time_high_and_version`
+  b[i++] = tmh >>> 24 & 0xf | 0x10; // include version
+  b[i++] = tmh >>> 16 & 0xff;
+
+  // `clock_seq_hi_and_reserved` (Per 4.2.2 - include variant)
+  b[i++] = clockseq >>> 8 | 0x80;
+
+  // `clock_seq_low`
+  b[i++] = clockseq & 0xff;
+
+  // `node`
+  var node = options.node || _nodeId;
+  for (var n = 0; n < 6; n++) {
+    b[i + n] = node[n];
+  }
+
+  return buf ? buf : unparse(b);
+}
+
+// **`v4()` - Generate random UUID**
+
+// See https://github.com/broofa/node-uuid for API details
+function v4(options, buf, offset) {
+  // Deprecated - 'format' argument, as supported in v1.2
+  var i = buf && offset || 0;
+
+  if (typeof(options) == 'string') {
+    buf = options == 'binary' ? new Array(16) : null;
+    options = null;
+  }
+  options = options || {};
+
+  var rnds = options.random || (options.rng || _rng)();
+
+  // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
+  rnds[6] = (rnds[6] & 0x0f) | 0x40;
+  rnds[8] = (rnds[8] & 0x3f) | 0x80;
+
+  // Copy bytes to buffer, if provided
+  if (buf) {
+    for (var ii = 0; ii < 16; ii++) {
+      buf[i + ii] = rnds[ii];
+    }
+  }
+
+  return buf || unparse(rnds);
+}
+
+// Export public API
+var uuid = v4;
+uuid.v1 = v1;
+uuid.v4 = v4;
+uuid.parse = parse;
+uuid.unparse = unparse;
+
+module.exports = uuid;
+
+},{"./rng":116}],118:[function(require,module,exports){
 
 /**
  * dependencies.
@@ -15972,7 +15299,7 @@ function all(){
   return ret;
 }
 
-},{"each":89,"unserialize":138}],138:[function(require,module,exports){
+},{"each":68,"unserialize":119}],119:[function(require,module,exports){
 
 /**
  * Unserialize the given "stringified" javascript.
@@ -15989,47 +15316,41 @@ module.exports = function(val){
   }
 };
 
-},{}],139:[function(require,module,exports){
+},{}],120:[function(require,module,exports){
 module.exports={
-    "name": "@segment/analytics.js",
-    "author": "Segment <friends@segment.com>",
-    "version": "2.11.0",
-    "description": "The hassle-free way to integrate analytics into any web application.",
-    "keywords": [
-        "analytics",
-        "analytics.js",
-        "segment",
-        "segment.io"
-    ],
-    "main": "analytics.js",
-    "scripts": {
-        "build": "make build",
-        "clean": "make clean",
-        "test": "make test"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/segmentio/analytics.js.git"
-    },
-    "license": "SEE LICENSE IN LICENSE",
-    "bugs": {
-        "url": "https://github.com/segmentio/analytics.js/issues"
-    },
-    "homepage": "https://github.com/segmentio/analytics.js#readme",
-    "dependencies": {
-        "@segment/analytics.js-core": "^3.0.0",
-        "@segment/analytics.js-integration": "^3.1.0",
-        "@segment/analytics.js-integration-mixpanel": "git+https://github.com/segment-integrations/analytics.js-integration-mixpanel.git",
-        "@segment/analytics.js-integration-segmentio": "git+https://github.com/segment-integrations/analytics.js-integration-segmentio.git"
-    },
-    "devDependencies": {
-        "@segment/eslint-config": "^3.1.1",
-        "browserify": "^13.0.1",
-        "eslint": "^2.9.0",
-        "eslint-plugin-mocha": "^2.2.0",
-        "eslint-plugin-require-path-exists": "^1.1.5",
-        "uglify-js": "^2.6.4"
-    }
+  "name": "@segment/analytics.js",
+  "author": "Segment <friends@segment.com>",
+  "version": "2.11.0",
+  "description": "The hassle-free way to integrate analytics into any web application.",
+  "keywords": ["analytics", "analytics.js", "segment", "segment.io"],
+  "main": "analytics.js",
+  "scripts": {
+    "build": "make build",
+    "clean": "make clean",
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/segmentio/analytics.js.git"
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/segmentio/analytics.js/issues"
+  },
+  "homepage": "https://github.com/segmentio/analytics.js#readme",
+  "dependencies": {
+    "@segment/analytics.js-core": "^3.0.0",
+    "@segment/analytics.js-integration": "^3.1.0",
+    "analytics.js-integration-segmentio": "git+ssh://git@github.com:alyne/analytics.js-integration-segmentio.git#v4.2.1"
+  },
+  "devDependencies": {
+    "@segment/eslint-config": "^3.1.1",
+    "browserify": "^13.0.1",
+    "eslint": "^2.9.0",
+    "eslint-plugin-mocha": "^2.2.0",
+    "eslint-plugin-require-path-exists": "^1.1.5",
+    "uglify-js": "^2.6.4"
+  }
 }
 
 },{}]},{},[1])(1)

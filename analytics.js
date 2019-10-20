@@ -5547,7 +5547,6 @@ var cookieOptions = {
   path: '/'
 };
 
-
 /**
  * Segment messages can be a maximum of 32kb.
  */
@@ -5573,15 +5572,16 @@ var queueOptions = {
  * Expose `Segment` integration.
  */
 
-var Segment = exports = module.exports = integration('Segment.io')
+var Segment = (exports = module.exports = integration('Segment.io')
   .option('apiKey', '')
+  // .option('apiHost', 'daili-eu.alyne.com/v1')
   .option('apiHost', 'api.segment.io/v1')
   .option('crossDomainIdServers', [])
   .option('deleteCrossDomainId', false)
   .option('saveCrossDomainIdInLocalStorage', true)
   .option('retryQueue', true)
   .option('addBundledMetadata', false)
-  .option('unbundledIntegrations', []);
+  .option('unbundledIntegrations', []));
 
 /**
  * Get the store.
@@ -5590,7 +5590,9 @@ var Segment = exports = module.exports = integration('Segment.io')
  */
 
 exports.storage = function() {
-  return protocol() === 'file:' || protocol() === 'chrome-extension:' ? localstorage : cookie;
+  return protocol() === 'file:' || protocol() === 'chrome-extension:'
+    ? localstorage
+    : cookie;
 };
 
 /**
@@ -5598,7 +5600,6 @@ exports.storage = function() {
  */
 
 exports.global = window;
-
 
 /**
  * Send the given `obj` and `headers` to `url` with the specified `timeout` and
@@ -5640,7 +5641,7 @@ exports.sendJsonWithTimeout = function(url, obj, headers, timeout, fn) {
   function done() {
     if (req.readyState === 4) {
       // Fail on 429 and 5xx HTTP errors
-      if (req.status === 429 || req.status >= 500 && req.status < 600) {
+      if (req.status === 429 || (req.status >= 500 && req.status < 600)) {
         fn(new Error('HTTP Error ' + req.status + ' (' + req.statusText + ')'));
       } else {
         fn(null, req);
@@ -5667,11 +5668,17 @@ Segment.prototype.initialize = function() {
       item.msg.sentAt = new Date();
 
       // send with 10s timeout
-      Segment.sendJsonWithTimeout(item.url, item.msg, item.headers, 10 * 1000, function(err, res) {
-        self.debug('sent %O, received %O', item.msg, [err, res]);
-        if (err) return done(err);
-        done(null, res);
-      });
+      Segment.sendJsonWithTimeout(
+        item.url,
+        item.msg,
+        item.headers,
+        10 * 1000,
+        function(err, res) {
+          self.debug('sent %O, received %O', item.msg, [err, res]);
+          if (err) return done(err);
+          done(null, res);
+        }
+      );
     });
 
     this._lsqueue.start();
@@ -5768,7 +5775,8 @@ Segment.prototype.ontrack = function(track) {
 Segment.prototype.onalias = function(alias) {
   var json = alias.json();
   var user = this.analytics.user();
-  json.previousId = json.previousId || json.from || user.id() || user.anonymousId();
+  json.previousId =
+    json.previousId || json.from || user.id() || user.anonymousId();
   json.userId = json.userId || json.to;
   delete json.from;
   delete json.to;
@@ -5787,11 +5795,12 @@ Segment.prototype.normalize = function(msg) {
   var user = this.analytics.user();
   var global = exports.global;
   var query = global.location.search;
-  var ctx = msg.context = msg.context || msg.options || {};
+  var ctx = (msg.context = msg.context || msg.options || {});
   delete msg.options;
   msg.writeKey = this.options.apiKey;
   ctx.userAgent = navigator.userAgent;
-  if (!ctx.library) ctx.library = { name: 'analytics.js', version: this.analytics.VERSION };
+  if (!ctx.library)
+    ctx.library = { name: 'analytics.js', version: this.analytics.VERSION };
   if (this.isCrossDomainAnalyticsEnabled()) {
     var crossDomainId = this.getCachedCrossDomainId();
     if (crossDomainId) {
@@ -6021,7 +6030,7 @@ Segment.prototype.retrieveCrossDomainId = function(callback) {
  * getCachedCrossDomainId returns the cross domain identifier stored on the client based on the `saveCrossDomainIdInLocalStorage` flag.
  * If `saveCrossDomainIdInLocalStorage` is false, it reads it from the `seg_xid` cookie.
  * If `saveCrossDomainIdInLocalStorage` is true, it reads it from the `seg_xid` key in localStorage.
- * 
+ *
  * @return {string} crossDomainId
  */
 Segment.prototype.getCachedCrossDomainId = function() {
@@ -6053,7 +6062,13 @@ Segment.prototype.saveCrossDomainId = function(crossDomainId) {
     var domain = this.options.crossDomainIdServers[i];
     if (getTld(domain) === currentTld) {
       var writeKey = this.options.apiKey;
-      var url = 'https://' + domain + '/v1/saveId?writeKey=' + writeKey + '&xid=' + crossDomainId;
+      var url =
+        'https://' +
+        domain +
+        '/v1/saveId?writeKey=' +
+        writeKey +
+        '&xid=' +
+        crossDomainId;
 
       httpGet(url, function(err, res) {
         if (err) {
@@ -6123,7 +6138,7 @@ function getCrossDomainIdFromServerList(domains, writeKey, callback) {
   var crossDomainIdFound = false;
   var finishedRequests = 0;
   var error = null;
-  for (var i=0; i<domains.length; i++) {
+  for (var i = 0; i < domains.length; i++) {
     var domain = domains[i];
 
     getCrossDomainIdFromSingleServer(domain, writeKey, function(err, res) {
@@ -6160,7 +6175,7 @@ function getCrossDomainIdFromSingleServer(domain, writeKey, callback) {
     } else {
       callback(null, {
         domain: domain,
-        id: res && res.id || null
+        id: (res && res.id) || null
       });
     }
   });
@@ -6215,7 +6230,10 @@ function httpGet(url, callback) {
  * @return {string} tld
  */
 function getTld(domain) {
-  return domain.split('.').splice(-2).join('.');
+  return domain
+    .split('.')
+    .splice(-2)
+    .join('.');
 }
 
 },{"@ndhoule/extend":10,"@ndhoule/keys":13,"@segment/ad-params":17,"@segment/analytics.js-integration":57,"@segment/localstorage-retry":41,"@segment/protocol":51,"@segment/send-json":52,"@segment/top-domain":54,"@segment/utm-params":55,"component-clone":63,"component-cookie":64,"json3":84,"uuid":117,"yields-store":118}],57:[function(require,module,exports){
